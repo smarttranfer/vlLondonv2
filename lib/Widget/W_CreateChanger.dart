@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/model/Information_Cutome.dart';
+import 'package:vl_ui/model/Information_Shop.dart';
+import 'package:vl_ui/model/ModelCustome.dart';
+import 'package:vl_ui/model/New_Changer.dart';
 
 class W_CreateChange extends StatefulWidget {
   @override
@@ -15,11 +19,37 @@ class W_CreateChange extends StatefulWidget {
 
 class CreateChange extends State {
   late String _Name = '';
+  late String _names = "";
+  late String _shop = "";
   TextEditingController dateinput = TextEditingController();
+  TextEditingController _code = TextEditingController();
+  TextEditingController _money = TextEditingController();
+  TextEditingController _notes = TextEditingController();
   List<DropdownMenuItem<Object>> ListCustom = [];
+  List<DropdownMenuItem<Object>> ListShop = [];
+
   @override
   void initState() {
+    _names = "";
+    _shop = "";
     dateinput.text = "";
+    for (Information_Shop name in Config_G.NameShop) {
+      ListShop.add(
+        DropdownMenuItem(
+          child: InkWell(
+              onTap: () {
+                setState(() {
+                  _Name = name.nameshop;
+                });
+              },
+              child: Text(
+                "${name.nameshop}",
+              )),
+          value: "${name.nameshop}",
+        ),
+      );
+      super.initState();
+    }
     for (Information_Cutome name in Config_G.NameCustom) {
       ListCustom.add(
         DropdownMenuItem(
@@ -41,6 +71,7 @@ class CreateChange extends State {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Container(
@@ -205,7 +236,11 @@ class CreateChange extends State {
                                                       Icons
                                                           .arrow_drop_down_circle_outlined,
                                                       color: Colors.black54),
-                                                  onChanged: (v) {},
+                                                  onChanged: (v) {
+                                                    setState(() {
+                                                      _names = v.toString();
+                                                    });
+                                                  },
                                                   decoration: InputDecoration(
                                                       enabledBorder:
                                                           OutlineInputBorder(
@@ -265,7 +300,11 @@ class CreateChange extends State {
                                                       Icons
                                                           .arrow_drop_down_circle_outlined,
                                                       color: Colors.black54),
-                                                  onChanged: (v) {},
+                                                  onChanged: (v) {
+                                                    setState(() {
+                                                      _shop = v.toString();
+                                                    });
+                                                  },
                                                   decoration: InputDecoration(
                                                       enabledBorder:
                                                           OutlineInputBorder(
@@ -282,7 +321,7 @@ class CreateChange extends State {
                                                       labelText: "TÊN SHOP",
                                                       labelStyle: TextStyle(
                                                           color: Colors.green)),
-                                                  items: ListCustom,
+                                                  items: ListShop,
                                                 ),
                                               ),
                                             ],
@@ -314,6 +353,7 @@ class CreateChange extends State {
                                                 BorderRadius.circular(15.0),
                                           ),
                                           child: TextField(
+                                            controller: _code,
                                             autocorrect: true,
                                             decoration: InputDecoration(
                                               hintText: 'ABC 123',
@@ -456,6 +496,7 @@ class CreateChange extends State {
                                                 BorderRadius.circular(15.0),
                                           ),
                                           child: TextField(
+                                            controller: _money,
                                             autocorrect: true,
                                             decoration: InputDecoration(
                                               hintText: '100.000',
@@ -510,6 +551,7 @@ class CreateChange extends State {
                                                 BorderRadius.circular(15.0),
                                           ),
                                           child: TextField(
+                                            controller: _notes,
                                             autocorrect: true,
                                             decoration: InputDecoration(
                                               hintText: 'Adc123-Abc123-Abc123',
@@ -569,18 +611,36 @@ class CreateChange extends State {
                                                             15) //content padding inside button
                                                     ),
                                                 onPressed: () {
-                                                  Fluttertoast.showToast(
-                                                      msg:
-                                                          "Tạo giao dịch thành công",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity:
-                                                          ToastGravity.CENTER,
-                                                      timeInSecForIosWeb: 2,
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                      textColor: Colors.white,
-                                                      fontSize: 16.0);
+                                                  if(_names.isEmpty|_shop.isEmpty|_code.text.isEmpty|dateinput.text.isEmpty|_money.text.isEmpty|_notes.text.isEmpty){
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                        "Bạn cần điền đầy đủ thông tin",
+                                                        toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                        gravity:
+                                                        ToastGravity.CENTER,
+                                                        timeInSecForIosWeb: 2,
+                                                        backgroundColor:
+                                                        Colors.red,
+                                                        textColor: Colors.white,
+                                                        fontSize: 16.0);
+                                                  }else{
+                                                    final ListBill = Provider.of<Bill>(context);
+                                                    ListBill.addBill(_names,_shop,_code.text,dateinput.text,_money.text,_notes.text);
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                        "Tạo giao dịch thành công",
+                                                        toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                        gravity:
+                                                        ToastGravity.CENTER,
+                                                        timeInSecForIosWeb: 2,
+                                                        backgroundColor:
+                                                        Colors.red,
+                                                        textColor: Colors.white,
+                                                        fontSize: 16.0);
+                                                  }
+
                                                 },
                                                 child: Text('Xác nhận',
                                                     style: TextStyle(

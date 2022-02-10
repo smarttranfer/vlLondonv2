@@ -1,9 +1,13 @@
+import 'package:vl_ui/model/CheckSameCustome.dart';
 import 'package:vl_ui/model/Information_Cutome.dart';
 import 'package:vl_ui/model/Information_Shop.dart';
+import 'package:vl_ui/model/New_Changer.dart';
 
 class Config_G{
   static List<Information_Cutome> NameCustom =[];
   static List<Information_Shop> NameShop=[];
+  static List<CheckSameCustome> modelCustome = [];
+  static List<Information_Bill> modelBill = [];
   static String ColorsBtnOption = "#388118";
   static String Usernames = "";
   static String Tilte_ens = "Hello," + Usernames;

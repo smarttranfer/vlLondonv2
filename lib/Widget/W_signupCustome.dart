@@ -1,5 +1,6 @@
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/Widget/W_Login.dart';
+import 'package:vl_ui/model/CheckSameCustome.dart';
 import 'package:vl_ui/model/Information_Cutome.dart';
 import 'package:vl_ui/model/Information_Shop.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,11 +27,14 @@ class W_SignUp extends State<W_SignUpCustom> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _phone = TextEditingController();
   final TextEditingController _nickname = TextEditingController();
-  List<String> listcustome = [];
+  List<CheckSameCustome> modelCustome = [];
   @override
   void initState() {
     for (Information_Cutome i in Config_G.NameCustom) {
-      listcustome.add(i.information_name);
+      CheckSameCustome modelchek = new CheckSameCustome();
+      modelchek.information_name = i.namecustome.toString();
+      modelchek.information_nickname = i.Nickname.toString();
+      modelCustome.add(modelchek);
     }
     super.initState();
   }
@@ -114,7 +118,7 @@ class W_SignUp extends State<W_SignUpCustom> {
                                       child: IntlPhoneField(
                                         controller: _phone,
                                         decoration: InputDecoration(
-                                          labelText: 'Phone Number',
+                                          labelText: 'Phone Number *',
                                         ),
                                         initialCountryCode: 'GB',
                                         onChanged: (phone) {
@@ -128,24 +132,25 @@ class W_SignUp extends State<W_SignUpCustom> {
                                 Expanded(
                                   child: TextFormField(
                                     onChanged: (newText) {
-                                      if (listcustome.contains(newText) ==
-                                          true) {
-                                        setState(() {
-                                          checkcolor = false;
-                                          checklabel = false;
-                                          checkdone = false;
-                                        });
-                                      } else {
-                                        setState(() {
-                                          checkdone = true;
-                                        });
+                                      for(CheckSameCustome checkname in modelCustome){
+                                        if(checkname.information_name==newText){
+                                          setState(() {
+                                            checkcolor = false;
+                                            checklabel = false;
+                                            checkdone = false;
+                                          });
+                                        }else{
+                                          setState(() {
+                                            checkdone = true;
+                                          });
+                                        }
                                       }
                                     },
                                     controller: _Name,
                                     decoration: InputDecoration(
                                         labelText: checklabel
                                             ? "Họ và tên  *"
-                                            : "Đã tồn tại trong dữ liệu",
+                                            : "${_Name.text} đã tồn tại trong dữ liệu",
                                         labelStyle: TextStyle(
                                             color: checkcolor
                                                 ? Colors.green
@@ -166,24 +171,37 @@ class W_SignUp extends State<W_SignUpCustom> {
                                 Expanded(
                                   child: TextFormField(
                                     onChanged: (newText) {
-                                      if (listcustome.contains(newText) ==
-                                          true) {
-                                        setState(() {
-                                          checkcolor = false;
-                                          checklabel = false;
-                                          checkdone = false;
-                                        });
-                                      } else {
+                                      if(modelCustome.isEmpty){
                                         setState(() {
                                           checkdone = true;
                                         });
+                                      }else{
+                                        for(CheckSameCustome checkname in modelCustome){
+                                          if(checkname.information_name==_Name.text && checkname.information_nickname==newText){
+                                            setState(() {
+                                              checklabelNickname = false;
+                                              checkcolorNickname = false;
+                                              checkcolor = false;
+                                              checklabel = false;
+                                              checkdone = false;
+                                            });
+                                          }else{
+                                            setState(() {
+                                              checklabelNickname = true;
+                                              checkcolorNickname = true;
+                                              checkcolor = true;
+                                              checklabel = true;
+                                              checkdone = true;
+                                            });
+                                          }
+                                        }
                                       }
                                     },
                                     controller: _nickname,
                                     decoration: InputDecoration(
                                         labelText: checklabelNickname
                                             ? "NickName  *"
-                                            : "Đã tồn tại trong dữ liệu",
+                                            : " ${_Name.text} ${_nickname.text} đã tồn tại trong dữ liệu",
                                         labelStyle: TextStyle(
                                             color: checkcolorNickname
                                                 ? Colors.green
@@ -237,8 +255,7 @@ class W_SignUp extends State<W_SignUpCustom> {
                                           15) //content padding inside button
                                   ),
                               onPressed: () {
-                                if (_Name.text.isEmpty |
-                                    _email.text.isEmpty |
+                                if (_Name.text.isEmpty |_nickname.text.isEmpty|
                                     _phone.text.isEmpty) {
                                   Fluttertoast.showToast(
                                       msg: "Bạn cần điền đầy đủ thông tin",
@@ -262,8 +279,12 @@ class W_SignUp extends State<W_SignUpCustom> {
                                         new Information_Cutome();
                                     s1.namecustome = _Name.text;
                                     s1.telephone = _phone.text;
-                                    s1.Email = _email.text;
+                                    s1.Nickname = _nickname.text;
                                     Config_G.NameCustom.add(s1);
+                                    CheckSameCustome modelchek = new CheckSameCustome();
+                                    modelchek.information_name = _Name.text;
+                                    modelchek.information_nickname = _nickname.text;
+                                    Config_G.modelCustome.add(modelchek);
                                     Navigator.pop(context);
                                   } else {
                                     Fluttertoast.showToast(

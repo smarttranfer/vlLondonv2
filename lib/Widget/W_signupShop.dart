@@ -1,5 +1,6 @@
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/Widget/W_Login.dart';
+import 'package:vl_ui/model/CheckSameCustome.dart';
 import 'package:vl_ui/model/Information_Cutome.dart';
 import 'package:vl_ui/model/Information_Shop.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,6 @@ class W_SignUpshop extends StatefulWidget {
 }
 
 class W_SignUp extends State {
-  late String _Name = '';
   final TextEditingController _NaneShop = TextEditingController();
   final TextEditingController _address = TextEditingController();
   final TextEditingController _Note = TextEditingController();
@@ -26,19 +26,18 @@ class W_SignUp extends State {
 
   @override
   void initState() {
-    for (Information_Cutome name in Config_G.NameCustom) {
+    for (CheckSameCustome name in Config_G.modelCustome) {
       ListCustom.add(
         DropdownMenuItem(
           child: InkWell(
               onTap: () {
                 setState(() {
-                  _Name = name.namecustome;
                 });
               },
               child: Text(
-                "${name.namecustome}",
+                "${name.information_name +"-"+ name.information_nickname}",
               )),
-          value: "${name.namecustome}",
+          value: "${name.information_name +" "+ name.information_nickname}",
         ),
       );
     }
@@ -118,7 +117,11 @@ class W_SignUp extends State {
                                 icon: Icon(
                                     Icons.arrow_drop_down_circle_outlined,
                                     color: Colors.black54),
-                                onChanged: (v) {},
+                                onChanged: (v) {
+                                  setState(() {
+                                    // update ten khach hang doan nay
+                                  });
+                                },
                                 decoration: InputDecoration(
                                   enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(

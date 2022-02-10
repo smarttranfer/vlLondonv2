@@ -1,7 +1,7 @@
 class Information_Cutome {
   late String namecustome;
   late String telephone;
-  late String Email;
+  late String Nickname;
   String get information_name {
     return namecustome;
   }
@@ -18,11 +18,11 @@ class Information_Cutome {
     this.telephone = telephone;
   }
 
-  String get information_Email {
-    return Email;
+  String get information_Nickname {
+    return Nickname;
   }
 
-  void set information_Email(String Email) {
-    this.namecustome = Email;
+  void set information_Nickname(String Nickname) {
+    this.Nickname = Nickname;
   }
 }
