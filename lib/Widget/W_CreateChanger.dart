@@ -105,7 +105,8 @@ class CreateChange extends State {
                                         children: [
                                           IconButton(
                                               onPressed: () {
-                                                Navigator.pop(context);
+                                                Navigator.pushReplacement(
+                                                    context, MaterialPageRoute(builder: (BuildContext context) => W_Home()));
                                               },
                                               icon: Icon(
                                                 Icons.arrow_back_ios_outlined,
