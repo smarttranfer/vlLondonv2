@@ -14,11 +14,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-        ChangeNotifierProvider<Bill>(create: (context) => Bill()),
-
-    ],child:
+    return
       MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -26,7 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: W_login(),
-    ));
+    );
   }
 }
 

@@ -4,7 +4,10 @@ import 'New_Changer.dart';
 
 class Bill with ChangeNotifier{
 
-  getCounter() => Config_G.modelBill;
+  bool checkEmty = false;
+
+  getCheckBill()=> checkEmty;
+  getBill() => Config_G.modelBill;
 
   void addBill(String name , String shop , String code ,String date ,String money,String note) {
     Information_Bill listmodelbill = new Information_Bill();
@@ -15,7 +18,9 @@ class Bill with ChangeNotifier{
     listmodelbill.money = money;
     listmodelbill.note = note;
     Config_G.modelBill.add(listmodelbill);
+    checkEmty = true;
     notifyListeners();
   }
+
 
 }
