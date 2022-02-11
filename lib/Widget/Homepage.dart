@@ -78,7 +78,7 @@ class Home extends State {
                                                 14),
                                     InkWell(
                                         onTap: () {
-                                          Navigator.pop(
+                                          Navigator.pushReplacement(
                                               context,
                                               PageTransition(
                                                   type: PageTransitionType
@@ -122,7 +122,7 @@ class Home extends State {
                                   children: [
                                     InkWell(
                                         onTap: () {
-                                          Navigator.push(
+                                          Navigator.pushReplacement(
                                               context,
                                               PageTransition(
                                                   type: PageTransitionType
@@ -329,7 +329,7 @@ class Home extends State {
                                                                 .spaceBetween,
                                                         children: [
                                                           Text(
-                                                            "\$ 1.000.000",
+                                                            "\$ ${Config_G.moneys()}",
                                                             style: TextStyle(
                                                               color:
                                                                   Colors.green,
@@ -585,7 +585,7 @@ class Home extends State {
                                                           .size
                                                           .height /
                                                       6,
-                                                  child: false
+                                                  child: Config_G.checknull()
                                                       ? Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment

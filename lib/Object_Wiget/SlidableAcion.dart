@@ -29,7 +29,7 @@ class ListViewsCustome extends StatelessWidget {
                   ),
                   shadowColor: Colors.black54,
                   child: ListTile(
-                    title: Text("${Config_G.NameCustom[index].namecustome}"),
+                    title: Text("${Config_G.NameCustom[index].namecustome}-${Config_G.NameCustom[index].Nickname}"),
                     subtitle: Text("${Config_G.NameShop[index].nameshop}"),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -53,7 +53,7 @@ class ListViewsCustome extends StatelessWidget {
                                         ),
                                         controller: _controlleruser
                                           ..text =
-                                              ("${Config_G.NameCustom[index].namecustome}"),
+                                              ("${Config_G.NameCustom[index].namecustome}-${Config_G.NameCustom[index].Nickname}"),
                                       ),
                                       TextField(
                                         decoration: InputDecoration(

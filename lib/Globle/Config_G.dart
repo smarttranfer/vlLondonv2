@@ -21,5 +21,22 @@ class Config_G{
   static String title_SignupShop_vi = "Đăng ký shop";
   static String title_SignupShop_en= "Sign Up shop";
   static int  timeDruation = 300;
-
+  static bool checknull(){
+    if(modelBill.isEmpty){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  static double moneys(){
+    double start = 0;
+    for(Information_Bill i in modelBill){
+      if(i.money.isEmpty){
+        return 0;
+      }else{
+        start+=double.parse(i.money) ;
+      }
+    }
+    return start;
+  }
 }

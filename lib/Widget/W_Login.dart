@@ -203,7 +203,7 @@ class login extends State {
                             });
                           _makeGetRequest(_controller.value.text);
                           if (_controller.value.text == "admin") {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 PageTransition(
                                     type: PageTransitionType.rightToLeft,

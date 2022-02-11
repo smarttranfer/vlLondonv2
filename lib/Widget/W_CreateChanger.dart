@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
+import 'package:vl_ui/model/CheckSameCustome.dart';
 import 'package:vl_ui/model/Information_Cutome.dart';
 import 'package:vl_ui/model/Information_Shop.dart';
 import 'package:vl_ui/model/ModelCustome.dart';
@@ -36,6 +37,21 @@ class CreateChange extends State {
     _names = "";
     _shop = "";
     dateinput.text = "";
+    for (CheckSameCustome name in Config_G.modelCustome) {
+      ListCustom.add(
+        DropdownMenuItem(
+          child: InkWell(
+              onTap: () {
+                setState(() {
+                });
+              },
+              child: Text(
+                "${name.information_name +"-"+ name.information_nickname}",
+              )),
+          value: "${name.information_name +" "+ name.information_nickname}",
+        ),
+      );
+    }
     for (Information_Shop name in Config_G.NameShop) {
       ListShop.add(
         DropdownMenuItem(
@@ -51,25 +67,9 @@ class CreateChange extends State {
           value: "${name.nameshop}",
         ),
       );
-      super.initState();
+
     }
-    for (Information_Cutome name in Config_G.NameCustom) {
-      ListCustom.add(
-        DropdownMenuItem(
-          child: InkWell(
-              onTap: () {
-                setState(() {
-                  _Name = name.namecustome;
-                });
-              },
-              child: Text(
-                "${name.namecustome}",
-              )),
-          value: "${name.namecustome}",
-        ),
-      );
-      super.initState();
-    }
+    super.initState();
   }
 
   @override
@@ -540,6 +540,7 @@ class CreateChange extends State {
                                                           15.0),
                                                 ),
                                                 child: TextField(
+                                                  keyboardType: TextInputType.number,
                                                   controller: _money,
                                                   autocorrect: true,
                                                   decoration: InputDecoration(
@@ -704,15 +705,17 @@ class CreateChange extends State {
                                                               dateinput.text,
                                                               _money.text,
                                                               _notes.text);
-                                                          Navigator.push(
-                                                              context,
-                                                              PageTransition(
-                                                                  type: PageTransitionType.rightToLeft,
-                                                                  duration: Duration(
-                                                                      milliseconds: Config_G.timeDruation),
-                                                                  reverseDuration: Duration(
-                                                                      milliseconds: Config_G.timeDruation),
-                                                                  child: W_Home()));
+                                                          // Navigator.pushReplacement(
+                                                          //     context,
+                                                          //     PageTransition(
+                                                          //         type: PageTransitionType.rightToLeft,
+                                                          //         duration: Duration(
+                                                          //             milliseconds: Config_G.timeDruation),
+                                                          //         reverseDuration: Duration(
+                                                          //             milliseconds: Config_G.timeDruation),
+                                                          //         child: W_Home()));
+                                                          Navigator.pushReplacement(
+                                                              context, MaterialPageRoute(builder: (BuildContext context) => W_Home()));
                                                           Fluttertoast.showToast(
                                                               msg:
                                                                   "Tạo giao dịch thành công",
