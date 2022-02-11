@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/model/Information_Cutome.dart';
 import 'package:vl_ui/model/Information_Shop.dart';
 import 'package:vl_ui/model/ModelCustome.dart';
 import 'package:vl_ui/model/New_Changer.dart';
+
+import 'Homepage.dart';
 
 class W_CreateChange extends StatefulWidget {
   @override
@@ -701,6 +704,15 @@ class CreateChange extends State {
                                                               dateinput.text,
                                                               _money.text,
                                                               _notes.text);
+                                                          Navigator.push(
+                                                              context,
+                                                              PageTransition(
+                                                                  type: PageTransitionType.rightToLeft,
+                                                                  duration: Duration(
+                                                                      milliseconds: Config_G.timeDruation),
+                                                                  reverseDuration: Duration(
+                                                                      milliseconds: Config_G.timeDruation),
+                                                                  child: W_Home()));
                                                           Fluttertoast.showToast(
                                                               msg:
                                                                   "Tạo giao dịch thành công",
