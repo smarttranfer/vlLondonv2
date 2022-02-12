@@ -608,10 +608,13 @@ class Home extends State {
                                                           ],
                                                         )
                                                       : SingleChildScrollView(
-                                                    physics: ScrollPhysics(),
-                                                    child: Column(
-                                                        children: <Widget>[ListViewsBill(),])
-                                                        )),
+                                                          physics:
+                                                              ScrollPhysics(),
+                                                          child: Column(
+                                                              children: <
+                                                                  Widget>[
+                                                                ListViewsBill(),
+                                                              ]))),
 
                                               SizedBox(
                                                 height: MediaQuery.of(context)
@@ -657,7 +660,6 @@ class Home extends State {
                                                   ))
                                                 ],
                                               ),
-
                                               Container(
                                                   decoration: BoxDecoration(
                                                       color: Colors.green
@@ -687,216 +689,7 @@ class Home extends State {
                                                         ),
                                                       ))
                                                     ],
-                                                  )
-                                                  // SingleChildScrollView(
-                                                  //   child: Column(
-                                                  //     children: [
-                                                  //       // -------------------------------------------------------------------------------------
-                                                  //       Row(
-                                                  //         mainAxisAlignment:
-                                                  //             MainAxisAlignment.center,
-                                                  //         children: [
-                                                  //           Container(
-                                                  //             height: 50,
-                                                  //             width: 50,
-                                                  //             child: SvgPicture.asset(
-                                                  //               "assest/IconBtn/contacts.svg",
-                                                  //             ),
-                                                  //           ),
-                                                  //           SizedBox(
-                                                  //             width:
-                                                  //                 MediaQuery.of(context)
-                                                  //                         .size
-                                                  //                         .width /
-                                                  //                     25,
-                                                  //           ),
-                                                  //           Column(children: [
-                                                  //             Text(
-                                                  //               "ALice",
-                                                  //               style: TextStyle(
-                                                  //                 color: Colors.black,
-                                                  //                 fontSize: 15,
-                                                  //                 fontFamily: 'Poppins',
-                                                  //                 fontWeight:
-                                                  //                     FontWeight.normal,
-                                                  //               ),
-                                                  //             ),
-                                                  //             Text(
-                                                  //               "vihu shop",
-                                                  //               style: TextStyle(
-                                                  //                 color: Colors.grey,
-                                                  //                 fontSize: 15,
-                                                  //                 fontFamily: 'Poppins',
-                                                  //                 fontWeight:
-                                                  //                     FontWeight.normal,
-                                                  //               ),
-                                                  //             ),
-                                                  //           ]),
-                                                  //           SizedBox(
-                                                  //             width:
-                                                  //                 MediaQuery.of(context)
-                                                  //                         .size
-                                                  //                         .width /
-                                                  //                     5,
-                                                  //           ),
-                                                  //           Text(
-                                                  //             "+ \$ 323",
-                                                  //             style: TextStyle(
-                                                  //               color: Colors.green,
-                                                  //               fontSize: 20,
-                                                  //               fontFamily: 'Poppins',
-                                                  //               fontWeight:
-                                                  //                   FontWeight.bold,
-                                                  //             ),
-                                                  //           ),
-                                                  //         ],
-                                                  //       ),
-                                                  //       Container(
-                                                  //         decoration: BoxDecoration(
-                                                  //             color: Colors.grey
-                                                  //                 .withOpacity(0.5),
-                                                  //             borderRadius:
-                                                  //                 BorderRadius.all(
-                                                  //                     Radius.circular(
-                                                  //                         20))),
-                                                  //         height: 1,
-                                                  //         margin: EdgeInsets.only(
-                                                  //             left: 20, right: 20),
-                                                  //       ),
-                                                  //       Row(
-                                                  //         mainAxisAlignment:
-                                                  //             MainAxisAlignment.center,
-                                                  //         children: [
-                                                  //           Container(
-                                                  //             height: 50,
-                                                  //             width: 50,
-                                                  //             child: SvgPicture.asset(
-                                                  //               "assest/IconBtn/contacts.svg",
-                                                  //             ),
-                                                  //           ),
-                                                  //           SizedBox(
-                                                  //             width:
-                                                  //                 MediaQuery.of(context)
-                                                  //                         .size
-                                                  //                         .width /
-                                                  //                     25,
-                                                  //           ),
-                                                  //           Column(children: [
-                                                  //             Text(
-                                                  //               "ALice",
-                                                  //               style: TextStyle(
-                                                  //                 color: Colors.black,
-                                                  //                 fontSize: 15,
-                                                  //                 fontFamily: 'Poppins',
-                                                  //                 fontWeight:
-                                                  //                     FontWeight.normal,
-                                                  //               ),
-                                                  //             ),
-                                                  //             Text(
-                                                  //               "vihu shop",
-                                                  //               style: TextStyle(
-                                                  //                 color: Colors.grey,
-                                                  //                 fontSize: 15,
-                                                  //                 fontFamily: 'Poppins',
-                                                  //                 fontWeight:
-                                                  //                     FontWeight.normal,
-                                                  //               ),
-                                                  //             ),
-                                                  //           ]),
-                                                  //           SizedBox(
-                                                  //             width:
-                                                  //                 MediaQuery.of(context)
-                                                  //                         .size
-                                                  //                         .width /
-                                                  //                     5,
-                                                  //           ),
-                                                  //           Text(
-                                                  //             "+ \$ 323",
-                                                  //             style: TextStyle(
-                                                  //               color: Colors.green,
-                                                  //               fontSize: 20,
-                                                  //               fontFamily: 'Poppins',
-                                                  //               fontWeight:
-                                                  //                   FontWeight.bold,
-                                                  //             ),
-                                                  //           ),
-                                                  //         ],
-                                                  //       ),
-                                                  //       Container(
-                                                  //         decoration: BoxDecoration(
-                                                  //             color: Colors.grey
-                                                  //                 .withOpacity(0.5),
-                                                  //             borderRadius:
-                                                  //                 BorderRadius.all(
-                                                  //                     Radius.circular(
-                                                  //                         20))),
-                                                  //         height: 1,
-                                                  //         margin: EdgeInsets.only(
-                                                  //             left: 20, right: 20),
-                                                  //       ),
-                                                  //       Row(
-                                                  //         mainAxisAlignment:
-                                                  //             MainAxisAlignment.center,
-                                                  //         children: [
-                                                  //           Container(
-                                                  //             height: 50,
-                                                  //             width: 50,
-                                                  //             child: SvgPicture.asset(
-                                                  //               "assest/IconBtn/contacts.svg",
-                                                  //             ),
-                                                  //           ),
-                                                  //           SizedBox(
-                                                  //             width:
-                                                  //                 MediaQuery.of(context)
-                                                  //                         .size
-                                                  //                         .width /
-                                                  //                     25,
-                                                  //           ),
-                                                  //           Column(children: [
-                                                  //             Text(
-                                                  //               "ALice",
-                                                  //               style: TextStyle(
-                                                  //                 color: Colors.black,
-                                                  //                 fontSize: 15,
-                                                  //                 fontFamily: 'Poppins',
-                                                  //                 fontWeight:
-                                                  //                     FontWeight.normal,
-                                                  //               ),
-                                                  //             ),
-                                                  //             Text(
-                                                  //               "vihu shop",
-                                                  //               style: TextStyle(
-                                                  //                 color: Colors.grey,
-                                                  //                 fontSize: 15,
-                                                  //                 fontFamily: 'Poppins',
-                                                  //                 fontWeight:
-                                                  //                     FontWeight.normal,
-                                                  //               ),
-                                                  //             ),
-                                                  //           ]),
-                                                  //           SizedBox(
-                                                  //             width:
-                                                  //                 MediaQuery.of(context)
-                                                  //                         .size
-                                                  //                         .width /
-                                                  //                     5,
-                                                  //           ),
-                                                  //           Text(
-                                                  //             "+ \$ 323",
-                                                  //             style: TextStyle(
-                                                  //               color: Colors.green,
-                                                  //               fontSize: 20,
-                                                  //               fontFamily: 'Poppins',
-                                                  //               fontWeight:
-                                                  //                   FontWeight.bold,
-                                                  //             ),
-                                                  //           ),
-                                                  //         ],
-                                                  //       ),
-                                                  //     ],
-                                                  //   ),
-                                                  // )
-                                                  ),
+                                                  )),
                                             ],
                                           )),
                                     ],

@@ -23,19 +23,21 @@ class W_SignUpshop extends StatefulWidget {
 
 class W_SignUp extends State {
   final TextEditingController _NaneShop = TextEditingController();
-  final TextEditingController _address = TextEditingController();
-  final TextEditingController _Note = TextEditingController();
+  final TextEditingController _numberlocal = TextEditingController();
+  final TextEditingController _stresst = TextEditingController();
+  final TextEditingController _postcode = TextEditingController();
   final TextEditingController _phone = TextEditingController();
   final TextEditingController _nameCustom = TextEditingController();
   final List<Map<String, dynamic>> _allUsers = [];
   List<Map<String, dynamic>> _foundUsers = [];
+  String Nicknames = '';
   @override
   initState() {
     int k = 1;
     for (Information_Cutome i in Config_G.NameCustom_shop) {
       _allUsers.add({
         "id": "${k}",
-        "name": "${i.namecustome}${i.Nickname}",
+        "name": "${i.namecustome}-${i.Nickname}",
         "shop": "${i.nameshop}"
       });
       k += 1;
@@ -309,7 +311,15 @@ class W_SignUp extends State {
                                                                                         setState(() {
                                                                                           Navigator.pop(context);
                                                                                           Config_G.check_namecustom_chossen = false;
-                                                                                          Config_G.namecustom_chossen = "${_foundUsers[index]["name"].toString()}";
+                                                                                          int indexs =0;
+                                                                                          for(String i in "${_foundUsers[index]["name"].toString()}".split("").toList()){
+                                                                                            if(i=="-"){
+                                                                                              Config_G.namecustom_chossen = "${_foundUsers[index]["name"].toString()}".substring(0,indexs);
+                                                                                              Nicknames = "${_foundUsers[index]["name"].toString()}".substring(indexs+1,);
+                                                                                            }
+                                                                                            indexs+=1;
+                                                                                          }
+                                                                                          
                                                                                         });
                                                                                       },
                                                                                       child: BtnFilter(Content: "${_foundUsers[index]["name"].toString()}", Subcontent: '${_foundUsers[index]["shop"].toString()}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
@@ -363,6 +373,7 @@ class W_SignUp extends State {
                                         ),
                                       ),
                                     ),
+
                                     Card(
                                       elevation: 10,
                                       shape: RoundedRectangleBorder(
@@ -370,9 +381,9 @@ class W_SignUp extends State {
                                             BorderRadius.circular(15.0),
                                       ),
                                       child: TextFormField(
-                                        controller: _address,
+                                        controller: _numberlocal,
                                         decoration: InputDecoration(
-                                          hintText: 'D/c Shop*',
+                                          hintText: 'Số tòa nhà*',
                                           prefixIcon: Icon(
                                             Icons.location_on_outlined,
                                             color: Colors.green,
@@ -403,7 +414,7 @@ class W_SignUp extends State {
                                             BorderRadius.circular(15.0),
                                       ),
                                       child: TextFormField(
-                                        controller: _address,
+                                        controller: _stresst,
                                         decoration: InputDecoration(
                                           hintText: 'Tên Đường*',
                                           prefixIcon: Icon(
@@ -436,7 +447,7 @@ class W_SignUp extends State {
                                             BorderRadius.circular(15.0),
                                       ),
                                       child: TextFormField(
-                                        controller: _address,
+                                        controller: _postcode,
                                         decoration: InputDecoration(
                                           hintText: 'Post Code*',
                                           prefixIcon: Icon(
@@ -505,9 +516,11 @@ class W_SignUp extends State {
                                           ),
                                       onPressed: () {
                                         if (_phone.text.isEmpty |
-                                            _address.text.isEmpty |
-                                            _NaneShop.text.isEmpty |
-                                            _Note.text.isEmpty) {
+                                            _numberlocal.text.isEmpty |
+                                            _stresst.text.isEmpty |
+                                            _postcode.text.isEmpty |
+                                            _NaneShop.text.isEmpty
+                                            ) {
                                           Fluttertoast.showToast(
                                               msg: "Chưa nhập đủ thông tin.",
                                               toastLength: Toast.LENGTH_SHORT,
@@ -526,12 +539,16 @@ class W_SignUp extends State {
                                               backgroundColor: Colors.red,
                                               textColor: Colors.white,
                                               fontSize: 16.0);
-                                          Information_Shop s2 =
-                                              new Information_Shop();
+                                          Information_Cutome s2 =
+                                              new Information_Cutome();
                                           s2.nameshop = _NaneShop.text;
                                           s2.telephone = _phone.text;
-                                          s2.address = _address.text;
-                                          Config_G.NameShop.add(s2);
+                                          s2.stresst = _stresst.text;
+                                          s2.Postcodet = _postcode.text;
+                                          s2.numberlocal = _numberlocal.text;
+                                          s2.namecustome = _nameCustom.text;
+                                          s2.Nickname = Nicknames;
+                                          Config_G.NameCustom_shop.add(s2);
                                           Navigator.pop(context);
                                         }
                                       },

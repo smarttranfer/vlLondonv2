@@ -78,7 +78,7 @@ class Signupmanagee extends State {
                                         EdgeInsets.only(left: 20, right: 20),
                                   ),
                                   Text(
-                                    "LOAI ĐĂNG KÝ",
+                                    "LOẠI ĐĂNG KÝ",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -150,8 +150,8 @@ class Signupmanagee extends State {
                               child: W_SignUpshop()));
                     },
                     child: SignupBtn(
-                        Content: "ĐĂNG KÝ CỬA HÀNG ",
-                        Subcontent: "Dành cho khách hàng đã có tài khoản",
+                        Content: "THÊM CỬA HÀNG       ",
+                        Subcontent: "Dành cho khách hàng đã có cửa hàng",
                         wights: MediaQuery.of(context).size.width / 1.2,
                         heights: 50,
                         colors: Colors.green.withOpacity(0.0),
