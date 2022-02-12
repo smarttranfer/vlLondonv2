@@ -6,9 +6,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 
 final TextEditingController _controllershop = TextEditingController();
+final TextEditingController _controllernickname = TextEditingController();
 final TextEditingController _controlleruser = TextEditingController();
 final TextEditingController _controllertelephone = TextEditingController();
-final TextEditingController _controlleraddress = TextEditingController();
+final TextEditingController _controllernumber = TextEditingController();
+final TextEditingController _controllerpostcode = TextEditingController();
+final TextEditingController _controllerstresst = TextEditingController();
 
 class ListViewsCustome extends StatelessWidget {
   const ListViewsCustome({
@@ -53,7 +56,18 @@ class ListViewsCustome extends StatelessWidget {
                                         ),
                                         controller: _controlleruser
                                           ..text =
-                                              ("${Config_G.NameCustom_shop[index].namecustome}-${Config_G.NameCustom_shop[index].Nickname}"),
+                                              ("${Config_G.NameCustom_shop[index].namecustome}"),
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          hintText:
+                                          "${Config_G.NameCustom_shop[index].namecustome}",
+                                          icon: Icon(Icons.person_pin_outlined),
+                                          labelText: 'Nick Name',
+                                        ),
+                                        controller: _controllernickname
+                                          ..text =
+                                          ("${Config_G.NameCustom_shop[index].Nickname}"),
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
@@ -92,14 +106,38 @@ class ListViewsCustome extends StatelessWidget {
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText:
-                                              "${Config_G.NameCustom_shop[index].numberlocal}  ${Config_G.NameCustom_shop[index].Postcodet} ${Config_G.NameCustom_shop[index].stresst}",
+                                          "${Config_G.NameCustom_shop[index].numberlocal}",
                                           icon: Icon(
                                               Icons.add_location_alt_outlined),
-                                          labelText: 'Adress shop',
+                                          labelText: 'Apartment number',
                                         ),
-                                        controller: _controlleraddress
+                                        controller: _controllernumber
                                           ..text =
-                                              "${Config_G.NameCustom_shop[index].numberlocal}  ${Config_G.NameCustom_shop[index].Postcodet} ${Config_G.NameCustom_shop[index].stresst}",
+                                              "${Config_G.NameCustom_shop[index].numberlocal}",
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          hintText:
+                                          "${Config_G.NameCustom_shop[index].Postcodet}",
+                                          icon: Icon(
+                                              Icons.add_location_alt_outlined),
+                                          labelText: 'Post code',
+                                        ),
+                                        controller: _controllerpostcode
+                                          ..text =
+                                              "${Config_G.NameCustom_shop[index].Postcodet}",
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          hintText:
+                                              " ${Config_G.NameCustom_shop[index].stresst}",
+                                          icon: Icon(
+                                              Icons.add_location_alt_outlined),
+                                          labelText: 'Stresst shop',
+                                        ),
+                                        controller: _controllerstresst
+                                          ..text =
+                                              "${Config_G.NameCustom_shop[index].stresst}",
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -115,15 +153,23 @@ class ListViewsCustome extends StatelessWidget {
                                           Config_G.NameCustom_shop[index]
                                                   .namecustome =
                                               _controlleruser.text.toString();
+                                          Config_G.NameCustom_shop[index]
+                                              .Nickname =
+                                              _controllernickname.text.toString();
                                           Config_G.NameCustom_shop[index].nameshop =
                                               _controllershop.text.toString();
                                           Config_G.NameCustom_shop[index].telephone =
                                               _controllertelephone.text
                                                   .toString();
-                                          // Config_G.NameCustom_shop[index]. =
-                                          //     _controlleraddress.text
-                                          //         .toString();
-
+                                          Config_G.NameCustom_shop[index].numberlocal =
+                                              _controllernumber.text
+                                                  .toString();
+                                          Config_G.NameCustom_shop[index].Postcodet =
+                                              _controllerpostcode.text
+                                                  .toString();
+                                          Config_G.NameCustom_shop[index].stresst =
+                                              _controllerstresst.text
+                                                  .toString();
                                           Fluttertoast.showToast(
                                               msg:
                                                   "Hủy bỏ giao dịch thành công ",
