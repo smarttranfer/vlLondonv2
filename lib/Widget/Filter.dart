@@ -2,7 +2,8 @@ import 'package:vl_ui/Button/BtnFilter.dart';
 import 'package:flutter/material.dart';
 
 class Filter extends StatelessWidget {
-  const Filter({Key? key}) : super(key: key);
+  const
+  Filter({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

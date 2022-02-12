@@ -51,21 +51,21 @@ class W_SignUp extends State<W_SignUpCustom> {
             ),
           ),
           child: SingleChildScrollView(
+              physics: ScrollPhysics(),
               padding: EdgeInsets.only(bottom: 5),
               child: Container(
                 padding: EdgeInsets.only(bottom: 2),
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                child: Column(
+                child:Column(
                   children: [
                     Expanded(
-                      flex: 4,
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          children: [
+                        child: ListView(shrinkWrap: true, children: [
                             SizedBox(
-                              height: MediaQuery.of(context).size.height / 14,
+                              height: MediaQuery.of(context).size.height / 35,
                             ),
                             Row(
                               children: [
@@ -91,7 +91,6 @@ class W_SignUp extends State<W_SignUpCustom> {
                                 ),
                               ],
                             ),
-                            Spacer(),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -108,25 +107,55 @@ class W_SignUp extends State<W_SignUpCustom> {
                               ],
                             ),
                             SizedBox(
-                              height: MediaQuery.of(context).size.height / 25,
+                              height: MediaQuery.of(context).size.height / 45,
                             ),
-                            Row(
+                  Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child:Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(
                                       flex: 2,
-                                      child: IntlPhoneField(
+                                      child: Center(child:IntlPhoneField(
                                         controller: _phone,
                                         decoration: InputDecoration(
                                           labelText: 'Phone Number *',
+                                          prefixIcon: Icon(
+                                            Icons.phone_iphone_outlined,
+                                            color: Colors.green,
+                                          ),
+                                          hintStyle:
+                                          TextStyle(color: Colors.green),
+                                          filled: true,
+                                          fillColor: Colors.white70,
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0)),
+                                            borderSide: BorderSide(
+                                                color: Colors.green, width: 2),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide: BorderSide(
+                                                color: Colors.green, width: 2),
+                                          ),
                                         ),
                                         initialCountryCode: 'GB',
                                         onChanged: (phone) {
                                           print(phone.completeNumber);
                                         },
                                       ))
-                                ]),
-                            Row(
+                                  )])),
+                  Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
@@ -148,24 +177,46 @@ class W_SignUp extends State<W_SignUpCustom> {
                                     },
                                     controller: _Name,
                                     decoration: InputDecoration(
-                                        labelText: checklabel
-                                            ? "Họ và tên  *"
-                                            : "${_Name.text} đã tồn tại trong dữ liệu",
-                                        labelStyle: TextStyle(
+                                      labelText: checklabel
+                                          ? "Họ và tên  *"
+                                          : "${_Name.text} đã tồn tại trong dữ liệu",
+                                      labelStyle: TextStyle(
+                                          color: checkcolor
+                                              ? Colors.green
+                                              : Colors.red),
+                                      prefixIcon: Icon(
+                                        Icons.supervised_user_circle_outlined,
+                                        color: Colors.green,
+                                      ),
+                                      hintStyle:
+                                      TextStyle(color: Colors.green),
+                                      filled: true,
+                                      fillColor: Colors.white70,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(
                                             color: checkcolor
                                                 ? Colors.green
                                                 : Colors.red),
-                                        fillColor: Colors.green,
-                                        enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: checkcolor
-                                                    ? Colors.green
-                                                    : Colors.red))),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.green, width: 2),
+                                      ),
+                                    ),
                                   ),
                                 )
                               ],
-                            ),
-                            Row(
+                            )),
+                  Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child:Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
@@ -199,46 +250,212 @@ class W_SignUp extends State<W_SignUpCustom> {
                                     },
                                     controller: _nickname,
                                     decoration: InputDecoration(
-                                        labelText: checklabelNickname
-                                            ? "NickName  *"
-                                            : " ${_Name.text} ${_nickname.text} đã tồn tại trong dữ liệu",
-                                        labelStyle: TextStyle(
-                                            color: checkcolorNickname
+                                      labelText: checklabelNickname
+                                          ? "NickName  *"
+                                          : " ${_Name.text} ${_nickname.text} đã tồn tại trong dữ liệu",
+                                      labelStyle: TextStyle(
+                                          color: checkcolor
+                                              ? Colors.green
+                                              : Colors.red),
+                                      prefixIcon: Icon(
+                                        Icons.workspaces_outline,
+                                        color: Colors.green,
+                                      ),
+                                      hintStyle:
+                                      TextStyle(color: Colors.green),
+                                      filled: true,
+                                      fillColor: Colors.white70,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(
+                                            color: checkcolor
                                                 ? Colors.green
                                                 : Colors.red),
-                                        fillColor: Colors.green,
-                                        enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: checkcolorNickname
-                                                    ? Colors.green
-                                                    : Colors.red))),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.green, width: 2),
+                                      ),
+                                    ),
                                   ),
                                 )
                               ],
-                            ),
-                            Row(
+                            )),
+                  Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
                                   child: TextFormField(
                                     controller: _email,
                                     decoration: InputDecoration(
-                                        labelStyle:
-                                            TextStyle(color: Colors.green),
-                                        labelText: "Email",
-                                        fillColor: Colors.green,
-                                        enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.green))),
+                                      labelText: 'Tên Shop *',
+                                      labelStyle: TextStyle(
+                                          color: checkcolor
+                                              ? Colors.green
+                                              : Colors.red),
+                                      prefixIcon: Icon(
+                                        Icons.shopping_cart_outlined,
+                                        color: Colors.green,
+                                      ),
+                                      hintStyle:
+                                      TextStyle(color: Colors.green),
+                                      filled: true,
+                                      fillColor: Colors.white70,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.green, width: 2),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.green, width: 2),
+                                      ),
+                                    ),
                                   ),
                                 )
                               ],
-                            ),
+                            )),
+                  Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child:Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _email,
+                                    decoration: InputDecoration(
+                                      labelText: 'Số tòa nhà *',
+                                      labelStyle: TextStyle(
+                                          color: checkcolor
+                                              ? Colors.green
+                                              : Colors.red),
+                                      prefixIcon: Icon(
+                                        Icons.home_outlined,
+                                        color: Colors.green,
+                                      ),
+                                      hintStyle:
+                                      TextStyle(color: Colors.green),
+                                      filled: true,
+                                      fillColor: Colors.white70,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.green, width: 2),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.green, width: 2),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )),
+                  Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child:Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _email,
+                                    decoration: InputDecoration(
+                                      labelText: 'Tên Đường *',
+                                      labelStyle: TextStyle(
+                                          color: checkcolor
+                                              ? Colors.green
+                                              : Colors.red),
+                                      prefixIcon: Icon(
+                                        Icons.add_road,
+                                        color: Colors.green,
+                                      ),
+                                      hintStyle:
+                                      TextStyle(color: Colors.green),
+                                      filled: true,
+                                      fillColor: Colors.white70,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.green, width: 2),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.green, width: 2),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )),
+                  Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child:Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _email,
+                                    decoration: InputDecoration(
+                                      labelText: 'Post Code *',
+                                      labelStyle: TextStyle(
+                                          color: checkcolor
+                                              ? Colors.green
+                                              : Colors.red),
+                                      prefixIcon: Icon(
+                                        Icons.code_off_outlined,
+                                        color: Colors.green,
+                                      ),
+                                      hintStyle:
+                                      TextStyle(color: Colors.green),
+                                      filled: true,
+                                      fillColor: Colors.white70,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.green, width: 2),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.green, width: 2),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )),
                             SizedBox(
                               height: MediaQuery.of(context).size.height / 40,
                             ),
-                            Expanded(
-                                child: Center(
+                             Center(
                                     child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: HexColor(
@@ -304,9 +521,8 @@ class W_SignUp extends State<W_SignUpCustom> {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                       fontSize: 20)),
-                            ))),
-                            Expanded(
-                                child: TextButton(
+                            )),
+                             TextButton(
                               style: TextButton.styleFrom(
                                 textStyle: const TextStyle(
                                     fontSize: 15, color: Colors.green),
@@ -322,18 +538,18 @@ class W_SignUp extends State<W_SignUpCustom> {
                                   fontWeight: FontWeight.w300,
                                 ),
                               ),
-                            )),
+                            ),
                             Expanded(
                                 child: SizedBox(
                               height: MediaQuery.of(context).size.height / 10,
                             )),
                           ],
                         ),
-                      ),
-                    )
+                      )),
+
                   ],
                 ),
-              )),
-        ));
+              ))),
+        );
   }
 }
