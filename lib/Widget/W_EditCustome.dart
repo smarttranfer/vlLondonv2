@@ -22,7 +22,7 @@ class _AnimeAppState extends State<AnimeApp> {
   void initState() {
     super.initState();
     shows = fetchShows();
-    if (Config_G.NameCustom.isEmpty | Config_G.NameShop.isEmpty) {
+    if (Config_G.NameCustom_shop.isEmpty) {
       setState(() {
         checknull = true;
       });

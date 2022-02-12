@@ -20,7 +20,7 @@ class ListViewsCustome extends StatelessWidget {
     return Scaffold(
         body: ListView.builder(
             padding: const EdgeInsets.all(15),
-            itemCount: Config_G.NameCustom.length,
+            itemCount: Config_G.NameCustom_shop.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
                   elevation: 50,
@@ -29,8 +29,8 @@ class ListViewsCustome extends StatelessWidget {
                   ),
                   shadowColor: Colors.black54,
                   child: ListTile(
-                    title: Text("${Config_G.NameCustom[index].namecustome}-${Config_G.NameCustom[index].Nickname}"),
-                    subtitle: Text("${Config_G.NameShop[index].nameshop}"),
+                    title: Text("${Config_G.NameCustom_shop[index].namecustome}-${Config_G.NameCustom_shop[index].Nickname}"),
+                    subtitle: Text("${Config_G.NameCustom_shop[index].nameshop}"),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -47,59 +47,59 @@ class ListViewsCustome extends StatelessWidget {
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText:
-                                              "${Config_G.NameCustom[index].namecustome}",
+                                              "${Config_G.NameCustom_shop[index].namecustome}",
                                           icon: Icon(Icons.person_pin_outlined),
                                           labelText: 'Name Custome',
                                         ),
                                         controller: _controlleruser
                                           ..text =
-                                              ("${Config_G.NameCustom[index].namecustome}-${Config_G.NameCustom[index].Nickname}"),
+                                              ("${Config_G.NameCustom_shop[index].namecustome}-${Config_G.NameCustom_shop[index].Nickname}"),
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText:
-                                              "${Config_G.NameShop[index].telephone}",
+                                              "${Config_G.NameCustom_shop[index].telephone}",
                                           icon: Icon(Icons.phone),
                                           labelText: 'Telephone Custome',
                                         ),
                                         controller: _controllertelephone
                                           ..text =
-                                              "${Config_G.NameCustom[index].telephone}",
+                                              "${Config_G.NameCustom_shop[index].telephone}",
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText:
-                                              "${Config_G.NameShop[index].nameshop}",
+                                              "${Config_G.NameCustom_shop[index].nameshop}",
                                           icon: Icon(
                                               Icons.shopping_cart_outlined),
                                           labelText: 'Name Shop',
                                         ),
                                         controller: _controllershop
                                           ..text =
-                                              "${Config_G.NameShop[index].nameshop}",
+                                              "${Config_G.NameCustom_shop[index].nameshop}",
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText:
-                                              "${Config_G.NameShop[index].telephone}",
+                                              "${Config_G.NameCustom_shop[index].telephone}",
                                           icon: Icon(Icons.phone),
                                           labelText: 'Telephone Shop',
                                         ),
                                         controller: _controllertelephone
                                           ..text =
-                                              "${Config_G.NameShop[index].telephone}",
+                                              "${Config_G.NameCustom_shop[index].telephone}",
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText:
-                                              "${Config_G.NameShop[index].address}",
+                                              "${Config_G.NameCustom_shop[index].numberlocal}  ${Config_G.NameCustom_shop[index].Postcodet} ${Config_G.NameCustom_shop[index].stresst}",
                                           icon: Icon(
                                               Icons.add_location_alt_outlined),
                                           labelText: 'Adress shop',
                                         ),
                                         controller: _controlleraddress
                                           ..text =
-                                              "${Config_G.NameShop[index].address}",
+                                              "${Config_G.NameCustom_shop[index].numberlocal}  ${Config_G.NameCustom_shop[index].Postcodet} ${Config_G.NameCustom_shop[index].stresst}",
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -112,17 +112,17 @@ class ListViewsCustome extends StatelessWidget {
                                                 color: Colors.white,
                                                 fontSize: 20)),
                                         onPressed: () {
-                                          Config_G.NameCustom[index]
+                                          Config_G.NameCustom_shop[index]
                                                   .namecustome =
                                               _controlleruser.text.toString();
-                                          Config_G.NameShop[index].nameshop =
+                                          Config_G.NameCustom_shop[index].nameshop =
                                               _controllershop.text.toString();
-                                          Config_G.NameShop[index].telephone =
+                                          Config_G.NameCustom_shop[index].telephone =
                                               _controllertelephone.text
                                                   .toString();
-                                          Config_G.NameShop[index].address =
-                                              _controlleraddress.text
-                                                  .toString();
+                                          // Config_G.NameCustom_shop[index]. =
+                                          //     _controlleraddress.text
+                                          //         .toString();
 
                                           Fluttertoast.showToast(
                                               msg:
@@ -167,8 +167,7 @@ class ListViewsCustome extends StatelessWidget {
                             icon: Icon(Icons.edit)),
                         IconButton(
                             onPressed: () {
-                              Config_G.NameCustom.removeAt(index);
-                              Config_G.NameShop.removeAt(index);
+                              Config_G.NameCustom_shop.removeAt(index);
                               Navigator.pushReplacement(
                                   context,
                                   PageTransition(

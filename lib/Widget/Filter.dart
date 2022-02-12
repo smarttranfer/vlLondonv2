@@ -1,5 +1,7 @@
 import 'package:vl_ui/Button/BtnFilter.dart';
 import 'package:flutter/material.dart';
+import 'package:vl_ui/Globle/Config_G.dart';
+import 'package:vl_ui/model/Information_Cutome.dart';
 
 class Filter extends StatelessWidget {
   const
@@ -23,21 +25,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Map<String, dynamic>> _allUsers = [
-    {"id": 1, "name": "Andy", "age": 29},
-    {"id": 2, "name": "Aragon", "age": 40},
-    {"id": 3, "name": "Bob", "age": 5},
-    {"id": 4, "name": "Barbara", "age": 35},
-    {"id": 5, "name": "Candy", "age": 21},
-    {"id": 6, "name": "Colin", "age": 55},
-    {"id": 7, "name": "Audra", "age": 30},
-    {"id": 8, "name": "Banana", "age": 14},
-    {"id": 9, "name": "Caversky", "age": 100},
-    {"id": 10, "name": "Becky", "age": 32},
-  ];
+  final List<Map<String, dynamic>> _allUsers = [];
   List<Map<String, dynamic>> _foundUsers = [];
   @override
   initState() {
+    int k = 1;
+    for(Information_Cutome i in Config_G.NameCustom_shop){
+      _allUsers.add({"id":"${k}","name":"${i.namecustome}${i.Nickname}","shop":"${i.nameshop}"});
+      k+=1;
+    }
     _foundUsers = _allUsers;
     super.initState();
   }
@@ -130,16 +126,24 @@ class _HomePageState extends State<HomePage> {
                               ),
                               elevation: 50,
                               shadowColor: Colors.black12,
-                              child: BtnFilter(
+                              child:InkWell(
+                                onTap: (){
+                                  setState(() {
+                                    Config_G.check_namecustom_chossen = false;
+                                    Config_G.namecustom_chossen = "${_foundUsers[index]["name"].toString()}";
+                                  });
+                                },
+                                  child:
+                              BtnFilter(
                                   Content:
                                       "${_foundUsers[index]["name"].toString()}",
                                   Subcontent:
-                                      '${_foundUsers[index]["age"].toString()}',
+                                      '${_foundUsers[index]["shop"].toString()}',
                                   wights: MediaQuery.of(context).size.width / 1,
                                   heights: 50,
                                   colors: Colors.green.withOpacity(0.0),
                                   path: ""))),
-                    )
+                    ))
                   : const Text(
                       'Không tìm thấy kết quả',
                       style: TextStyle(fontSize: 24, color: Colors.green),
