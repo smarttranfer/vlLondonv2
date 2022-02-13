@@ -157,7 +157,11 @@ class W_SignUp extends State {
                                                   ? ""
                                                   : Config_G.namecustom_chossen,
                                             decoration: InputDecoration(
-                                              hintText: 'Tên chủ khách hàng *',
+                                              labelText: 'Tên chủ khách hàng *',
+                                              labelStyle: TextStyle(
+                                                  color:
+                                                  Colors.green
+                                              ),
                                               prefixIcon: Icon(
                                                 Icons
                                                     .supervised_user_circle_outlined,
@@ -349,7 +353,11 @@ class W_SignUp extends State {
                                       child: TextFormField(
                                         controller: _NaneShop,
                                         decoration: InputDecoration(
-                                          hintText: 'Tên Shop*',
+                                          labelText: 'Tên Shop*',
+                                          labelStyle: TextStyle(
+                                              color:
+                                              Colors.green
+                                          ),
                                           prefixIcon: Icon(
                                             Icons.shopping_cart_outlined,
                                             color: Colors.green,
@@ -383,7 +391,11 @@ class W_SignUp extends State {
                                       child: TextFormField(
                                         controller: _numberlocal,
                                         decoration: InputDecoration(
-                                          hintText: 'Số tòa nhà*',
+                                          labelText: 'Số tòa nhà*',
+                                          labelStyle: TextStyle(
+                                              color:
+                                              Colors.green
+                                          ),
                                           prefixIcon: Icon(
                                             Icons.location_on_outlined,
                                             color: Colors.green,
@@ -416,7 +428,11 @@ class W_SignUp extends State {
                                       child: TextFormField(
                                         controller: _stresst,
                                         decoration: InputDecoration(
-                                          hintText: 'Tên Đường*',
+                                          labelText: 'Tên Đường*',
+                                          labelStyle: TextStyle(
+                                              color:
+                                              Colors.green
+                                          ),
                                           prefixIcon: Icon(
                                             Icons.add_road,
                                             color: Colors.green,
@@ -449,7 +465,11 @@ class W_SignUp extends State {
                                       child: TextFormField(
                                         controller: _postcode,
                                         decoration: InputDecoration(
-                                          hintText: 'Post Code*',
+                                          labelText: 'Post Code*',
+                                          labelStyle: TextStyle(
+                                              color:
+                                              Colors.green
+                                          ),
                                           prefixIcon: Icon(
                                             Icons.code_off_outlined,
                                             color: Colors.green,
