@@ -48,7 +48,7 @@ class ListViewsBill extends StatelessWidget {
                                       ),
                                       Column(children: [
                                         Text(
-                                          "${provider.getCustomeBill(index).toString().substring(0,10)}...",
+                                          "${provider.getCustomeBill(index).toString()}",
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 15,

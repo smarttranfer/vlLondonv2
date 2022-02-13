@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:vl_ui/Button/BtnFilter.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/model/CheckSameCustome.dart';
 import 'package:vl_ui/model/Information_Cutome.dart';
@@ -22,54 +24,47 @@ class W_CreateChange extends StatefulWidget {
 }
 
 class CreateChange extends State {
-  late String _Name = '';
-  late String _names = "";
-  late String _shop = "";
+  String Nicknames = '';
+  TextEditingController _shop = TextEditingController();
+  TextEditingController _nameCustom = TextEditingController();
   TextEditingController dateinput = TextEditingController();
   TextEditingController _code = TextEditingController();
   TextEditingController _money = TextEditingController();
   TextEditingController _notes = TextEditingController();
   List<DropdownMenuItem<Object>> ListCustom = [];
   List<DropdownMenuItem<Object>> ListShop = [];
+  final List<Map<String, dynamic>> _allUsers = [];
+  List<Map<String, dynamic>> _foundUsers = [];
 
   @override
   void initState() {
-    _names = "";
-    _shop = "";
     dateinput.text = "";
-    for (CheckSameCustome name in Config_G.modelCustome) {
-      ListCustom.add(
-        DropdownMenuItem(
-          child: InkWell(
-              onTap: () {
-                setState(() {
-                });
-              },
-              child: Text(
-                "${name.information_name +"-"+ name.information_nickname}",
-              )),
-          value: "${name.information_name +" "+ name.information_nickname}",
-        ),
-      );
+    int k = 0;
+    for (Information_Cutome i in Config_G.NameCustom_shop) {
+      _allUsers.add({
+        "id": "${k}",
+        "name": "${i.namecustome}-${i.Nickname}",
+        "shop": "${i.nameshop}"
+      });
+      k += 1;
     }
-    for (Information_Shop name in Config_G.NameShop) {
-      ListShop.add(
-        DropdownMenuItem(
-          child: InkWell(
-              onTap: () {
-                setState(() {
-                  _Name = name.nameshop;
-                });
-              },
-              child: Text(
-                "${name.nameshop}",
-              )),
-          value: "${name.nameshop}",
-        ),
-      );
-
-    }
+    _foundUsers = _allUsers;
     super.initState();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = _allUsers;
+    } else {
+      results = _allUsers
+          .where((user) =>
+              user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
   }
 
   @override
@@ -106,7 +101,11 @@ class CreateChange extends State {
                                           IconButton(
                                               onPressed: () {
                                                 Navigator.pushReplacement(
-                                                    context, MaterialPageRoute(builder: (BuildContext context) => W_Home()));
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            W_Home()));
                                               },
                                               icon: Icon(
                                                 Icons.arrow_back_ios_outlined,
@@ -150,7 +149,7 @@ class CreateChange extends State {
                                             Radius.circular(20))),
                                     width: MediaQuery.of(context).size.width,
                                     height: MediaQuery.of(context).size.height /
-                                        1.1,
+                                        1.2,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
@@ -226,15 +225,6 @@ class CreateChange extends State {
                                                           .width /
                                                       25,
                                                 ),
-                                                Text(
-                                                  "ĐẠI DIỆN QUẢN LÝ",
-                                                  style: TextStyle(
-                                                    color: Colors.green,
-                                                    fontSize: 15,
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
                                               ],
                                             ),
 
@@ -250,40 +240,174 @@ class CreateChange extends State {
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     Expanded(
-                                                      child:
-                                                          DropdownButtonFormField(
-                                                        icon: Icon(
-                                                            Icons
-                                                                .arrow_drop_down_circle_outlined,
-                                                            color:
-                                                                Colors.black54),
-                                                        onChanged: (v) {
-                                                          setState(() {
-                                                            _names =
-                                                                v.toString();
-                                                          });
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
+                                                      child: Card(
+                                                          elevation: 10,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0),
+                                                          ),
+                                                          child: TextField(
+                                                              controller: _nameCustom
+                                                                ..text = Config_G.check_namecustom_chossen
+                                                                    ? ""
+                                                                    : Config_G
+                                                                        .namecustom_chossen,
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                labelText:
+                                                                    'Tên chủ khách hàng *',
+                                                                labelStyle: TextStyle(
+                                                                    color: Colors
+                                                                        .green),
+                                                                prefixIcon:
+                                                                    Icon(
+                                                                  Icons
+                                                                      .supervised_user_circle_outlined,
+                                                                  color: Colors
+                                                                      .green,
+                                                                ),
+                                                                hintStyle: TextStyle(
+                                                                    color: Colors
+                                                                        .green),
+                                                                filled: true,
+                                                                fillColor: Colors
+                                                                    .white70,
                                                                 enabledBorder:
                                                                     OutlineInputBorder(
                                                                   borderRadius:
                                                                       BorderRadius.all(
                                                                           Radius.circular(
                                                                               12.0)),
-                                                                  borderSide: const BorderSide(
+                                                                  borderSide: BorderSide(
                                                                       color: Colors
                                                                           .green,
-                                                                      width:
-                                                                          2.0),
+                                                                      width: 2),
                                                                 ),
-                                                                labelText:
-                                                                    "Đại Diện Khách Hàng",
-                                                                labelStyle: TextStyle(
-                                                                    color: Colors
-                                                                        .green)),
-                                                        items: ListCustom,
-                                                      ),
+                                                                focusedBorder:
+                                                                    OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius.all(
+                                                                          Radius.circular(
+                                                                              10.0)),
+                                                                  borderSide: BorderSide(
+                                                                      color: Colors
+                                                                          .green,
+                                                                      width: 2),
+                                                                ),
+                                                              ),
+                                                              readOnly:
+                                                                  true, //set it true, so that user will not able to edit text
+                                                              onTap: () async {
+                                                                return showBarModalBottomSheet(
+                                                                  expand: Config_G
+                                                                      .check_namecustom_chossen,
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return Container(
+                                                                      decoration: BoxDecoration(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          borderRadius: BorderRadius.only(topRight: Radius.circular(20.0), topLeft: Radius.circular(20.0)),
+                                                                          boxShadow: [
+                                                                            BoxShadow(
+                                                                                blurRadius: 7.0,
+                                                                                color: Colors.black)
+                                                                          ]),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.all(10),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            const SizedBox(
+                                                                              height: 20,
+                                                                            ),
+                                                                            TextField(
+                                                                              onChanged: (value) => _runFilter(value),
+                                                                              decoration: const InputDecoration(labelText: 'Search', suffixIcon: Icon(Icons.search)),
+                                                                            ),
+                                                                            const SizedBox(
+                                                                              height: 20,
+                                                                            ),
+                                                                            Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                                              children: [
+                                                                                Container(
+                                                                                  decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.all(Radius.circular(20))),
+                                                                                  height: 3,
+                                                                                  width: 20,
+                                                                                  margin: EdgeInsets.only(left: 20, right: 20),
+                                                                                ),
+                                                                                Text(
+                                                                                  "Result",
+                                                                                  style: TextStyle(
+                                                                                    color: Colors.green,
+                                                                                    fontSize: 20,
+                                                                                    fontFamily: 'Poppins',
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
+                                                                                ),
+                                                                                Container(
+                                                                                  decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.all(Radius.circular(20))),
+                                                                                  height: 3,
+                                                                                  width: 20,
+                                                                                  margin: EdgeInsets.only(left: 20, right: 20),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                            Expanded(
+                                                                              child: _foundUsers.isNotEmpty
+                                                                                  ? ListView.builder(
+                                                                                      itemCount: _foundUsers.length,
+                                                                                      itemBuilder: (context, index) => Card(
+                                                                                            key: ValueKey(_foundUsers[index]["id"]),
+                                                                                            color: Colors.white,
+                                                                                            elevation: 4,
+                                                                                            margin: const EdgeInsets.symmetric(vertical: 10),
+                                                                                            child: Card(
+                                                                                                shape: RoundedRectangleBorder(
+                                                                                                  borderRadius: BorderRadius.circular(50.0),
+                                                                                                ),
+                                                                                                elevation: 50,
+                                                                                                shadowColor: Colors.black12,
+                                                                                                child: InkWell(
+                                                                                                    onTap: () {
+                                                                                                      setState(() {
+                                                                                                        Navigator.pop(context);
+                                                                                                        Config_G.check_namecustom_chossen = false;
+                                                                                                        _shop..text = "${_foundUsers[index]["shop"].toString()}";
+                                                                                                        int indexs = 0;
+                                                                                                        for (String i in "${_foundUsers[index]["name"].toString()}".split("").toList()) {
+                                                                                                          if (i == "-") {
+                                                                                                            Config_G.namecustom_chossen = "${_foundUsers[index]["name"].toString()}".substring(0, indexs);
+                                                                                                            Nicknames = "${_foundUsers[index]["name"].toString()}".substring(
+                                                                                                              indexs + 1,
+                                                                                                            );
+                                                                                                          }
+                                                                                                          indexs += 1;
+                                                                                                        }
+                                                                                                      });
+                                                                                                    },
+                                                                                                    child: BtnFilter(Content: "${_foundUsers[index]["name"].toString()}", Subcontent: '${_foundUsers[index]["shop"].toString()}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
+                                                                                          ))
+                                                                                  : const Text(
+                                                                                      'Không tìm thấy kết quả',
+                                                                                      style: TextStyle(fontSize: 24, color: Colors.green),
+                                                                                    ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                );
+                                                              })),
                                                     ),
                                                   ],
                                                 )),
@@ -296,18 +420,8 @@ class CreateChange extends State {
                                                           .width /
                                                       25,
                                                 ),
-                                                Text(
-                                                  "TÊN SHOP",
-                                                  style: TextStyle(
-                                                    color: Colors.green,
-                                                    fontSize: 15,
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
                                               ],
                                             ),
-
                                             Card(
                                                 elevation: 10,
                                                 shape: RoundedRectangleBorder(
@@ -315,48 +429,62 @@ class CreateChange extends State {
                                                       BorderRadius.circular(
                                                           15.0),
                                                 ),
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Expanded(
-                                                      child:
-                                                          DropdownButtonFormField(
-                                                        icon: Icon(
-                                                            Icons
-                                                                .arrow_drop_down_circle_outlined,
-                                                            color:
-                                                                Colors.black54),
-                                                        onChanged: (v) {
-                                                          setState(() {
-                                                            _shop =
-                                                                v.toString();
-                                                          });
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                                enabledBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius.all(
-                                                                          Radius.circular(
-                                                                              12.0)),
-                                                                  borderSide: const BorderSide(
-                                                                      color: Colors
-                                                                          .green,
-                                                                      width:
-                                                                          2.0),
-                                                                ),
-                                                                labelText:
-                                                                    "TÊN SHOP",
-                                                                labelStyle: TextStyle(
-                                                                    color: Colors
-                                                                        .green)),
-                                                        items: ListShop,
-                                                      ),
+                                                child: Card(
+                                                    elevation: 10,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
                                                     ),
-                                                  ],
-                                                )),
+                                                    child: TextField(
+                                                      controller: _shop,
+                                                      autocorrect: true,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: 'Tên Shop *',
+                                                        labelStyle: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                        prefixIcon: Icon(
+                                                          Icons
+                                                              .view_list_outlined,
+                                                          color: Colors.green,
+                                                        ),
+                                                        hintStyle: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                        filled: true,
+                                                        fillColor:
+                                                            Colors.white70,
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          12.0)),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .green,
+                                                                  width: 2),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .green,
+                                                                  width: 2),
+                                                        ),
+                                                      ),
+                                                    ))),
                                             // --------------------------------------------------------------
                                             Row(
                                               children: [
@@ -366,15 +494,6 @@ class CreateChange extends State {
                                                           .width /
                                                       25,
                                                 ),
-                                                Text(
-                                                  "TÊN HÓA ĐƠN/MÃ HÓA ĐƠN",
-                                                  style: TextStyle(
-                                                    color: Colors.green,
-                                                    fontSize: 15,
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
                                               ],
                                             ),
                                             Card(
@@ -384,41 +503,63 @@ class CreateChange extends State {
                                                       BorderRadius.circular(
                                                           15.0),
                                                 ),
-                                                child: TextField(
-                                                  controller: _code,
-                                                  autocorrect: true,
-                                                  decoration: InputDecoration(
-                                                    hintText: 'ABC 123',
-                                                    prefixIcon: Icon(
-                                                      Icons.view_list_outlined,
-                                                      color: Colors.green,
-                                                    ),
-                                                    hintStyle: TextStyle(
-                                                        color: Colors.green),
-                                                    filled: true,
-                                                    fillColor: Colors.white70,
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
+                                                child: Card(
+                                                    elevation: 10,
+                                                    shape:
+                                                        RoundedRectangleBorder(
                                                       borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  12.0)),
-                                                      borderSide: BorderSide(
-                                                          color: Colors.green,
-                                                          width: 2),
+                                                          BorderRadius.circular(
+                                                              15.0),
                                                     ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10.0)),
-                                                      borderSide: BorderSide(
+                                                    child: TextField(
+                                                      controller: _code,
+                                                      autocorrect: true,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText:
+                                                            'Mã hóa đơn *',
+                                                        labelStyle: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                        prefixIcon: Icon(
+                                                          Icons
+                                                              .view_list_outlined,
                                                           color: Colors.green,
-                                                          width: 2),
-                                                    ),
-                                                  ),
-                                                )),
+                                                        ),
+                                                        hintStyle: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                        filled: true,
+                                                        fillColor:
+                                                            Colors.white70,
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          12.0)),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .green,
+                                                                  width: 2),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .green,
+                                                                  width: 2),
+                                                        ),
+                                                      ),
+                                                    ))),
                                             // -----------------------------------------------------------
                                             Row(
                                               children: [
@@ -428,15 +569,6 @@ class CreateChange extends State {
                                                           .width /
                                                       25,
                                                 ),
-                                                Text(
-                                                  "NGÀY TẠO",
-                                                  style: TextStyle(
-                                                    color: Colors.green,
-                                                    fontSize: 15,
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
                                               ],
                                             ),
                                             Card(
@@ -446,73 +578,93 @@ class CreateChange extends State {
                                                       BorderRadius.circular(
                                                           15.0),
                                                 ),
-                                                child: TextField(
-                                                    controller: dateinput,
-                                                    autocorrect: true,
-                                                    decoration: InputDecoration(
-                                                      hintText: 'yyyy-MM-dd',
-                                                      prefixIcon: Icon(
-                                                        Icons
-                                                            .calendar_today_sharp,
-                                                        color: Colors.green,
-                                                      ),
-                                                      hintStyle: TextStyle(
-                                                          color: Colors.green),
-                                                      filled: true,
-                                                      fillColor: Colors.white70,
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    12.0)),
-                                                        borderSide: BorderSide(
-                                                            color: Colors.green,
-                                                            width: 2),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10.0)),
-                                                        borderSide: BorderSide(
-                                                            color: Colors.green,
-                                                            width: 2),
-                                                      ),
+                                                child: Card(
+                                                    elevation: 10,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
                                                     ),
-                                                    readOnly:
-                                                        true, //set it true, so that user will not able to edit text
-                                                    onTap: () async {
-                                                      DateTime? pickedDate =
-                                                          await showDatePicker(
-                                                              context: context,
-                                                              initialDate:
-                                                                  DateTime
-                                                                      .now(),
-                                                              firstDate: DateTime(
-                                                                  2000), //DateTime.now() - not to allow to choose before today.
-                                                              lastDate:
-                                                                  DateTime(
-                                                                      2101));
-                                                      if (pickedDate != null) {
-                                                        print(
-                                                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                                        String formattedDate =
-                                                            DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(
-                                                                    pickedDate);
-                                                        print(
-                                                            formattedDate); //formatted date output using intl package =>  2021-03-16
-                                                        //you can implement different kind of Date Format here according to your requirement
+                                                    child: TextField(
+                                                        controller: dateinput,
+                                                        autocorrect: true,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          hintText:
+                                                              'yyyy-MM-dd',
+                                                          prefixIcon: Icon(
+                                                            Icons
+                                                                .calendar_today_sharp,
+                                                            color: Colors.green,
+                                                          ),
+                                                          hintStyle: TextStyle(
+                                                              color:
+                                                                  Colors.green),
+                                                          filled: true,
+                                                          fillColor:
+                                                              Colors.white70,
+                                                          enabledBorder:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius.all(
+                                                                    Radius.circular(
+                                                                        12.0)),
+                                                            borderSide:
+                                                                BorderSide(
+                                                                    color: Colors
+                                                                        .green,
+                                                                    width: 2),
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius.all(
+                                                                    Radius.circular(
+                                                                        10.0)),
+                                                            borderSide:
+                                                                BorderSide(
+                                                                    color: Colors
+                                                                        .green,
+                                                                    width: 2),
+                                                          ),
+                                                        ),
+                                                        readOnly:
+                                                            true, //set it true, so that user will not able to edit text
+                                                        onTap: () async {
+                                                          DateTime? pickedDate =
+                                                              await showDatePicker(
+                                                                  context:
+                                                                      context,
+                                                                  initialDate:
+                                                                      DateTime
+                                                                          .now(),
+                                                                  firstDate:
+                                                                      DateTime(
+                                                                          2000), //DateTime.now() - not to allow to choose before today.
+                                                                  lastDate:
+                                                                      DateTime(
+                                                                          2101));
+                                                          if (pickedDate !=
+                                                              null) {
+                                                            print(
+                                                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                                            String
+                                                                formattedDate =
+                                                                DateFormat(
+                                                                        'yyyy-MM-dd')
+                                                                    .format(
+                                                                        pickedDate);
+                                                            print(
+                                                                formattedDate); //formatted date output using intl package =>  2021-03-16
+                                                            //you can implement different kind of Date Format here according to your requirement
 
-                                                        setState(() {
-                                                          dateinput.text =
-                                                              formattedDate; //set output date to TextField value.
-                                                        });
-                                                      } else {}
-                                                    })),
+                                                            setState(() {
+                                                              dateinput.text =
+                                                                  formattedDate; //set output date to TextField value.
+                                                            });
+                                                          } else {}
+                                                        }))),
                                             // ---------------------------------------------
                                             Row(
                                               children: [
@@ -522,15 +674,6 @@ class CreateChange extends State {
                                                           .width /
                                                       25,
                                                 ),
-                                                Text(
-                                                  "SỐ TIỀN NỢ",
-                                                  style: TextStyle(
-                                                    color: Colors.green,
-                                                    fontSize: 15,
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
                                               ],
                                             ),
                                             Card(
@@ -540,42 +683,63 @@ class CreateChange extends State {
                                                       BorderRadius.circular(
                                                           15.0),
                                                 ),
-                                                child: TextField(
-                                                  keyboardType: TextInputType.number,
-                                                  controller: _money,
-                                                  autocorrect: true,
-                                                  decoration: InputDecoration(
-                                                    hintText: '100.000',
-                                                    prefixIcon: Icon(
-                                                      Icons.euro,
-                                                      color: Colors.green,
-                                                    ),
-                                                    hintStyle: TextStyle(
-                                                        color: Colors.green),
-                                                    filled: true,
-                                                    fillColor: Colors.white70,
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
+                                                child: Card(
+                                                    elevation: 10,
+                                                    shape:
+                                                        RoundedRectangleBorder(
                                                       borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  12.0)),
-                                                      borderSide: BorderSide(
-                                                          color: Colors.green,
-                                                          width: 2),
+                                                          BorderRadius.circular(
+                                                              15.0),
                                                     ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10.0)),
-                                                      borderSide: BorderSide(
+                                                    child: TextField(
+                                                      keyboardType:
+                                                          TextInputType.number,
+                                                      controller: _money,
+                                                      autocorrect: true,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: 'Số tiền *',
+                                                        labelStyle: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                        prefixIcon: Icon(
+                                                          Icons.euro,
                                                           color: Colors.green,
-                                                          width: 2),
-                                                    ),
-                                                  ),
-                                                )),
+                                                        ),
+                                                        hintStyle: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                        filled: true,
+                                                        fillColor:
+                                                            Colors.white70,
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          12.0)),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .green,
+                                                                  width: 2),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .green,
+                                                                  width: 2),
+                                                        ),
+                                                      ),
+                                                    ))),
                                             // ---------------------------------------------------------------------
                                             Row(
                                               children: [
@@ -585,15 +749,6 @@ class CreateChange extends State {
                                                           .width /
                                                       25,
                                                 ),
-                                                Text(
-                                                  "NỘI DUNG",
-                                                  style: TextStyle(
-                                                    color: Colors.green,
-                                                    fontSize: 15,
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
                                               ],
                                             ),
                                             Card(
@@ -603,42 +758,62 @@ class CreateChange extends State {
                                                       BorderRadius.circular(
                                                           15.0),
                                                 ),
-                                                child: TextField(
-                                                  controller: _notes,
-                                                  autocorrect: true,
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        'Adc123-Abc123-Abc123',
-                                                    prefixIcon: Icon(
-                                                      Icons.note_add_rounded,
-                                                      color: Colors.green,
-                                                    ),
-                                                    hintStyle: TextStyle(
-                                                        color: Colors.green),
-                                                    filled: true,
-                                                    fillColor: Colors.white70,
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
+                                                child: Card(
+                                                    elevation: 10,
+                                                    shape:
+                                                        RoundedRectangleBorder(
                                                       borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  12.0)),
-                                                      borderSide: BorderSide(
-                                                          color: Colors.green,
-                                                          width: 2),
+                                                          BorderRadius.circular(
+                                                              15.0),
                                                     ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10.0)),
-                                                      borderSide: BorderSide(
+                                                    child: TextField(
+                                                      controller: _notes,
+                                                      autocorrect: true,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: 'Ghi chú *',
+                                                        labelStyle: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                        prefixIcon: Icon(
+                                                          Icons
+                                                              .note_add_rounded,
                                                           color: Colors.green,
-                                                          width: 2),
-                                                    ),
-                                                  ),
-                                                )),
+                                                        ),
+                                                        hintStyle: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                        filled: true,
+                                                        fillColor:
+                                                            Colors.white70,
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          12.0)),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .green,
+                                                                  width: 2),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .green,
+                                                                  width: 2),
+                                                        ),
+                                                      ),
+                                                    ))),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -674,8 +849,9 @@ class CreateChange extends State {
                                                                           15) //content padding inside button
                                                               ),
                                                       onPressed: () {
-                                                        if (_names.isEmpty |
-                                                            _shop.isEmpty |
+                                                        if (_nameCustom
+                                                                .text.isEmpty |
+                                                            _shop.text.isEmpty |
                                                             _code.text.isEmpty |
                                                             dateinput
                                                                 .text.isEmpty |
@@ -700,23 +876,19 @@ class CreateChange extends State {
                                                               fontSize: 16.0);
                                                         } else {
                                                           provider.addBill(
-                                                              _names,
-                                                              _shop,
+                                                              _nameCustom.text,
+                                                              _shop.text,
                                                               _code.text,
                                                               dateinput.text,
                                                               _money.text,
                                                               _notes.text);
-                                                          // Navigator.pushReplacement(
-                                                          //     context,
-                                                          //     PageTransition(
-                                                          //         type: PageTransitionType.rightToLeft,
-                                                          //         duration: Duration(
-                                                          //             milliseconds: Config_G.timeDruation),
-                                                          //         reverseDuration: Duration(
-                                                          //             milliseconds: Config_G.timeDruation),
-                                                          //         child: W_Home()));
+
                                                           Navigator.pushReplacement(
-                                                              context, MaterialPageRoute(builder: (BuildContext context) => W_Home()));
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (BuildContext
+                                                                          context) =>
+                                                                      W_Home()));
                                                           Fluttertoast.showToast(
                                                               msg:
                                                                   "Tạo giao dịch thành công",
@@ -799,7 +971,12 @@ class CreateChange extends State {
                                                             textColor:
                                                                 Colors.white,
                                                             fontSize: 16.0);
-                                                        Navigator.pop(context);
+                                                        Navigator.pushReplacement(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    W_Home()));
                                                       },
                                                       child: Text('Loại bỏ ',
                                                           style: TextStyle(
