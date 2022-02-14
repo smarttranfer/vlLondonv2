@@ -12,8 +12,9 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vl_ui/model/ModelCustome.dart';
-import 'Filter.dart';
+import 'Filter_Bill.dart';
 import 'W_CreateChanger.dart';
+import 'W_DealManager.dart';
 import 'W_static.dart';
 
 class W_Home extends StatefulWidget {
@@ -212,16 +213,31 @@ class Home extends State {
                                               14,
                                           colors: Colors.green.withOpacity(0.5),
                                         )),
-                                    OptionBtn(
+                                    InkWell(
+                                      onTap: (){
+                                        Navigator.push(
+                                            context,
+                                            PageTransition(
+                                                type: PageTransitionType
+                                                    .rightToLeft,
+                                                duration: Duration(
+                                                    milliseconds:
+                                                    Config_G.timeDruation),
+                                                reverseDuration: Duration(
+                                                    milliseconds:
+                                                    Config_G.timeDruation),
+                                                child: DealManagers()));
+                                      },
+                                        child: OptionBtn(
                                       path: "assest/IconBtn/manager.svg",
-                                      namebtn: Config_G.check_lang?"GD MỚI":"NEW DEAL",
+                                      namebtn: Config_G.check_lang?"GD MỚI":"MANAGER DEAL",
                                       wights:
                                           MediaQuery.of(context).size.width / 7,
                                       heights:
                                           MediaQuery.of(context).size.height /
                                               14,
                                       colors: Colors.green.withOpacity(0.5),
-                                    ),
+                                    )),
                                     InkWell(
                                       splashColor: Colors.black12,
                                       child: OptionBtn(
@@ -254,7 +270,7 @@ class Home extends State {
                                       splashColor: Colors.black12,
                                       child: OptionBtn(
                                         path: "assest/IconBtn/SignUp.svg",
-                                        namebtn:  Config_G.check_lang?"ĐĂNG KÝ":"Registration",
+                                        namebtn:  Config_G.check_lang?"ĐĂNG KÝ":"REGISTRATION",
                                         wights:
                                             MediaQuery.of(context).size.width /
                                                 7,
@@ -392,7 +408,7 @@ class Home extends State {
                                                                 .spaceBetween,
                                                         children: [
                                                           Text(
-                                                            "\$ ${Config_G.moneys()}",
+                                                            "\€ ${Config_G.moneys()}",
                                                             style: TextStyle(
                                                               color:
                                                                   Colors.green,
@@ -545,7 +561,7 @@ class Home extends State {
                                                                           context:
                                                                               context,
                                                                           builder: (context) =>
-                                                                              Filter(),
+                                                                              Filter_Bills(),
                                                                         ),
                                                                     child: SvgPicture
                                                                         .asset(

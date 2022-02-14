@@ -78,9 +78,9 @@ class BtnFilter extends StatelessWidget {
                                 Subcontent,
                                 style: TextStyle(
                                   color: Colors.green,
-                                  fontSize: 9.8,
+                                  fontSize: 17,
                                   fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             )
