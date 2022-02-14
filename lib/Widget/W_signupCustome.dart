@@ -106,7 +106,9 @@ class W_SignUp extends State<W_SignUpCustom> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    Config_G.title_SignupCustom_vi,
+                                    Config_G.check_lang
+                                        ? "Đăng ký tài khoản"
+                                        : "Register for an account",
                                     style: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.bold,
@@ -135,7 +137,9 @@ class W_SignUp extends State<W_SignUpCustom> {
                                                 child: IntlPhoneField(
                                               controller: _phone,
                                               decoration: InputDecoration(
-                                                labelText: 'Phone Number *',
+                                                labelText: Config_G.check_lang
+                                                    ? 'Số Điện Thoại *'
+                                                    : 'Phone Number *',
                                                 prefixIcon: Icon(
                                                   Icons.phone_iphone_outlined,
                                                   color: Colors.green,
@@ -201,9 +205,13 @@ class W_SignUp extends State<W_SignUpCustom> {
                                           },
                                           controller: _Name,
                                           decoration: InputDecoration(
-                                            labelText: checklabel
-                                                ? "Họ và tên  *"
-                                                : "${_Name.text} đã tồn tại trong dữ liệu",
+                                            labelText: Config_G.check_lang
+                                                ? (checklabel
+                                                    ? "Họ và tên  *"
+                                                    : "${_Name.text} đã tồn tại trong dữ liệu")
+                                                : (checklabel
+                                                    ? "First and last name  *"
+                                                    : "${_Name.text} already exists in the data"),
                                             labelStyle: TextStyle(
                                                 color: checkcolor
                                                     ? Colors.green
@@ -283,9 +291,13 @@ class W_SignUp extends State<W_SignUpCustom> {
                                           },
                                           controller: _nickname,
                                           decoration: InputDecoration(
-                                            labelText: checklabelNickname
-                                                ? "NickName  *"
-                                                : " ${_Name.text} ${_nickname.text} đã tồn tại trong dữ liệu",
+                                            labelText: Config_G.check_lang
+                                                ? (checklabelNickname
+                                                    ? "Bí Danh  *"
+                                                    : " ${_Name.text} ${_nickname.text} đã tồn tại trong dữ liệu")
+                                                : (checklabelNickname
+                                                    ? "NickName  *"
+                                                    : " ${_Name.text} ${_nickname.text} already exists in the data"),
                                             labelStyle: TextStyle(
                                                 color: checkcolor
                                                     ? Colors.green
@@ -331,11 +343,11 @@ class W_SignUp extends State<W_SignUpCustom> {
                                         child: TextFormField(
                                           controller: _shop,
                                           decoration: InputDecoration(
-                                            labelText: 'Tên Shop *',
-                                            labelStyle: TextStyle(
-                                                color:
-                                                     Colors.green
-                                                    ),
+                                            labelText: Config_G.check_lang
+                                                ? 'Tên Shop *'
+                                                : 'Name Shop.',
+                                            labelStyle:
+                                                TextStyle(color: Colors.green),
                                             prefixIcon: Icon(
                                               Icons.shopping_cart_outlined,
                                               color: Colors.green,
@@ -376,7 +388,13 @@ class W_SignUp extends State<W_SignUpCustom> {
                                         child: TextFormField(
                                           controller: _numberlocal,
                                           decoration: InputDecoration(
-                                            labelText: post_numberloacl_color?'Số tòa nhà *':'${_numberlocal.text}${_postcode.text} đã tồn tại.',
+                                            labelText: Config_G.check_lang
+                                                ? (post_numberloacl_color
+                                                    ? 'Số tòa nhà *'
+                                                    : '${_numberlocal.text}${_postcode.text} đã tồn tại.')
+                                                : (post_numberloacl_color
+                                                    ? 'Building number *'
+                                                    : '${_numberlocal.text}${_postcode.text} already exist.'),
                                             labelStyle: TextStyle(
                                                 color: post_numberloacl_color
                                                     ? Colors.green
@@ -421,11 +439,11 @@ class W_SignUp extends State<W_SignUpCustom> {
                                         child: TextFormField(
                                           controller: _stresst,
                                           decoration: InputDecoration(
-                                            labelText: 'Tên Đường *',
-                                            labelStyle: TextStyle(
-                                                color:
-                                                    Colors.green
-                                                    ),
+                                            labelText: Config_G.check_lang
+                                                ? 'Tên Đường *'
+                                                : "Street *",
+                                            labelStyle:
+                                                TextStyle(color: Colors.green),
                                             prefixIcon: Icon(
                                               Icons.add_road,
                                               color: Colors.green,
@@ -465,24 +483,34 @@ class W_SignUp extends State<W_SignUpCustom> {
                                       Expanded(
                                         child: TextFormField(
                                           controller: _postcode,
-                                          onChanged: (v){
-                                            for(CheckSameCustome i in modelCustome){
-                                              if("${_numberlocal.text.split(" ")}${v.toString().split(" ")}".contains(i.post_numberloacl)){
-                                                  setState(() {
-                                                    post_numberloacl_label = false;
-                                                    post_numberloacl_color = false;
-                                                    checkdone = false;
-                                                  });
-                                              }else{
+                                          onChanged: (v) {
+                                            for (CheckSameCustome i
+                                                in modelCustome) {
+                                              if ("${_numberlocal.text.split(" ")}${v.toString().split(" ")}"
+                                                  .contains(
+                                                      i.post_numberloacl)) {
+                                                setState(() {
+                                                  post_numberloacl_label =
+                                                      false;
+                                                  post_numberloacl_color =
+                                                      false;
+                                                  checkdone = false;
+                                                });
+                                              } else {
                                                 post_numberloacl_label = true;
                                                 post_numberloacl_color = true;
                                                 checkdone = true;
                                               }
                                             }
-
                                           },
                                           decoration: InputDecoration(
-                                            labelText: post_numberloacl_label?'Post Code *':"${_numberlocal.text}${_postcode.text} đã tồn tại.*",
+                                            labelText: Config_G.check_lang
+                                                ? (post_numberloacl_label
+                                                    ? 'Post Code *'
+                                                    : "${_numberlocal.text}${_postcode.text} đã tồn tại.*")
+                                                : (post_numberloacl_label
+                                                    ? 'Post Code *'
+                                                    : "${_numberlocal.text}${_postcode.text} đalready exist."),
                                             labelStyle: TextStyle(
                                                 color: post_numberloacl_color
                                                     ? Colors.green
@@ -543,7 +571,9 @@ class W_SignUp extends State<W_SignUpCustom> {
                                       _stresst.text.isEmpty |
                                       _phone.text.isEmpty) {
                                     Fluttertoast.showToast(
-                                        msg: "Bạn cần điền đầy đủ thông tin",
+                                        msg: Config_G.check_lang
+                                            ? "Bạn cần điền đầy đủ thông tin"
+                                            : "You need to fill in all the information",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 2,
@@ -553,7 +583,9 @@ class W_SignUp extends State<W_SignUpCustom> {
                                   } else {
                                     if (checkdone == true) {
                                       Fluttertoast.showToast(
-                                          msg: "Tạo Thông tin thành công",
+                                          msg: Config_G.check_lang
+                                              ? "Tạo Thông tin thành công"
+                                              : "Create Success Info",
                                           toastLength: Toast.LENGTH_SHORT,
                                           gravity: ToastGravity.BOTTOM,
                                           timeInSecForIosWeb: 2,
@@ -579,7 +611,9 @@ class W_SignUp extends State<W_SignUpCustom> {
                                       Navigator.pop(context);
                                     } else {
                                       Fluttertoast.showToast(
-                                          msg: "không thể đăng ký được account",
+                                          msg: Config_G.check_lang
+                                              ? "không thể đăng ký được account"
+                                              : "Unable to register an account",
                                           toastLength: Toast.LENGTH_SHORT,
                                           gravity: ToastGravity.CENTER,
                                           timeInSecForIosWeb: 2,
@@ -589,7 +623,8 @@ class W_SignUp extends State<W_SignUpCustom> {
                                     }
                                   }
                                 },
-                                child: const Text('Đồng ý ',
+                                child: Text(
+                                    Config_G.check_lang ? 'Đồng ý ' : 'Confirm',
                                     style: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.bold,
@@ -604,8 +639,10 @@ class W_SignUp extends State<W_SignUpCustom> {
                                 onPressed: () {
                                   // if()
                                 },
-                                child: const Text(
-                                  'Designed & Powered by Vihu.uk',
+                                child: Text(
+                                  Config_G.check_lang
+                                      ? 'Thiết kế & Vận hành bởi Vihu.uk'
+                                      : 'Designed & Powered by Vihu.uk',
                                   style: TextStyle(
                                     color: Colors.green,
                                     fontFamily: 'Poppins',

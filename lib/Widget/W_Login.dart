@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,34 +55,6 @@ class login extends State {
     super.initState();
     setState(() {
       Config_G.Usernames = _controlleruser.text;
-      // });
-      // _firebaseMessaging.configure(
-      //   onMessage: (Map<String, dynamic> message) async {
-      //     print("onMessage: $message");
-      //
-      //   },
-      //   // onBackgroundMessage: myBackgroundMessageHandler,
-      //   onLaunch: (Map<String, dynamic> message) async {
-      //     print("onLaunch: $message");
-      //
-      //   },
-      //   onResume: (Map<String, dynamic> message) async {
-      //     print("onResume: $message");
-      //
-      //   },
-      // );
-      // _firebaseMessaging.requestNotificationPermissions(
-      //     const IosNotificationSettings(
-      //         sound: true, badge: true, alert: true, provisional: true));
-      // _firebaseMessaging.onIosSettingsRegistered
-      //     .listen((IosNotificationSettings settings) {
-      //   print("Settings registered: $settings");
-      // });
-      // _firebaseMessaging.getToken().then((String token) {
-      //   assert(token != null);
-      //   print("Push Messaging token: $token");
-      // });
-      // _firebaseMessaging.subscribeToTopic("matchscore");
     });
   }
 
@@ -113,7 +86,8 @@ class login extends State {
                       Row(
                         children: [
                           Center(
-                            child: Text('LOG IN',
+                            child: Text(Config_G.check_lang
+                                ?"ĐĂNG NHẬP":'LOG IN',
                                 style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.bold,
@@ -122,6 +96,73 @@ class login extends State {
                           ),
                           SizedBox(
                               width: MediaQuery.of(context).size.width / 50),
+                          PopupMenuButton(
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      width: 2, color: Colors.green),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(15.0))),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(),
+                                child: Image.asset(
+                                    "assest/IconBtn/translate.png",height: 30,
+                                    fit:BoxFit.fill),
+                              ),
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                    child: Row(
+                                      children: [
+                                        IconButton(
+                                          icon: Image.asset(
+                                              "assest/IconBtn/vietnam.png"),
+                                          onPressed: () {
+                                            print(
+                                                "Dổi ngồn ngũ sang tiếng việt");
+                                            setState(() {
+                                              Config_G.check_lang = true;
+                                            });
+                                          },
+                                        ),
+                                        Text(
+                                          "Tiếng Việt",
+                                          style: TextStyle(
+                                            color: Colors.green,
+                                            fontSize: 20,
+                                            fontFamily: 'Poppins',
+                                            fontWeight:
+                                            FontWeight.bold,
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                                PopupMenuItem(
+                                    child: Row(
+                                      children: [
+                                        IconButton(
+                                          icon: Image.asset(
+                                            "assest/IconBtn/kingdom.png",
+                                          ),
+                                          onPressed: () {
+                                            print(
+                                                "Dổi ngồn ngũ sang tiếng anh");
+                                            setState(() {
+                                              Config_G.check_lang = false;
+                                            });
+                                          },
+                                        ),
+                                        Text(
+                                          "English",
+                                          style: TextStyle(
+                                            color: Colors.green,
+                                            fontSize: 20,
+                                            fontFamily: 'Poppins',
+                                            fontWeight:
+                                            FontWeight.bold,
+                                          ),
+                                        )
+                                      ],
+                                    ))
+                              ]),
                         ],
                       ),
                       SizedBox(
@@ -134,7 +175,8 @@ class login extends State {
                               child: TextField(
                                 controller: _controlleruser,
                                 decoration: InputDecoration(
-                                  hintText: "Username",
+                                  hintText: Config_G.check_lang
+                                      ?"Tài Khoản":"Username",
                                   hintStyle: TextStyle(
                                     color: Colors.black,
                                     fontStyle: FontStyle.normal,
@@ -154,7 +196,8 @@ class login extends State {
                               color: Colors.black54,
                               controller: _controller,
                               inputDecoration: PasswordDecoration(),
-                              hintText: 'Password',
+                              hintText: Config_G.check_lang
+                                  ?"Mật khẩu":'Password',
                               border: PasswordBorder(
                                 border: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -171,8 +214,7 @@ class login extends State {
                                       BorderSide(width: 2, color: Colors.red),
                                 ),
                               ),
-                              errorMessage:
-                                  '',
+                              errorMessage: '',
                             ),
                           )
                         ],
@@ -198,9 +240,9 @@ class login extends State {
                                 bottom: 15) //content padding inside button
                             ),
                         onPressed: () {
-                            setState(() {
-                              Config_G.Usernames = _controlleruser.text;
-                            });
+                          setState(() {
+                            Config_G.Usernames = _controlleruser.text;
+                          });
                           _makeGetRequest(_controller.value.text);
                           if (_controller.value.text == "admin") {
                             Navigator.pushReplacement(
@@ -220,7 +262,9 @@ class login extends State {
                               body: Center(
                                 child: Center(
                                     child: Text(
-                                  "Mật khẩu không đúng, check lại tài khoàn với VIHU hoăc call cho Support.",
+                                      Config_G.check_lang
+                                          ?"Mật khẩu không đúng, check lại tài khoàn với VIHU hoăc call cho Support.":
+                                      "The password is incorrect, please check your account with VIHU or call Support.",
                                   style: TextStyle(fontWeight: FontWeight.w900),
                                 )),
                               ),
@@ -230,7 +274,8 @@ class login extends State {
                             )..show();
                           }
                         },
-                        child: Text('ĐĂNG NHẬP',
+                        child: Text(Config_G.check_lang
+                            ?'ĐĂNG NHẬP':"Login",
                             style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.bold,
@@ -258,7 +303,8 @@ class login extends State {
                                             MediaQuery.of(context).size.width /
                                                 30,
                                       ),
-                                      Text('Hỗ trợ',
+                                      Text(Config_G.check_lang
+                                          ?'Hỗ trợ':"Help",
                                           style: TextStyle(
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.bold,

@@ -117,7 +117,9 @@ class CreateChange extends State {
                                                       .width /
                                                   7),
                                           Text(
-                                            "TẠO GIAO DỊCH MỚI",
+                                            Config_G.check_lang
+                                                ? "TẠO GIAO DỊCH MỚI"
+                                                : "CREATE NEW TRADE",
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 20,
@@ -180,7 +182,9 @@ class CreateChange extends State {
                                                   40,
                                             ),
                                             Text(
-                                              "THÔNG TIN GIAO DỊCH",
+                                              Config_G.check_lang
+                                                  ? "THÔNG TIN GIAO DỊCH"
+                                                  : "TRANSACTION INFORMATION",
                                               style: TextStyle(
                                                 color: Colors.green,
                                                 fontSize: 15,
@@ -257,8 +261,10 @@ class CreateChange extends State {
                                                                         .namecustom_chossen,
                                                               decoration:
                                                                   InputDecoration(
-                                                                labelText:
-                                                                    'Tên chủ khách hàng *',
+                                                                labelText: Config_G
+                                                                        .check_lang
+                                                                    ? 'Tên chủ khách hàng *'
+                                                                    : 'Customer name *',
                                                                 labelStyle: TextStyle(
                                                                     color: Colors
                                                                         .green),
@@ -442,7 +448,10 @@ class CreateChange extends State {
                                                       autocorrect: true,
                                                       decoration:
                                                           InputDecoration(
-                                                        labelText: 'Tên Shop *',
+                                                        labelText:
+                                                            Config_G.check_lang
+                                                                ? 'Tên Shop *'
+                                                                : 'Name Shop *',
                                                         labelStyle: TextStyle(
                                                             color:
                                                                 Colors.green),
@@ -517,7 +526,9 @@ class CreateChange extends State {
                                                       decoration:
                                                           InputDecoration(
                                                         labelText:
-                                                            'Mã hóa đơn *',
+                                                            Config_G.check_lang
+                                                                ? 'Mã hóa đơn *'
+                                                                : 'Code Bill *',
                                                         labelStyle: TextStyle(
                                                             color:
                                                                 Colors.green),
@@ -698,7 +709,10 @@ class CreateChange extends State {
                                                       autocorrect: true,
                                                       decoration:
                                                           InputDecoration(
-                                                        labelText: 'Số tiền *',
+                                                        labelText: Config_G
+                                                                .check_lang
+                                                            ? 'Số tiền *'
+                                                            : 'Amount of money *',
                                                         labelStyle: TextStyle(
                                                             color:
                                                                 Colors.green),
@@ -771,7 +785,10 @@ class CreateChange extends State {
                                                       autocorrect: true,
                                                       decoration:
                                                           InputDecoration(
-                                                        labelText: 'Ghi chú *',
+                                                        labelText:
+                                                            Config_G.check_lang
+                                                                ? 'Ghi chú'
+                                                                : 'Note',
                                                         labelStyle: TextStyle(
                                                             color:
                                                                 Colors.green),
@@ -856,8 +873,6 @@ class CreateChange extends State {
                                                             dateinput
                                                                 .text.isEmpty |
                                                             _money
-                                                                .text.isEmpty |
-                                                            _notes
                                                                 .text.isEmpty) {
                                                           Fluttertoast.showToast(
                                                               msg:
@@ -890,13 +905,15 @@ class CreateChange extends State {
                                                                           context) =>
                                                                       W_Home()));
                                                           Fluttertoast.showToast(
-                                                              msg:
-                                                                  "Tạo giao dịch thành công",
+                                                              msg: Config_G
+                                                                      .check_lang
+                                                                  ? "Tạo giao dịch thành công"
+                                                                  : "Create successful transaction",
                                                               toastLength: Toast
                                                                   .LENGTH_SHORT,
                                                               gravity:
                                                                   ToastGravity
-                                                                      .CENTER,
+                                                                      .BOTTOM,
                                                               timeInSecForIosWeb:
                                                                   2,
                                                               backgroundColor:
@@ -906,7 +923,10 @@ class CreateChange extends State {
                                                               fontSize: 16.0);
                                                         }
                                                       },
-                                                      child: Text('Xác nhận',
+                                                      child: Text(
+                                                          Config_G.check_lang
+                                                              ? 'Xác nhận'
+                                                              : 'Confirm',
                                                           style: TextStyle(
                                                               fontFamily:
                                                                   'Poppins',
@@ -957,13 +977,14 @@ class CreateChange extends State {
                                                               ),
                                                       onPressed: () {
                                                         Fluttertoast.showToast(
-                                                            msg:
-                                                                "Hủy bỏ giao dịch thành công ",
+                                                            msg: Config_G
+                                                                    .check_lang
+                                                                ? "Hủy bỏ giao dịch thành công "
+                                                                : "Cancellation of successful transaction",
                                                             toastLength: Toast
                                                                 .LENGTH_SHORT,
-                                                            gravity:
-                                                                ToastGravity
-                                                                    .CENTER,
+                                                            gravity: ToastGravity
+                                                                .BOTTOM,
                                                             timeInSecForIosWeb:
                                                                 2,
                                                             backgroundColor:
@@ -978,7 +999,10 @@ class CreateChange extends State {
                                                                         context) =>
                                                                     W_Home()));
                                                       },
-                                                      child: Text('Loại bỏ ',
+                                                      child: Text(
+                                                          Config_G.check_lang
+                                                              ? 'Loại bỏ '
+                                                              : 'Cancel ',
                                                           style: TextStyle(
                                                               fontFamily:
                                                                   'Poppins',

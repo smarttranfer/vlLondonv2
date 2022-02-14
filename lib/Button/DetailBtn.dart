@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vl_ui/Globle/Config_G.dart';
 
 class DetailBtn extends StatelessWidget {
   const DetailBtn({
@@ -33,7 +34,7 @@ class DetailBtn extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "CHI TIẾT",
+                  Config_G.check_lang?"CHI TIẾT":"  DETAIL",
                   style: TextStyle(
                     color: Colors.green,
                     fontSize: 15,

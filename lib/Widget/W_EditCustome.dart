@@ -68,7 +68,9 @@ class _AnimeAppState extends State<AnimeApp> {
                       ),
                       SizedBox(width: MediaQuery.of(context).size.height / 30),
                       Text(
-                        "CHỈNH SỬA THÔNG TIN",
+                        Config_G.check_lang
+                            ? "CHỈNH SỬA THÔNG TIN"
+                            : "EDIT INFORMATION",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 25,
@@ -127,7 +129,9 @@ class _AnimeAppState extends State<AnimeApp> {
                                       children: [
                                         Center(
                                             child: Text(
-                                          "Không có dữ liệu",
+                                          Config_G.check_lang
+                                              ? "Không có dữ liệu"
+                                              : "No data",
                                           style: TextStyle(
                                             color: Colors.green,
                                             fontSize: 20,

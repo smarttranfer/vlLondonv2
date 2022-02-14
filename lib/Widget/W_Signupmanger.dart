@@ -78,7 +78,9 @@ class Signupmanagee extends State {
                                         EdgeInsets.only(left: 20, right: 20),
                                   ),
                                   Text(
-                                    "LOẠI ĐĂNG KÝ",
+                                    Config_G.check_lang
+                                        ? "LOẠI HÌNH ĐĂNG KÝ"
+                                        : "TYPE OF REGISTRATION",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -126,8 +128,12 @@ class Signupmanagee extends State {
                               child: W_SignUpCustom()));
                     },
                     child: SignupBtn(
-                      Content: "ĐĂNG KÝ KHÁCH HÀNG ",
-                      Subcontent: "Dành cho khách hàng đăng ký mở tài khoản",
+                      Content: Config_G.check_lang
+                          ? "ĐĂNG KÝ KHÁCH HÀNG "
+                          : "REGISTER CUSTOMERS",
+                      Subcontent: Config_G.check_lang
+                          ? "Dành cho khách hàng đăng ký mở tài khoản"
+                          : "For customers who register to open an account",
                       wights: MediaQuery.of(context).size.width / 1.2,
                       heights: 50,
                       colors: Colors.green.withOpacity(0.0),
@@ -150,8 +156,12 @@ class Signupmanagee extends State {
                               child: W_SignUpshop()));
                     },
                     child: SignupBtn(
-                        Content: "THÊM CỬA HÀNG       ",
-                        Subcontent: "Dành cho khách hàng đã có cửa hàng",
+                        Content: Config_G.check_lang
+                            ? "THÊM CỬA HÀNG       "
+                            : "ADD SHOP              ",
+                        Subcontent: Config_G.check_lang
+                            ? "Dành cho khách hàng đã có cửa hàng"
+                            : "For customers who already have a store",
                         wights: MediaQuery.of(context).size.width / 1.2,
                         heights: 50,
                         colors: Colors.green.withOpacity(0.0),
@@ -173,8 +183,12 @@ class Signupmanagee extends State {
                               child: AnimeApp()));
                     },
                     child: SignupBtnIcon(
-                        Content: "Chỉnh Sửa Thông Tin",
-                        Subcontent: "Dành cho khách hàng đã có tài khoản",
+                        Content: Config_G.check_lang
+                            ? "Chỉnh Sửa Thông Tin"
+                            : "Edit Information         ",
+                        Subcontent: Config_G.check_lang
+                            ? "Dành cho khách hàng đã có tài khoản"
+                            : "For customers who already have an account",
                         wights: MediaQuery.of(context).size.width / 1.2,
                         heights: 50,
                         colors: Colors.green.withOpacity(0.0),

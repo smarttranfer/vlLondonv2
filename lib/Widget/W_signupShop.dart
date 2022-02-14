@@ -127,7 +127,9 @@ class W_SignUp extends State {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          Config_G.title_SignupShop_vi,
+                                          Config_G.check_lang
+                                              ? "Đăng Ký Shop"
+                                              : "Register Shop",
                                           style: TextStyle(
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.bold,
@@ -157,11 +159,11 @@ class W_SignUp extends State {
                                                   ? ""
                                                   : Config_G.namecustom_chossen,
                                             decoration: InputDecoration(
-                                              labelText: 'Tên chủ khách hàng *',
+                                              labelText: Config_G.check_lang
+                                                  ? 'Tên chủ khách hàng *'
+                                                  : 'Customer owner name *',
                                               labelStyle: TextStyle(
-                                                  color:
-                                                  Colors.green
-                                              ),
+                                                  color: Colors.green),
                                               prefixIcon: Icon(
                                                 Icons
                                                     .supervised_user_circle_outlined,
@@ -315,15 +317,16 @@ class W_SignUp extends State {
                                                                                         setState(() {
                                                                                           Navigator.pop(context);
                                                                                           Config_G.check_namecustom_chossen = false;
-                                                                                          int indexs =0;
-                                                                                          for(String i in "${_foundUsers[index]["name"].toString()}".split("").toList()){
-                                                                                            if(i=="-"){
-                                                                                              Config_G.namecustom_chossen = "${_foundUsers[index]["name"].toString()}".substring(0,indexs);
-                                                                                              Nicknames = "${_foundUsers[index]["name"].toString()}".substring(indexs+1,);
+                                                                                          int indexs = 0;
+                                                                                          for (String i in "${_foundUsers[index]["name"].toString()}".split("").toList()) {
+                                                                                            if (i == "-") {
+                                                                                              Config_G.namecustom_chossen = "${_foundUsers[index]["name"].toString()}".substring(0, indexs);
+                                                                                              Nicknames = "${_foundUsers[index]["name"].toString()}".substring(
+                                                                                                indexs + 1,
+                                                                                              );
                                                                                             }
-                                                                                            indexs+=1;
+                                                                                            indexs += 1;
                                                                                           }
-                                                                                          
                                                                                         });
                                                                                       },
                                                                                       child: BtnFilter(Content: "${_foundUsers[index]["name"].toString()}", Subcontent: '${_foundUsers[index]["shop"].toString()}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
@@ -353,11 +356,11 @@ class W_SignUp extends State {
                                       child: TextFormField(
                                         controller: _NaneShop,
                                         decoration: InputDecoration(
-                                          labelText: 'Tên Shop*',
-                                          labelStyle: TextStyle(
-                                              color:
-                                              Colors.green
-                                          ),
+                                          labelText: Config_G.check_lang
+                                              ? 'Tên Shop*'
+                                              : 'Shop Name*',
+                                          labelStyle:
+                                              TextStyle(color: Colors.green),
                                           prefixIcon: Icon(
                                             Icons.shopping_cart_outlined,
                                             color: Colors.green,
@@ -381,7 +384,6 @@ class W_SignUp extends State {
                                         ),
                                       ),
                                     ),
-
                                     Card(
                                       elevation: 10,
                                       shape: RoundedRectangleBorder(
@@ -391,11 +393,11 @@ class W_SignUp extends State {
                                       child: TextFormField(
                                         controller: _numberlocal,
                                         decoration: InputDecoration(
-                                          labelText: 'Số tòa nhà*',
-                                          labelStyle: TextStyle(
-                                              color:
-                                              Colors.green
-                                          ),
+                                          labelText: Config_G.check_lang
+                                              ? 'Số tòa nhà*'
+                                              : 'Building number*',
+                                          labelStyle:
+                                              TextStyle(color: Colors.green),
                                           prefixIcon: Icon(
                                             Icons.location_on_outlined,
                                             color: Colors.green,
@@ -428,11 +430,11 @@ class W_SignUp extends State {
                                       child: TextFormField(
                                         controller: _stresst,
                                         decoration: InputDecoration(
-                                          labelText: 'Tên Đường*',
-                                          labelStyle: TextStyle(
-                                              color:
-                                              Colors.green
-                                          ),
+                                          labelText: Config_G.check_lang
+                                              ? 'Tên Đường*'
+                                              : "'Street names*'",
+                                          labelStyle:
+                                              TextStyle(color: Colors.green),
                                           prefixIcon: Icon(
                                             Icons.add_road,
                                             color: Colors.green,
@@ -465,11 +467,11 @@ class W_SignUp extends State {
                                       child: TextFormField(
                                         controller: _postcode,
                                         decoration: InputDecoration(
-                                          labelText: 'Post Code*',
-                                          labelStyle: TextStyle(
-                                              color:
-                                              Colors.green
-                                          ),
+                                          labelText: Config_G.check_lang
+                                              ? 'Post Code*'
+                                              : 'Post Code*',
+                                          labelStyle:
+                                              TextStyle(color: Colors.green),
                                           prefixIcon: Icon(
                                             Icons.code_off_outlined,
                                             color: Colors.green,
@@ -507,7 +509,10 @@ class W_SignUp extends State {
                                               child: IntlPhoneField(
                                                 controller: _phone,
                                                 decoration: InputDecoration(
-                                                    labelText: 'Phone Number',
+                                                    labelText:
+                                                        Config_G.check_lang
+                                                            ? 'Số Điện Thoại'
+                                                            : 'Phone Number',
                                                     enabledBorder:
                                                         UnderlineInputBorder(
                                                             borderSide: BorderSide(
@@ -539,10 +544,11 @@ class W_SignUp extends State {
                                             _numberlocal.text.isEmpty |
                                             _stresst.text.isEmpty |
                                             _postcode.text.isEmpty |
-                                            _NaneShop.text.isEmpty
-                                            ) {
+                                            _NaneShop.text.isEmpty) {
                                           Fluttertoast.showToast(
-                                              msg: "Chưa nhập đủ thông tin.",
+                                              msg: Config_G.check_lang
+                                                  ? "Chưa nhập đủ thông tin."
+                                                  : "Not enough information has been entered.",
                                               toastLength: Toast.LENGTH_SHORT,
                                               gravity: ToastGravity.CENTER,
                                               timeInSecForIosWeb: 2,
@@ -551,8 +557,9 @@ class W_SignUp extends State {
                                               fontSize: 16.0);
                                         } else {
                                           Fluttertoast.showToast(
-                                              msg:
-                                                  "Thêm thông tin shop thành công.",
+                                              msg: Config_G.check_lang
+                                                  ? "Thêm thông tin shop thành công."
+                                                  : "Add successful shop information.",
                                               toastLength: Toast.LENGTH_SHORT,
                                               gravity: ToastGravity.CENTER,
                                               timeInSecForIosWeb: 2,
@@ -572,7 +579,10 @@ class W_SignUp extends State {
                                           Navigator.pop(context);
                                         }
                                       },
-                                      child: const Text('Đồng ý',
+                                      child: Text(
+                                          Config_G.check_lang
+                                              ? 'Đồng ý'
+                                              : 'Confirm',
                                           style: TextStyle(
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.bold,
@@ -585,8 +595,10 @@ class W_SignUp extends State {
                                             fontSize: 15, color: Colors.green),
                                       ),
                                       onPressed: () {},
-                                      child: const Text(
-                                        'Designed & Powered by Vihu.uk',
+                                      child: Text(
+                                        Config_G.check_lang
+                                            ? 'Thiết kế & Vận hàn bởi Vihu.uk'
+                                            : 'Designed & Powered by Vihu.uk',
                                         style: TextStyle(
                                           color: Colors.green,
                                           fontFamily: 'Poppins',

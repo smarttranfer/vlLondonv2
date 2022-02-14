@@ -172,7 +172,7 @@ class ListViewsCustome extends StatelessWidget {
                                                   .toString();
                                           Fluttertoast.showToast(
                                               msg:
-                                                  "Hủy bỏ giao dịch thành công ",
+                                                  "Sửa thông tin thành công ",
                                               toastLength: Toast.LENGTH_SHORT,
                                               gravity: ToastGravity.BOTTOM,
                                               timeInSecForIosWeb: 2,

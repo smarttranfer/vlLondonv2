@@ -55,16 +55,79 @@ class Home extends State {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: SvgPicture.asset(
-                                            "assest/IconBtn/btndraw.svg")),
+                                    PopupMenuButton(
+                                        shape: RoundedRectangleBorder(
+                                            side: BorderSide(
+                                                width: 2, color: Colors.green),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15.0))),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(),
+                                          child: SvgPicture.asset(
+                                              "assest/IconBtn/btndraw.svg"),
+                                        ),
+                                        itemBuilder: (context) => [
+                                              PopupMenuItem(
+                                                  child: Row(
+                                                children: [
+                                                  IconButton(
+                                                    icon: Image.asset(
+                                                        "assest/IconBtn/vietnam.png"),
+                                                    onPressed: () {
+                                                      print(
+                                                          "Dổi ngồn ngũ sang tiếng việt");
+                                                      setState(() {
+                                                        Config_G.check_lang = true;
+                                                      });
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "Tiếng Việt",
+                                                    style: TextStyle(
+                                                      color: Colors.green,
+                                                      fontSize: 20,
+                                                      fontFamily: 'Poppins',
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  )
+                                                ],
+                                              )),
+                                              PopupMenuItem(
+                                                  child: Row(
+                                                children: [
+                                                  IconButton(
+                                                    icon: Image.asset(
+                                                      "assest/IconBtn/kingdom.png",
+                                                    ),
+                                                    onPressed: () {
+                                                      print(
+                                                          "Dổi ngồn ngũ sang tiếng anh");
+                                                      setState(() {
+                                                        Config_G.check_lang = false;
+                                                      });
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "English",
+                                                    style: TextStyle(
+                                                      color: Colors.green,
+                                                      fontSize: 20,
+                                                      fontFamily: 'Poppins',
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  )
+                                                ],
+                                              ))
+                                            ]),
                                     SizedBox(
                                         height:
                                             MediaQuery.of(context).size.height /
                                                 14),
                                     Text(
-                                      Config_G.Tilte_vis,
+                                      Config_G.check_lang
+                                          ?Config_G.Tilte_vis:Config_G.Tilte_eng,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,
@@ -138,7 +201,7 @@ class Home extends State {
                                         child: OptionBtn(
                                           path:
                                               "assest/IconBtn/createTranfer.svg",
-                                          namebtn: Config_G.createbtn_vi,
+                                          namebtn: Config_G.check_lang?"TẠO GD":"CREATE DEAL",
                                           wights: MediaQuery.of(context)
                                                   .size
                                                   .width /
@@ -151,7 +214,7 @@ class Home extends State {
                                         )),
                                     OptionBtn(
                                       path: "assest/IconBtn/manager.svg",
-                                      namebtn: "GD MỚI",
+                                      namebtn: Config_G.check_lang?"GD MỚI":"NEW DEAL",
                                       wights:
                                           MediaQuery.of(context).size.width / 7,
                                       heights:
@@ -163,7 +226,7 @@ class Home extends State {
                                       splashColor: Colors.black12,
                                       child: OptionBtn(
                                         path: "assest/IconBtn/Statistical.svg",
-                                        namebtn: "Thống kê",
+                                        namebtn:  Config_G.check_lang?"THỐNG KÊ":"STATISTICAL",
                                         wights:
                                             MediaQuery.of(context).size.width /
                                                 7,
@@ -191,7 +254,7 @@ class Home extends State {
                                       splashColor: Colors.black12,
                                       child: OptionBtn(
                                         path: "assest/IconBtn/SignUp.svg",
-                                        namebtn: "Đăng ký",
+                                        namebtn:  Config_G.check_lang?"ĐĂNG KÝ":"Registration",
                                         wights:
                                             MediaQuery.of(context).size.width /
                                                 7,
@@ -262,7 +325,7 @@ class Home extends State {
                                                 40,
                                           ),
                                           Text(
-                                            "ThÔNG TIN QUẢN LÝ",
+                                            Config_G.check_lang?"THÔNG TIN QUẢN LÝ":"MANAGEMENT INFORMATION",
                                             style: TextStyle(
                                               color: Colors.green,
                                               fontSize: 15,
@@ -302,7 +365,7 @@ class Home extends State {
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        "TỔNG NỢ",
+                                                        Config_G.check_lang?"TỔNG NỢ":"TOTAL LIABILITIES",
                                                         style: TextStyle(
                                                           color: Colors.green,
                                                           fontSize: 15,
@@ -417,7 +480,7 @@ class Home extends State {
                                                             40,
                                                       ),
                                                       Text(
-                                                        "GIAO DỊCH GẦN ĐÂY",
+                                                        Config_G.check_lang?"GIAO DỊCH GẦN ĐÂY":"RECENT TRANSACTIONS",
                                                         style: TextStyle(
                                                           color: Colors.green,
                                                           fontSize: 15,
@@ -430,13 +493,14 @@ class Home extends State {
                                                   )),
                                               Container(
                                                   child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                 children: [
                                                   SizedBox(
                                                       width:
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width /
-                                                              8),
+                                                              20),
                                                   Center(
                                                       child: Column(children: [
                                                     Container(
@@ -528,24 +592,13 @@ class Home extends State {
                                                       EdgeInsets.only(right: 2),
                                                   child: Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                        MainAxisAlignment.end,
                                                     children: [
-                                                      Text(
-                                                        "Hôm nay",
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 15,
-                                                          fontFamily: 'Poppins',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                      ),
                                                       Container(
                                                           child: Row(
                                                         children: [
                                                           Text(
-                                                            "CHI TIẾT",
+                                                            Config_G.check_lang?"CHI TIẾT":"DETAIL",
                                                             style: TextStyle(
                                                               color:
                                                                   Colors.green,
@@ -584,7 +637,7 @@ class Home extends State {
                                                   height: MediaQuery.of(context)
                                                           .size
                                                           .height /
-                                                      6,
+                                                      2.7,
                                                   child: Config_G.checknull()
                                                       ? Row(
                                                           mainAxisAlignment:
@@ -593,7 +646,7 @@ class Home extends State {
                                                           children: [
                                                             Center(
                                                                 child: Text(
-                                                              "Không có dữ liệu.",
+                                                                  Config_G.check_lang?"Không có dữ liệu.":"Not Found Data.",
                                                               style: TextStyle(
                                                                 color: Colors
                                                                     .green,
@@ -622,74 +675,6 @@ class Home extends State {
                                                         .height /
                                                     100,
                                               ),
-                                              // ------------------------------------------------------------------------------------------------------------
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "Hôm qua",
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 15,
-                                                      fontFamily: 'Poppins',
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                      child: Row(
-                                                    children: [
-                                                      Text(
-                                                        "CHI TIẾT",
-                                                        style: TextStyle(
-                                                          color: Colors.green,
-                                                          fontSize: 15,
-                                                          fontFamily: 'Poppins',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                      ),
-                                                      Icon(
-                                                        Icons.arrow_forward_ios,
-                                                        color: Colors.green,
-                                                        size: 15,
-                                                      )
-                                                    ],
-                                                  ))
-                                                ],
-                                              ),
-                                              Container(
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.green
-                                                          .withOpacity(0.2),
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  20))),
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height /
-                                                      6,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Center(
-                                                          child: Text(
-                                                        "Không có dữ liệu.",
-                                                        style: TextStyle(
-                                                          color: Colors.green,
-                                                          fontSize: 15,
-                                                          fontFamily: 'Poppins',
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ))
-                                                    ],
-                                                  )),
                                             ],
                                           )),
                                     ],

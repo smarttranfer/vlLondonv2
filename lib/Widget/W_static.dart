@@ -14,7 +14,6 @@ class StatsPage extends StatefulWidget {
 
 class _StatsPageState extends State<StatsPage> {
   int activeDay = 3;
-
   bool showAvg = false;
   @override
   Widget build(BuildContext context) {
@@ -274,23 +273,24 @@ class _StatsPageState extends State<StatsPage> {
                                         color: expenses[index]['color']),
                                     child: Center(
                                       child: InkWell(
-                                        onTap: (){
-                                          Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                  type: PageTransitionType.rightToLeft,
-                                                  duration: Duration(
-                                                      milliseconds:
-                                                      Config_G.timeDruation),
-                                                  reverseDuration: Duration(
-                                                      milliseconds:
-                                                      Config_G.timeDruation),
-                                                  child: DailyPage()));
-                                        },
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                    type: PageTransitionType
+                                                        .rightToLeft,
+                                                    duration: Duration(
+                                                        milliseconds: Config_G
+                                                            .timeDruation),
+                                                    reverseDuration: Duration(
+                                                        milliseconds: Config_G
+                                                            .timeDruation),
+                                                    child: DailyPage()));
+                                          },
                                           child: Icon(
-                                        expenses[index]['icon'],
-                                        color: white,
-                                      )),
+                                            expenses[index]['icon'],
+                                            color: white,
+                                          )),
                                     ))),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
