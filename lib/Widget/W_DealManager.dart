@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:vl_ui/Button/BtnFilter_Bill.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:timelines/timelines.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/model/New_Changer.dart';
 
@@ -70,15 +72,30 @@ class _HomePageState extends State<DealManagers> {
             ),
             Row(
               children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_ios_outlined,
-                      color: Colors.white,
-                      size: 35,
-                    )),
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios_outlined,
+                          color: Colors.white,
+                        )),
+                    SizedBox(width: MediaQuery.of(context).size.width / 7),
+                    Text(
+                      Config_G.check_lang
+                          ? "QUẢN LÝ BILL"
+                          : "MANAGER BILL",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 20,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
             SizedBox(
@@ -130,43 +147,239 @@ class _HomePageState extends State<DealManagers> {
                   ? ListView.builder(
                       itemCount: _foundUsers.length,
                       itemBuilder: (context, index) => Card(
-                            key: ValueKey(_foundUsers[index]["id"]),
-                            color: Colors.white,
-                            elevation: 4,
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0),
+                          key: ValueKey(_foundUsers[index]["id"]),
+                          color: Colors.white,
+                          elevation: 4,
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          child: Center(
+                            child: Container(
+                              width: 360.0,
+                              child: Card(
+                                margin: EdgeInsets.all(20.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: _OrderTitle(
+                                        date: _foundUsers[index]["date"]
+                                            .toString(),
+                                        index: index,
+                                      ),
+                                    ),
+                                    Column(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 20, bottom: 10, right: 5),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.circle,
+                                                color: Colors.green,
+                                                size: 10,
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 10,
+                                                      left: 20,
+                                                      bottom: 10,
+                                                      right: 5),
+                                                  child: Text(
+                                                    "Name : ${_foundUsers[index]["name"].toString()}",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 20, bottom: 10, right: 5),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.circle,
+                                                color: Colors.green,
+                                                size: 10,
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 10,
+                                                      left: 20,
+                                                      bottom: 10,
+                                                      right: 5),
+                                                  child: Text(
+                                                    'Shop : ${_foundUsers[index]["shop"].toString()}',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 20, bottom: 10, right: 5),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.circle,
+                                                color: Colors.green,
+                                                size: 10,
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 10,
+                                                      left: 20,
+                                                      bottom: 10,
+                                                      right: 5),
+                                                  child: Text(
+                                                    "Code Bill :${_foundUsers[index]["code"].toString()}",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 20, bottom: 10, right: 5),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.circle,
+                                                color: Colors.green,
+                                                size: 10,
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 10,
+                                                      left: 20,
+                                                      bottom: 10,
+                                                      right: 5),
+                                                  child: Text(
+                                                    "Money : ${_foundUsers[index]["mony"].toString()}",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Divider(height: 1.0),
+                                    Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Card(
+                                                elevation: 10,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0),
+                                                ),
+                                                child: Center(
+                                                    child: ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                          primary: HexColor(
+                                                              "#237401"), //background color of button
+                                                          elevation:
+                                                              3, //elevation of button
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                                  //to set border radius to button
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              15)),
+                                                          padding: EdgeInsets.only(
+                                                              left: 30,
+                                                              right: 30,
+                                                              top: 20,
+                                                              bottom:
+                                                                  15) //content padding inside button
+                                                          ),
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                      Config_G.check_lang
+                                                          ? 'Thanh toán bill'
+                                                          : 'Bill payment',
+                                                      style: TextStyle(
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                          fontSize: 10)),
+                                                ))),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  30,
+                                            ),
+                                            Card(
+                                                elevation: 10,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0),
+                                                ),
+                                                child: Center(
+                                                    child: ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                          primary: HexColor(
+                                                                  "#237401")
+                                                              .withOpacity(
+                                                                  0.5), //background color of button
+                                                          elevation:
+                                                              3, //elevation of button
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                                  //to set border radius to button
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              15)),
+                                                          padding: EdgeInsets.only(
+                                                              left: 30,
+                                                              right: 30,
+                                                              top: 20,
+                                                              bottom:
+                                                                  15) //content padding inside button
+                                                          ),
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                      Config_G.check_lang
+                                                          ? 'Thanh toán hêt'
+                                                          : 'Pay all Bills ',
+                                                      style: TextStyle(
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                          fontSize: 10)),
+                                                )))
+                                          ],
+                                        )),
+                                  ],
                                 ),
-                                elevation: 50,
-                                shadowColor: Colors.black12,
-                                child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        Config_G.check_namecustom_chossen =
-                                            false;
-                                        Config_G.namecustom_chossen =
-                                            "${_foundUsers[index]["name"].toString()}";
-                                      });
-                                    },
-                                    child: BtnFilter_Bills(
-                                        code:
-                                            "${_foundUsers[index]["code"].toString()}",
-                                        date:
-                                            "${_foundUsers[index]["date"].toString()}",
-                                        money:
-                                            "${_foundUsers[index]["mony"].toString()}",
-                                        Content:
-                                            "${_foundUsers[index]["name"].toString()}",
-                                        Subcontent:
-                                            '${_foundUsers[index]["shop"].toString()}',
-                                        wights:
-                                            MediaQuery.of(context).size.width /
-                                                1,
-                                        heights: 70,
-                                        colors: Colors.green.withOpacity(0.0),
-                                        path: ""))),
-                          ))
+                              ),
+                            ),
+                          )),
+                    )
                   : Text(
                       Config_G.check_lang
                           ? 'Không tìm thấy kết quả'
@@ -178,5 +391,99 @@ class _HomePageState extends State<DealManagers> {
         ),
       ),
     ));
+  }
+}
+
+class _OrderTitle extends StatelessWidget {
+  const _OrderTitle({
+    Key? key,
+    required this.date,
+    required this.index,
+  }) : super(key: key);
+
+  final String date;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          Config_G.check_lang ? "Hóa đơn #${index}" : "Bill #${index}",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Spacer(),
+        Text(
+          '${date}',
+          style: TextStyle(
+            color: Color(0xffb6b2b2),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 10),
+          child: PopupMenuButton(
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 2, color: Colors.green),
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              child: Padding(
+                  padding: EdgeInsets.symmetric(),
+                  child: Icon(Icons.arrow_drop_down_circle_outlined)),
+              itemBuilder: (context) => [
+                    PopupMenuItem(
+                        child: Row(
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(
+                              color: Colors.green,
+                              fontSize: 20,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            Config_G.check_lang ? "Sửa" : 'Edit',
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 20,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                      ],
+                    )),
+                    PopupMenuItem(
+                        child: Row(
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(
+                              color: Colors.green,
+                              fontSize: 20,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            Config_G.check_lang ? "Xóa" : 'Delete',
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 20,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                      ],
+                    ))
+                  ]),
+        )
+      ],
+    );
   }
 }

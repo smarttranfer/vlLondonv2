@@ -73,6 +73,7 @@ class CreateChange extends State {
         create: (context) => Bill(),
         child: Builder(builder: (context) {
           return Scaffold(
+
               resizeToAvoidBottomInset: true,
               body: Container(
                   decoration: BoxDecoration(
