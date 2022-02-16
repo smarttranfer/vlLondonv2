@@ -7,7 +7,7 @@ import 'package:vl_ui/Globle/Config_G.dart';
 
 import 'W_DealManager.dart';
 
-class OrderTitle extends StatefulWidget {
+class OrderTitle extends StatelessWidget {
   const OrderTitle({
     Key? key,
     required this.date,
@@ -17,29 +17,19 @@ class OrderTitle extends StatefulWidget {
   final String date;
   final int index;
 
-
-
-
-  @override
-  State<StatefulWidget> createState() {
-    return _AnimeAppState();
-  }
-
-}
-class _AnimeAppState extends State<OrderTitle> {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Text(
-          Config_G.check_lang ? "Hóa đơn #${widget.index}" : "Bill #${widget.index}",
+          Config_G.check_lang ? "Hóa đơn #${index}" : "Bill #${index}",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
         Spacer(),
         Text(
-          '${widget.date}',
+          '${date}',
           style: TextStyle(
             color: Color(0xffb6b2b2),
           ),
@@ -54,8 +44,8 @@ class _AnimeAppState extends State<OrderTitle> {
                   padding: EdgeInsets.symmetric(),
                   child: Icon(Icons.arrow_drop_down_circle_outlined)),
               itemBuilder: (context) => [
-                PopupMenuItem(
-                    child: Row(
+                    PopupMenuItem(
+                        child: Row(
                       children: [
                         TextButton(
                           style: TextButton.styleFrom(
@@ -78,7 +68,7 @@ class _AnimeAppState extends State<OrderTitle> {
                                     TextField(
                                       decoration: InputDecoration(
                                         hintText:
-                                        "${Config_G.NameCustom_shop[widget.index].namecustome}",
+                                            "${Config_G.NameCustom_shop[index].namecustome}",
                                         icon: Icon(Icons.person_pin_outlined),
                                         labelText: 'Name Custome',
                                       ),
@@ -89,7 +79,7 @@ class _AnimeAppState extends State<OrderTitle> {
                                     TextField(
                                       decoration: InputDecoration(
                                         hintText:
-                                        "${Config_G.NameCustom_shop[widget.index].namecustome}",
+                                            "${Config_G.NameCustom_shop[index].namecustome}",
                                         icon: Icon(Icons.person_pin_outlined),
                                         labelText: 'Nick Name',
                                       ),
@@ -100,7 +90,7 @@ class _AnimeAppState extends State<OrderTitle> {
                                     TextField(
                                       decoration: InputDecoration(
                                         hintText:
-                                        "${Config_G.NameCustom_shop[widget.index].telephone}",
+                                            "${Config_G.NameCustom_shop[index].telephone}",
                                         icon: Icon(Icons.phone),
                                         labelText: 'Telephone Custome',
                                       ),
@@ -111,9 +101,9 @@ class _AnimeAppState extends State<OrderTitle> {
                                     TextField(
                                       decoration: InputDecoration(
                                         hintText:
-                                        "${Config_G.NameCustom_shop[widget.index].nameshop}",
-                                        icon: Icon(
-                                            Icons.shopping_cart_outlined),
+                                            "${Config_G.NameCustom_shop[index].nameshop}",
+                                        icon:
+                                            Icon(Icons.shopping_cart_outlined),
                                         labelText: 'Name Shop',
                                       ),
                                       // controller: _controllershop
@@ -123,7 +113,7 @@ class _AnimeAppState extends State<OrderTitle> {
                                     TextField(
                                       decoration: InputDecoration(
                                         hintText:
-                                        "${Config_G.NameCustom_shop[widget.index].telephone}",
+                                            "${Config_G.NameCustom_shop[index].telephone}",
                                         icon: Icon(Icons.phone),
                                         labelText: 'Telephone Shop',
                                       ),
@@ -134,7 +124,7 @@ class _AnimeAppState extends State<OrderTitle> {
                                     TextField(
                                       decoration: InputDecoration(
                                         hintText:
-                                        "${Config_G.NameCustom_shop[widget.index].numberlocal}",
+                                            "${Config_G.NameCustom_shop[index].numberlocal}",
                                         icon: Icon(
                                             Icons.add_location_alt_outlined),
                                         labelText: 'Apartment number',
@@ -146,7 +136,7 @@ class _AnimeAppState extends State<OrderTitle> {
                                     TextField(
                                       decoration: InputDecoration(
                                         hintText:
-                                        "${Config_G.NameCustom_shop[widget.index].Postcodet}",
+                                            "${Config_G.NameCustom_shop[index].Postcodet}",
                                         icon: Icon(
                                             Icons.add_location_alt_outlined),
                                         labelText: 'Post code',
@@ -158,7 +148,7 @@ class _AnimeAppState extends State<OrderTitle> {
                                     TextField(
                                       decoration: InputDecoration(
                                         hintText:
-                                        " ${Config_G.NameCustom_shop[widget.index].stresst}",
+                                            " ${Config_G.NameCustom_shop[index].stresst}",
                                         icon: Icon(
                                             Icons.add_location_alt_outlined),
                                         labelText: 'Stresst shop',
@@ -199,8 +189,7 @@ class _AnimeAppState extends State<OrderTitle> {
                                         //     _controllerstresst.text
                                         //         .toString();
                                         Fluttertoast.showToast(
-                                            msg:
-                                            "Sửa thông tin thành công ",
+                                            msg: "Sửa thông tin thành công ",
                                             toastLength: Toast.LENGTH_SHORT,
                                             gravity: ToastGravity.BOTTOM,
                                             timeInSecForIosWeb: 2,
@@ -209,7 +198,11 @@ class _AnimeAppState extends State<OrderTitle> {
                                             fontSize: 16.0);
                                         Navigator.of(context).pop();
                                         Navigator.pushReplacement(
-                                            context, MaterialPageRoute(builder: (BuildContext context) => DealManagers()));
+                                            context,
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        DealManagers()));
                                       },
                                       style: ElevatedButton.styleFrom(
                                         primary: Colors.green,
@@ -241,8 +234,8 @@ class _AnimeAppState extends State<OrderTitle> {
                         )
                       ],
                     )),
-                PopupMenuItem(
-                    child: Row(
+                    PopupMenuItem(
+                        child: Row(
                       children: [
                         TextButton(
                           style: TextButton.styleFrom(
@@ -254,9 +247,12 @@ class _AnimeAppState extends State<OrderTitle> {
                             ),
                           ),
                           onPressed: () {
-                            Config_G.modelBill.removeAt(widget.index);
+                            Config_G.modelBill.removeAt(index);
                             Navigator.pushReplacement(
-                                context, MaterialPageRoute(builder: (BuildContext context) => DealManagers()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        DealManagers()));
                           },
                           child: Text(
                             Config_G.check_lang ? "Xóa" : 'Delete',
@@ -270,7 +266,7 @@ class _AnimeAppState extends State<OrderTitle> {
                         )
                       ],
                     ))
-              ]),
+                  ]),
         )
       ],
     );
