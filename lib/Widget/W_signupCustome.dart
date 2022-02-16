@@ -650,10 +650,6 @@ class W_SignUp extends State<W_SignUpCustom> {
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                  child: SizedBox(
-                                height: MediaQuery.of(context).size.height / 10,
-                              )),
                             ],
                           ),
                         )),
