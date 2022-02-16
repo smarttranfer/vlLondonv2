@@ -1,9 +1,14 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:timelines/timelines.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
+import 'package:vl_ui/Widget/Homepage.dart';
 import 'package:vl_ui/model/New_Changer.dart';
+
+import 'Information.dart';
 
 class DealManagers extends StatefulWidget {
   const DealManagers({Key? key}) : super(key: key);
@@ -21,7 +26,8 @@ class _HomePageState extends State<DealManagers> {
     for (Information_Bill i in Config_G.modelBill) {
       _allUsers.add({
         "id": "${k}",
-        "name": "${i.namecustome}-${i.namecustome}",
+        "name": "${i.namecustome}",
+        "nickname":"${i.namecustome}",
         "shop": "${i.nameshop}",
         "mony": "${i.money}",
         "date": "${i.date}",
@@ -32,7 +38,6 @@ class _HomePageState extends State<DealManagers> {
     _foundUsers = _allUsers;
     super.initState();
   }
-
   void _runFilter(String enteredKeyword) {
     List<Map<String, dynamic>> results = [];
     if (enteredKeyword.isEmpty) {
@@ -49,7 +54,6 @@ class _HomePageState extends State<DealManagers> {
       _foundUsers = results;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +80,17 @@ class _HomePageState extends State<DealManagers> {
                   children: [
                     IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType
+                                      .rightToLeft,
+                                  duration:
+                                  Duration(milliseconds: 3),
+                                  reverseDuration: Duration(
+                                      milliseconds: Config_G
+                                          .timeDruation),
+                                  child: W_Home()));
                         },
                         icon: Icon(
                           Icons.arrow_back_ios_outlined,
@@ -161,7 +175,7 @@ class _HomePageState extends State<DealManagers> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(20.0),
-                                      child: _OrderTitle(
+                                      child: OrderTitle(
                                         date: _foundUsers[index]["date"]
                                             .toString(),
                                         index: index,
@@ -360,7 +374,9 @@ class _HomePageState extends State<DealManagers> {
                                                               bottom:
                                                                   15) //content padding inside button
                                                           ),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+
+                                                  },
                                                   child: Text(
                                                       Config_G.check_lang
                                                           ? 'Thanh toán hêt'
@@ -394,96 +410,3 @@ class _HomePageState extends State<DealManagers> {
   }
 }
 
-class _OrderTitle extends StatelessWidget {
-  const _OrderTitle({
-    Key? key,
-    required this.date,
-    required this.index,
-  }) : super(key: key);
-
-  final String date;
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          Config_G.check_lang ? "Hóa đơn #${index}" : "Bill #${index}",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Spacer(),
-        Text(
-          '${date}',
-          style: TextStyle(
-            color: Color(0xffb6b2b2),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 10),
-          child: PopupMenuButton(
-              shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 2, color: Colors.green),
-                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              child: Padding(
-                  padding: EdgeInsets.symmetric(),
-                  child: Icon(Icons.arrow_drop_down_circle_outlined)),
-              itemBuilder: (context) => [
-                    PopupMenuItem(
-                        child: Row(
-                      children: [
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            textStyle: const TextStyle(
-                              color: Colors.green,
-                              fontSize: 20,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            Config_G.check_lang ? "Sửa" : 'Edit',
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 20,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
-                      ],
-                    )),
-                    PopupMenuItem(
-                        child: Row(
-                      children: [
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            textStyle: const TextStyle(
-                              color: Colors.green,
-                              fontSize: 20,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            Config_G.check_lang ? "Xóa" : 'Delete',
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 20,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
-                      ],
-                    ))
-                  ]),
-        )
-      ],
-    );
-  }
-}

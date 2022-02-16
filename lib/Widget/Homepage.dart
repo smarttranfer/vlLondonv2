@@ -260,7 +260,7 @@ class Home extends State {
                               )),
                           InkWell(
                               onTap: () {
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                     context,
                                     PageTransition(
                                         type: PageTransitionType.rightToLeft,
