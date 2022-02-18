@@ -27,7 +27,7 @@ class _HomePageState extends State<DealManagers> {
       _allUsers.add({
         "id": "${k}",
         "name": "${i.namecustome}",
-        "nickname":"${i.namecustome}",
+        "nickname": "${i.namecustome}",
         "shop": "${i.nameshop}",
         "mony": "${i.money}",
         "date": "${i.date}",
@@ -38,6 +38,7 @@ class _HomePageState extends State<DealManagers> {
     _foundUsers = _allUsers;
     super.initState();
   }
+
   void _runFilter(String enteredKeyword) {
     List<Map<String, dynamic>> results = [];
     if (enteredKeyword.isEmpty) {
@@ -54,6 +55,7 @@ class _HomePageState extends State<DealManagers> {
       _foundUsers = results;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,13 +85,10 @@ class _HomePageState extends State<DealManagers> {
                           Navigator.pushReplacement(
                               context,
                               PageTransition(
-                                  type: PageTransitionType
-                                      .rightToLeft,
-                                  duration:
-                                  Duration(milliseconds: 3),
+                                  type: PageTransitionType.rightToLeft,
+                                  duration: Duration(milliseconds: 3),
                                   reverseDuration: Duration(
-                                      milliseconds: Config_G
-                                          .timeDruation),
+                                      milliseconds: Config_G.timeDruation),
                                   child: W_Home()));
                         },
                         icon: Icon(
@@ -98,9 +97,7 @@ class _HomePageState extends State<DealManagers> {
                         )),
                     SizedBox(width: MediaQuery.of(context).size.width / 7),
                     Text(
-                      Config_G.check_lang
-                          ? "QUẢN LÝ BILL"
-                          : "MANAGER BILL",
+                      Config_G.check_lang ? "QUẢN LÝ BILL" : "MANAGER BILL",
                       style: TextStyle(
                         color: Colors.green,
                         fontSize: 20,
@@ -374,10 +371,7 @@ class _HomePageState extends State<DealManagers> {
                                                               bottom:
                                                                   15) //content padding inside button
                                                           ),
-                                                  onPressed: () {
-                                                    
-
-                                                  },
+                                                  onPressed: () {},
                                                   child: Text(
                                                       Config_G.check_lang
                                                           ? 'Thanh toán hêt'
@@ -410,4 +404,3 @@ class _HomePageState extends State<DealManagers> {
     ));
   }
 }
-

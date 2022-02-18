@@ -597,7 +597,7 @@ class W_SignUp extends State<W_SignUpCustom> {
                                       s1.namecustome = _Name.text;
                                       s1.telephone = _phone.text;
                                       s1.Nickname = _nickname.text;
-                                      s1.nameshop = _shop.text;
+                                      s1.nameshop.add(_shop.text);
                                       s1.numberlocal = _numberlocal.text;
                                       s1.stresst = _stresst.text;
                                       s1.Postcodet = _postcode.text;

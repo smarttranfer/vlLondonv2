@@ -4,6 +4,7 @@ import 'package:vl_ui/Widget/W_EditCustome.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vl_ui/model/Information_Cutome.dart';
 
 final TextEditingController _controllershop = TextEditingController();
 final TextEditingController _controllernickname = TextEditingController();
@@ -20,6 +21,8 @@ class ListViewsCustome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _controllershop = new TextEditingController();
+    int indexshop = 0;
     return Scaffold(
         body: ListView.builder(
             padding: const EdgeInsets.all(15),
@@ -32,8 +35,10 @@ class ListViewsCustome extends StatelessWidget {
                   ),
                   shadowColor: Colors.black54,
                   child: ListTile(
-                    title: Text("${Config_G.NameCustom_shop[index].namecustome}-${Config_G.NameCustom_shop[index].Nickname}"),
-                    subtitle: Text("${Config_G.NameCustom_shop[index].nameshop}"),
+                    title: Text(
+                        "${Config_G.NameCustom_shop[index].namecustome}-${Config_G.NameCustom_shop[index].Nickname}"),
+                    subtitle: Text(
+                        "${Config_G.NameCustom_shop[index].nameshop.toString().substring(1, Config_G.NameCustom_shop[index].nameshop.toString().length - 1)}"),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -47,6 +52,47 @@ class ListViewsCustome extends StatelessWidget {
                                 body: Container(
                                   child: Column(
                                     children: <Widget>[
+                                      Padding(
+                                          padding: EdgeInsets.only(),
+                                          child: new Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                new Expanded(
+                                                    child: new TextField(
+                                                        decoration: InputDecoration(
+                                                          hintText:
+                                                          "${Config_G.NameCustom_shop[index].nameshop[0]}",
+                                                          icon: Icon(Icons.shopping_cart_outlined),
+                                                          labelText: 'Name Shop',
+                                                        ),
+                                                        onChanged: (v){
+                                                          print(v);
+                                                        },
+                                                        controller:
+                                                        _controllershop..text = "${Config_G.NameCustom_shop[index].nameshop[0]}")),
+                                                new PopupMenuButton<String>(
+                                                  icon: const Icon(
+                                                      Icons.arrow_drop_down),
+                                                  onSelected: (String value) {
+                                                    _controllershop.text = value;
+                                                    indexshop = Config_G.NameCustom_shop[index].nameshop.indexWhere((indexshop) => indexshop==value);
+
+                                                  },
+                                                  itemBuilder:
+                                                      (BuildContext context) {
+                                                    return Config_G.NameCustom_shop[index].nameshop.map<
+                                                        PopupMenuItem<
+                                                            String>>(
+                                                            (String value) {
+                                                          return new PopupMenuItem(
+                                                              child:
+                                                              new Text(value),
+                                                              value: value);
+                                                        }).toList();
+                                                  },
+                                                )
+                                              ])),
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText:
@@ -61,13 +107,13 @@ class ListViewsCustome extends StatelessWidget {
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText:
-                                          "${Config_G.NameCustom_shop[index].namecustome}",
+                                              "${Config_G.NameCustom_shop[index].namecustome}",
                                           icon: Icon(Icons.person_pin_outlined),
                                           labelText: 'Nick Name',
                                         ),
                                         controller: _controllernickname
                                           ..text =
-                                          ("${Config_G.NameCustom_shop[index].Nickname}"),
+                                              ("${Config_G.NameCustom_shop[index].Nickname}"),
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
@@ -83,18 +129,6 @@ class ListViewsCustome extends StatelessWidget {
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText:
-                                              "${Config_G.NameCustom_shop[index].nameshop}",
-                                          icon: Icon(
-                                              Icons.shopping_cart_outlined),
-                                          labelText: 'Name Shop',
-                                        ),
-                                        controller: _controllershop
-                                          ..text =
-                                              "${Config_G.NameCustom_shop[index].nameshop}",
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          hintText:
                                               "${Config_G.NameCustom_shop[index].telephone}",
                                           icon: Icon(Icons.phone),
                                           labelText: 'Telephone Shop',
@@ -106,7 +140,7 @@ class ListViewsCustome extends StatelessWidget {
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText:
-                                          "${Config_G.NameCustom_shop[index].numberlocal}",
+                                              "${Config_G.NameCustom_shop[index].numberlocal}",
                                           icon: Icon(
                                               Icons.add_location_alt_outlined),
                                           labelText: 'Apartment number',
@@ -118,9 +152,9 @@ class ListViewsCustome extends StatelessWidget {
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText:
-                                          "${Config_G.NameCustom_shop[index].Postcodet}",
+                                              "${Config_G.NameCustom_shop[index].Postcodet}",
                                           icon: Icon(
-                                              Icons.add_location_alt_outlined),
+                                              Icons.local_post_office_outlined),
                                           labelText: 'Post code',
                                         ),
                                         controller: _controllerpostcode
@@ -131,8 +165,7 @@ class ListViewsCustome extends StatelessWidget {
                                         decoration: InputDecoration(
                                           hintText:
                                               " ${Config_G.NameCustom_shop[index].stresst}",
-                                          icon: Icon(
-                                              Icons.add_location_alt_outlined),
+                                          icon: Icon(Icons.edit_road_rounded),
                                           labelText: 'Stresst shop',
                                         ),
                                         controller: _controllerstresst
@@ -154,25 +187,40 @@ class ListViewsCustome extends StatelessWidget {
                                                   .namecustome =
                                               _controlleruser.text.toString();
                                           Config_G.NameCustom_shop[index]
-                                              .Nickname =
-                                              _controllernickname.text.toString();
-                                          Config_G.NameCustom_shop[index].nameshop =
-                                              _controllershop.text.toString();
-                                          Config_G.NameCustom_shop[index].telephone =
+                                                  .Nickname =
+                                              _controllernickname.text
+                                                  .toString();
+                                          if (Config_G.NameCustom_shop[index]
+                                                  .nameshop
+                                                  .toList()[indexshop]
+                                                  .toUpperCase() ==
+                                              _controllershop.text
+                                                  .toString()
+                                                  .toUpperCase()) {
+                                          } else {
+                                            Config_G
+                                                .NameCustom_shop[index].nameshop[indexshop]=_controllershop.text
+                                                .toString();
+
+                                          }
+
+                                          Config_G.NameCustom_shop[index]
+                                                  .telephone =
                                               _controllertelephone.text
                                                   .toString();
-                                          Config_G.NameCustom_shop[index].numberlocal =
-                                              _controllernumber.text
-                                                  .toString();
-                                          Config_G.NameCustom_shop[index].Postcodet =
+                                          Config_G.NameCustom_shop[index]
+                                                  .numberlocal =
+                                              _controllernumber.text.toString();
+                                          Config_G.NameCustom_shop[index]
+                                                  .Postcodet =
                                               _controllerpostcode.text
                                                   .toString();
-                                          Config_G.NameCustom_shop[index].stresst =
+                                          Config_G.NameCustom_shop[index]
+                                                  .stresst =
                                               _controllerstresst.text
                                                   .toString();
                                           Fluttertoast.showToast(
-                                              msg:
-                                                  "Sửa thông tin thành công ",
+                                              msg: "Sửa thông tin thành công ",
                                               toastLength: Toast.LENGTH_SHORT,
                                               gravity: ToastGravity.BOTTOM,
                                               timeInSecForIosWeb: 2,

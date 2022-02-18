@@ -566,16 +566,15 @@ class W_SignUp extends State {
                                               backgroundColor: Colors.red,
                                               textColor: Colors.white,
                                               fontSize: 16.0);
-                                          Information_Cutome s2 =
-                                              new Information_Cutome();
-                                          s2.nameshop = _NaneShop.text;
-                                          s2.telephone = _phone.text;
-                                          s2.stresst = _stresst.text;
-                                          s2.Postcodet = _postcode.text;
-                                          s2.numberlocal = _numberlocal.text;
-                                          s2.namecustome = _nameCustom.text;
-                                          s2.Nickname = Nicknames;
-                                          Config_G.NameCustom_shop.add(s2);
+                                          int k =0;
+                                          for(Information_Cutome i in Config_G.NameCustom_shop){
+                                            if(i.namecustome==_nameCustom.text){
+                                              i.nameshop.add(_NaneShop.text);
+                                            }
+                                            k+=1;
+                                          }
+
+
                                           Navigator.pop(context);
                                         }
                                       },

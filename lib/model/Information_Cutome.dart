@@ -2,7 +2,7 @@ class Information_Cutome {
   late String namecustome;
   late String telephone;
   late String Nickname;
-  late String nameshop;
+  late List<String> nameshop =[];
   late String numberlocal;
   late String stresst;
   late String Postcodet;
@@ -31,12 +31,12 @@ class Information_Cutome {
     this.Nickname = Nickname;
   }
 
-  String get information_nameshop {
+  List<String> get information_nameshops {
     return nameshop;
   }
 
   void set information_nameshop(String nameshop) {
-    this.nameshop = nameshop;
+    this.nameshop = nameshop as List<String>;
   }
   String get information_numberlocal {
     return numberlocal;
