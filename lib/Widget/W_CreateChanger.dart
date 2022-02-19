@@ -503,35 +503,48 @@ class CreateChange extends State {
                                                               },
                                                               controller:
                                                                   _shop)),
-                                                      new PopupMenuButton<
-                                                          String>(
-                                                        icon: const Icon(Icons
-                                                            .arrow_drop_down),
-                                                        onSelected:
-                                                            (String value) {
-                                                          print(value);
-                                                          setState(() {
-                                                            _shop..text = value;
-                                                          });
-                                                          indexshop = nameshops
-                                                              .indexWhere(
-                                                                  (indexhop) =>
-                                                                      indexhop ==
-                                                                      value);
-                                                        },
-                                                        itemBuilder:
-                                                            (BuildContextcontext) {
-                                                          return nameshops.map<
+                                                      new Card(
+                                                          elevation: 10,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0),
+                                                          ),
+                                                          child:
+                                                              PopupMenuButton<
+                                                                  String>(
+                                                            icon: const Icon(Icons
+                                                                .arrow_drop_down),
+                                                            onSelected:
+                                                                (String value) {
+                                                              print(value);
+                                                              setState(() {
+                                                                _shop
+                                                                  ..text =
+                                                                      value;
+                                                              });
+                                                              indexshop = nameshops
+                                                                  .indexWhere(
+                                                                      (indexhop) =>
+                                                                          indexhop ==
+                                                                          value);
+                                                            },
+                                                            itemBuilder:
+                                                                (BuildContextcontext) {
+                                                              return nameshops.map<
                                                                   PopupMenuItem<
-                                                                      String>>(
-                                                              (String value) {
-                                                            return new PopupMenuItem(
-                                                                child: new Text(
-                                                                    value),
-                                                                value: value);
-                                                          }).toList();
-                                                        },
-                                                      )
+                                                                      String>>((String
+                                                                  value) {
+                                                                return new PopupMenuItem(
+                                                                    child: new Text(
+                                                                        value),
+                                                                    value:
+                                                                        value);
+                                                              }).toList();
+                                                            },
+                                                          ))
                                                     ])),
                                           ),
                                           // --------------------------------------------------------------
