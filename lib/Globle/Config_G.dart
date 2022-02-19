@@ -4,6 +4,8 @@ import 'package:vl_ui/model/Information_Shop.dart';
 import 'package:vl_ui/model/New_Changer.dart';
 
 class Config_G{
+  static String url_SignCustome = 'http://103.161.16.61:27554/customer/register';
+  static String Token_app = "";
   static bool check_lang = false;
   static List<Information_Cutome> NameCustom_shop =[];
   static List<Information_Shop> NameShop=[];

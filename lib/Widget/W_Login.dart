@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +22,6 @@ class W_login extends StatefulWidget {
 }
 
 class login extends State {
-  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _controlleruser = TextEditingController();
   bool check = false;
@@ -31,23 +31,30 @@ class login extends State {
   }
 
   Future<bool> _makeGetRequest(String password) async {
-    String url = 'http://192.168.1.10:8055/api/login';
-    Request req = Request('POST', Uri.parse(url))
-      ..body = json.encode({'username': 'admin1', 'password': '${password}'})
-      ..headers.addAll({
-        "Content-type": "application/json",
-      });
-    var res = await req.send();
-    if (res.statusCode.toString() == "200") {
+    try {
+      String url = 'http://103.161.16.61:27554/auth/login';
+      var dio = Dio();
+      var response = await dio
+          .post(url, data: {'username': 'admin', 'password': '${password}'});
+      var data = response;
+      if (data.data["status"].toString() == "200") {
+        setState(() {
+          check = true;
+          Config_G.Token_app = data.data["data"]["token"].toString();
+        });
+        return true;
+      } else {
+        setState(() {
+          check = false;
+        });
+        return false;
+      }
+    } on Exception catch (e) {
       setState(() {
-        check = true;
+        check = false;
       });
-      return true;
+      return false;
     }
-    setState(() {
-      check = false;
-    });
-    return false;
   }
 
   @override
@@ -241,12 +248,12 @@ class login extends State {
                                 top: 15,
                                 bottom: 15) //content padding inside button
                             ),
-                        onPressed: () {
+                        onPressed: () async {
                           setState(() {
                             Config_G.Usernames = _controlleruser.text;
                           });
-                          _makeGetRequest(_controller.value.text);
-                          if (_controller.value.text == "admin") {
+                          await _makeGetRequest(_controller.value.text);
+                          if (check == true) {
                             Navigator.pushReplacement(
                                 context,
                                 PageTransition(

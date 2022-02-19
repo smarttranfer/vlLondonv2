@@ -23,6 +23,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.17.0
+  dio: ^4.0.4
   flutter_highlight: ^0.7.0
   google_fonts: ^2.0.0
   timelines: ^0.1.0

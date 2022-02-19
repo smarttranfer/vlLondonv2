@@ -7,14 +7,16 @@ import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'W_Signupmanger.dart';
 
+
 class AnimeApp extends StatefulWidget {
   AnimeApp({Key? key}) : super(key: key);
 
   @override
-  _AnimeAppState createState() => _AnimeAppState();
+  AnimeAppState createState() => AnimeAppState();
 }
 
-class _AnimeAppState extends State<AnimeApp> {
+class AnimeAppState extends State<AnimeApp> {
+
   late Future<List<Show>> shows;
   String searchString = "";
   bool checknull = false;

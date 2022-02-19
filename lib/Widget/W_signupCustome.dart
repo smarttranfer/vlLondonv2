@@ -1,3 +1,4 @@
+import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/Widget/W_Login.dart';
 import 'package:vl_ui/model/CheckSameCustome.dart';
@@ -18,6 +19,7 @@ class W_SignUpCustom extends StatefulWidget {
 }
 
 class W_SignUp extends State<W_SignUpCustom> {
+  static bool check = false;
   bool checkcolor = true;
   bool checklabel = true;
   bool checkcolorNickname = true;
@@ -562,7 +564,7 @@ class W_SignUp extends State<W_SignUpCustom> {
                                         bottom:
                                             15) //content padding inside button
                                     ),
-                                onPressed: () {
+                                onPressed: () async {
                                   if (_Name.text.isEmpty |
                                       _nickname.text.isEmpty |
                                       _shop.text.isEmpty |
@@ -582,33 +584,54 @@ class W_SignUp extends State<W_SignUpCustom> {
                                         fontSize: 16.0);
                                   } else {
                                     if (checkdone == true) {
-                                      Fluttertoast.showToast(
-                                          msg: Config_G.check_lang
-                                              ? "Tạo Thông tin thành công"
-                                              : "Create Success Info",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 2,
-                                          backgroundColor: Colors.green,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0);
-                                      Information_Cutome s1 =
-                                          new Information_Cutome();
-                                      s1.namecustome = _Name.text;
-                                      s1.telephone = _phone.text;
-                                      s1.Nickname = _nickname.text;
-                                      s1.nameshop.add(_shop.text);
-                                      s1.numberlocal = _numberlocal.text;
-                                      s1.stresst = _stresst.text;
-                                      s1.Postcodet = _postcode.text;
-                                      Config_G.NameCustom_shop.add(s1);
-                                      CheckSameCustome modelchek =
-                                          new CheckSameCustome();
-                                      modelchek.information_name = _Name.text;
-                                      modelchek.information_nickname =
-                                          _nickname.text;
-                                      Config_G.modelCustome.add(modelchek);
-                                      Navigator.pop(context);
+                                      await ActionJS.SignCustome(
+                                          _Name.text,
+                                          _nickname.text,
+                                          _phone.text,
+                                          _shop.text,
+                                          _numberlocal.text,
+                                          _stresst.text,
+                                          _postcode.text);
+                                      if (check == true) {
+                                        Information_Cutome s1 =
+                                            new Information_Cutome();
+                                        s1.namecustome = _Name.text;
+                                        s1.telephone = _phone.text;
+                                        s1.Nickname = _nickname.text;
+                                        s1.nameshop.add(_shop.text);
+                                        s1.numberlocal = _numberlocal.text;
+                                        s1.stresst = _stresst.text;
+                                        s1.Postcodet = _postcode.text;
+                                        Config_G.NameCustom_shop.add(s1);
+                                        CheckSameCustome modelchek =
+                                            new CheckSameCustome();
+                                        modelchek.information_name = _Name.text;
+                                        modelchek.information_nickname =
+                                            _nickname.text;
+                                        Config_G.modelCustome.add(modelchek);
+                                        Fluttertoast.showToast(
+                                            msg: Config_G.check_lang
+                                                ? "Tạo Thông tin thành công"
+                                                : "Create Success Info",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 2,
+                                            backgroundColor: Colors.green,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                        Navigator.pop(context);
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: Config_G.check_lang
+                                                ? "không thể đăng ký được account"
+                                                : "Unable to register an account",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 2,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      }
                                     } else {
                                       Fluttertoast.showToast(
                                           msg: Config_G.check_lang
