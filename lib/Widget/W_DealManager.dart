@@ -222,13 +222,18 @@ class _HomePageState extends State<DealManagers> {
                                                       left: 20,
                                                       bottom: 10,
                                                       right: 5),
-                                                  child: Text(
-                                                    'Shop : ${_foundUsers[index]["shop"].toString()}',
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ))
+                                                  child: Container(
+                                                      width: 150,
+                                                      child: Text(
+                                                        'Shop : ${_foundUsers[index]["shop"].toString()}',
+                                                        overflow: TextOverflow
+                                                            .visible,
+                                                        maxLines: 5,
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      )))
                                             ],
                                           ),
                                         ),

@@ -232,7 +232,6 @@ class CreateChange extends State {
                                               ),
                                             ],
                                           ),
-
                                           Card(
                                               elevation: 10,
                                               shape: RoundedRectangleBorder(

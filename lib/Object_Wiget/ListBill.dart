@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/model/ModelCustome.dart';
 
@@ -28,60 +30,77 @@ class ListViewsBill extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             shadowColor: Colors.black54,
-                            child: Column(
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: 50,
-                                        width: 50,
-                                        child: SvgPicture.asset(
-                                          "assest/IconBtn/contacts.svg",
+                                  Expanded(
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 2),
+                                                child: Container(
+                                                  margin:
+                                                      EdgeInsets.only(left: 2),
+                                                  height: 50,
+                                                  width: 50,
+                                                  child: SvgPicture.asset(
+                                                    "assest/IconBtn/contacts.svg",
+                                                  ),
+                                                )),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  25,
+                                            ),
+                                            Column(children: [
+                                              Text(
+                                                "${ActionJS.splitString(provider.getCustomeBill(index).toString())}",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 15,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                              Text(
+                                                "${ActionJS.splitString(provider.getShopBill(index))}",
+                                                style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 15,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                            ]),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  30,
+                                            ),
+                                            Text(
+                                              "- ${provider.getMoneyBill(index)}",
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                                fontSize: 20,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                25,
-                                      ),
-                                      Column(children: [
-                                        Text(
-                                          "${provider.getCustomeBill(index).toString()}",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                        Text(
-                                          "${provider.getShopBill(index)}",
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 15,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                      ]),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                30,
-                                      ),
-                                      Text(
-                                        "- ${provider.getMoneyBill(index)}",
-                                        style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: 20,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                      ]))
                                 ])))
                   ]);
                 });

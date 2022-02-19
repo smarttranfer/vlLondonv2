@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vl_ui/DartJs/FuntionsAction.dart';
 
 class BtnFilter extends StatelessWidget {
   const BtnFilter({
@@ -75,7 +76,7 @@ class BtnFilter extends StatelessWidget {
                             )),
                             Center(
                               child: Text(
-                                Subcontent,
+                                ActionJS.splitString(Subcontent).substring(1, ActionJS.splitString(Subcontent).length-1),
                                 style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 17,

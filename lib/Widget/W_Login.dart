@@ -86,8 +86,8 @@ class login extends State {
                       Row(
                         children: [
                           Center(
-                            child: Text(Config_G.check_lang
-                                ?"ĐĂNG NHẬP":'LOG IN',
+                            child: Text(
+                                Config_G.check_lang ? "ĐĂNG NHẬP" : 'LOG IN',
                                 style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.bold,
@@ -98,71 +98,72 @@ class login extends State {
                               width: MediaQuery.of(context).size.width / 50),
                           PopupMenuButton(
                               shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                      width: 2, color: Colors.green),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(15.0))),
+                                  side:
+                                      BorderSide(width: 2, color: Colors.green),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.0))),
                               child: Padding(
                                 padding: EdgeInsets.symmetric(),
                                 child: Image.asset(
-                                    "assest/IconBtn/translate.png",height: 30,
-                                    fit:BoxFit.fill),
+                                    "assest/IconBtn/translate.png",
+                                    height: 30,
+                                    fit: BoxFit.fill),
                               ),
                               itemBuilder: (context) => [
-                                PopupMenuItem(
-                                    child: Row(
-                                      children: [
-                                        IconButton(
-                                          icon: Image.asset(
-                                              "assest/IconBtn/vietnam.png"),
-                                          onPressed: () {
-                                            print(
-                                                "Dổi ngồn ngũ sang tiếng việt");
-                                            setState(() {
-                                              Config_G.check_lang = true;
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          "Tiếng Việt",
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: 20,
-                                            fontFamily: 'Poppins',
-                                            fontWeight:
-                                            FontWeight.bold,
-                                          ),
-                                        )
-                                      ],
-                                    )),
-                                PopupMenuItem(
-                                    child: Row(
-                                      children: [
-                                        IconButton(
-                                          icon: Image.asset(
-                                            "assest/IconBtn/kingdom.png",
-                                          ),
-                                          onPressed: () {
-                                            print(
-                                                "Dổi ngồn ngũ sang tiếng anh");
-                                            setState(() {
-                                              Config_G.check_lang = false;
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          "English",
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: 20,
-                                            fontFamily: 'Poppins',
-                                            fontWeight:
-                                            FontWeight.bold,
-                                          ),
-                                        )
-                                      ],
-                                    ))
-                              ]),
+                                    PopupMenuItem(
+                                        child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                Config_G.check_lang = true;
+                                              });
+                                            },
+                                            child: Row(
+                                              children: [
+                                                IconButton(
+                                                  icon: Image.asset(
+                                                      "assest/IconBtn/vietnam.png"),
+                                                  onPressed: () {
+                                                    setState(() {});
+                                                  },
+                                                ),
+                                                Text(
+                                                  "Tiếng Việt",
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontSize: 20,
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                )
+                                              ],
+                                            ))),
+                                    PopupMenuItem(
+                                        child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                Config_G.check_lang = false;
+                                              });
+                                            },
+                                            child: Row(
+                                              children: [
+                                                IconButton(
+                                                  icon: Image.asset(
+                                                    "assest/IconBtn/kingdom.png",
+                                                  ),
+                                                  onPressed: () {},
+                                                ),
+                                                Text(
+                                                  "English",
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontSize: 20,
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                )
+                                              ],
+                                            )))
+                                  ]),
                         ],
                       ),
                       SizedBox(
@@ -176,7 +177,8 @@ class login extends State {
                                 controller: _controlleruser,
                                 decoration: InputDecoration(
                                   hintText: Config_G.check_lang
-                                      ?"Tài Khoản":"Username",
+                                      ? "Tài Khoản"
+                                      : "Username",
                                   hintStyle: TextStyle(
                                     color: Colors.black,
                                     fontStyle: FontStyle.normal,
@@ -196,8 +198,8 @@ class login extends State {
                               color: Colors.black54,
                               controller: _controller,
                               inputDecoration: PasswordDecoration(),
-                              hintText: Config_G.check_lang
-                                  ?"Mật khẩu":'Password',
+                              hintText:
+                                  Config_G.check_lang ? "Mật khẩu" : 'Password',
                               border: PasswordBorder(
                                 border: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -262,9 +264,9 @@ class login extends State {
                               body: Center(
                                 child: Center(
                                     child: Text(
-                                      Config_G.check_lang
-                                          ?"Mật khẩu không đúng, check lại tài khoàn với VIHU hoăc call cho Support.":
-                                      "The password is incorrect, please check your account with VIHU or call Support.",
+                                  Config_G.check_lang
+                                      ? "Mật khẩu không đúng, check lại tài khoàn với VIHU hoăc call cho Support."
+                                      : "The password is incorrect, please check your account with VIHU or call Support.",
                                   style: TextStyle(fontWeight: FontWeight.w900),
                                 )),
                               ),
@@ -274,8 +276,7 @@ class login extends State {
                             )..show();
                           }
                         },
-                        child: Text(Config_G.check_lang
-                            ?'ĐĂNG NHẬP':"Login",
+                        child: Text(Config_G.check_lang ? 'ĐĂNG NHẬP' : "Login",
                             style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.bold,
@@ -303,8 +304,10 @@ class login extends State {
                                             MediaQuery.of(context).size.width /
                                                 30,
                                       ),
-                                      Text(Config_G.check_lang
-                                          ?'Hỗ trợ':"Help",
+                                      Text(
+                                          Config_G.check_lang
+                                              ? 'Hỗ trợ'
+                                              : "Help",
                                           style: TextStyle(
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.bold,

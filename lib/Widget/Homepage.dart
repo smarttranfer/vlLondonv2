@@ -1,4 +1,3 @@
-import 'package:provider/provider.dart';
 import 'package:vl_ui/Button/DetailBtn.dart';
 import 'package:vl_ui/Button/OptionButton.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
@@ -9,10 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:vl_ui/model/ModelCustome.dart';
-import 'Filter_Bill.dart';
 import 'TimeLineLog.dart';
 import 'W_CreateChanger.dart';
 import 'W_DealManager.dart';
@@ -62,56 +58,58 @@ class Home extends State {
                               ),
                               itemBuilder: (context) => [
                                     PopupMenuItem(
-                                        child: Row(
-                                      children: [
-                                        IconButton(
-                                          icon: Image.asset(
-                                              "assest/IconBtn/vietnam.png"),
-                                          onPressed: () {
-                                            print(
-                                                "Dổi ngồn ngũ sang tiếng việt");
-                                            setState(() {
-                                              Config_G.check_lang = true;
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          "Tiếng Việt",
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: 20,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )
-                                      ],
-                                    )),
+                                        child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                Config_G.check_lang = true;
+                                              });
+                                            },
+                                            child: Row(
+                                              children: [
+                                                IconButton(
+                                                  icon: Image.asset(
+                                                      "assest/IconBtn/vietnam.png"),
+                                                  onPressed: () {
+                                                    setState(() {});
+                                                  },
+                                                ),
+                                                Text(
+                                                  "Tiếng Việt",
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontSize: 20,
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                )
+                                              ],
+                                            ))),
                                     PopupMenuItem(
-                                        child: Row(
-                                      children: [
-                                        IconButton(
-                                          icon: Image.asset(
-                                            "assest/IconBtn/kingdom.png",
-                                          ),
-                                          onPressed: () {
-                                            print(
-                                                "Dổi ngồn ngũ sang tiếng anh");
-                                            setState(() {
-                                              Config_G.check_lang = false;
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          "English",
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: 20,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )
-                                      ],
-                                    ))
+                                        child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                Config_G.check_lang = false;
+                                              });
+                                            },
+                                            child: Row(
+                                              children: [
+                                                IconButton(
+                                                  icon: Image.asset(
+                                                    "assest/IconBtn/kingdom.png",
+                                                  ),
+                                                  onPressed: () {},
+                                                ),
+                                                Text(
+                                                  "English",
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontSize: 20,
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                )
+                                              ],
+                                            )))
                                   ]),
                           SizedBox(
                               height: MediaQuery.of(context).size.height / 14),
@@ -152,14 +150,55 @@ class Home extends State {
                                   )),
                               itemBuilder: (context) => [
                                     PopupMenuItem(
-                                        child: Row(
-                                      children: [
-                                        IconButton(
-                                          icon: Image.asset(
-                                            "assest/IconBtn/history.png",
-                                          ),
-                                          onPressed: () {
-                                            Navigator.push(
+                                        child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                Config_G.check_lang = false;
+                                              });
+                                            },
+                                            child: InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      PageTransition(
+                                                          type:
+                                                              PageTransitionType
+                                                                  .rightToLeft,
+                                                          duration: Duration(
+                                                              milliseconds: Config_G
+                                                                  .timeDruation),
+                                                          reverseDuration: Duration(
+                                                              milliseconds: Config_G
+                                                                  .timeDruation),
+                                                          child:
+                                                              PackageDeliveryTrackingPage()));
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    IconButton(
+                                                      icon: Image.asset(
+                                                        "assest/IconBtn/history.png",
+                                                      ),
+                                                      onPressed: () {},
+                                                    ),
+                                                    Text(
+                                                      Config_G.check_lang
+                                                          ? "Lich sử"
+                                                          : "History",
+                                                      style: TextStyle(
+                                                        color: Colors.green,
+                                                        fontSize: 20,
+                                                        fontFamily: 'Poppins',
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    )
+                                                  ],
+                                                )))),
+                                    PopupMenuItem(
+                                      child: InkWell(
+                                          onTap: () {
+                                            Navigator.pushReplacement(
                                                 context,
                                                 PageTransition(
                                                     type: PageTransitionType
@@ -170,62 +209,29 @@ class Home extends State {
                                                     reverseDuration: Duration(
                                                         milliseconds: Config_G
                                                             .timeDruation),
-                                                    child:
-                                                        PackageDeliveryTrackingPage()));
-                                            setState(() {
-                                              Config_G.check_lang = false;
-                                            });
+                                                    child: W_login()));
                                           },
-                                        ),
-                                        Text(
-                                          Config_G.check_lang
-                                              ? "Lich sử"
-                                              : "History",
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: 20,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )
-                                      ],
-                                    )),
-                                    PopupMenuItem(
-                                        child: Row(
-                                      children: [
-                                        IconButton(
-                                          icon: Image.asset(
-                                              "assest/IconBtn/logout.png"),
-                                          onPressed: () {
-                                            setState(() {
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  PageTransition(
-                                                      type: PageTransitionType
-                                                          .rightToLeft,
-                                                      duration: Duration(
-                                                          milliseconds: Config_G
-                                                              .timeDruation),
-                                                      reverseDuration: Duration(
-                                                          milliseconds: Config_G
-                                                              .timeDruation),
-                                                      child: W_login()));
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          Config_G.check_lang
-                                              ? "Thoát"
-                                              : "Log Out",
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: 20,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )
-                                      ],
-                                    )),
+                                          child: Row(
+                                            children: [
+                                              IconButton(
+                                                icon: Image.asset(
+                                                    "assest/IconBtn/logout.png"),
+                                                onPressed: () {},
+                                              ),
+                                              Text(
+                                                Config_G.check_lang
+                                                    ? "Thoát"
+                                                    : "Log Out",
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                  fontSize: 20,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                    )
                                   ]),
                         ],
                       ),
