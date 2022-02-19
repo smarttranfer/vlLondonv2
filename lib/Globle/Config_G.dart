@@ -4,15 +4,17 @@ import 'package:vl_ui/model/Information_Shop.dart';
 import 'package:vl_ui/model/New_Changer.dart';
 
 class Config_G{
-  static String url_SignCustome = 'http://103.161.16.61:27554/customer/register';
-  static String Token_app = "";
+
   static bool check_lang = false;
+  static bool check_namecustom_chossen = false;
   static List<Information_Cutome> NameCustom_shop =[];
   static List<Information_Shop> NameShop=[];
   static List<CheckSameCustome> modelCustome = [];
   static List<Information_Bill> modelBill = [];
+  static String url_SignCustome = 'http://103.161.16.61:27554/customer/register';
+  static String Token_app = "";
+  static String id_Custome_shop = "";
   static String namecustom_chossen = "";
-  static bool check_namecustom_chossen = false;
   static String ColorsBtnOption = "#388118";
   static String Usernames = "";
   static String Tilte_ens = "Hello," + Usernames;

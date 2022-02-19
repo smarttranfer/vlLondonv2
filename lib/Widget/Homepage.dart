@@ -198,6 +198,9 @@ class Home extends State {
                                     PopupMenuItem(
                                       child: InkWell(
                                           onTap: () {
+                                            setState(() {
+                                              login.check_loadingbar = false;
+                                            });
                                             Navigator.pushReplacement(
                                                 context,
                                                 PageTransition(

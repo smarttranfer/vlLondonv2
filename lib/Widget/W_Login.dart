@@ -24,7 +24,8 @@ class W_login extends StatefulWidget {
 class login extends State {
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _controlleruser = TextEditingController();
-  bool check = false;
+  static bool checks = false;
+  static bool check_loadingbar = false;
   _callNumber() async {
     const number = '0335925341';
     bool? res = await FlutterPhoneDirectCaller.callNumber(number);
@@ -32,6 +33,10 @@ class login extends State {
 
   Future<bool> _makeGetRequest(String password) async {
     try {
+      setState(() {
+        check_loadingbar = true;
+      });
+
       String url = 'http://103.161.16.61:27554/auth/login';
       var dio = Dio();
       var response = await dio
@@ -39,19 +44,19 @@ class login extends State {
       var data = response;
       if (data.data["status"].toString() == "200") {
         setState(() {
-          check = true;
+          checks = true;
           Config_G.Token_app = data.data["data"]["token"].toString();
         });
         return true;
       } else {
         setState(() {
-          check = false;
+          checks = false;
         });
         return false;
       }
     } on Exception catch (e) {
       setState(() {
-        check = false;
+        checks = false;
       });
       return false;
     }
@@ -252,8 +257,12 @@ class login extends State {
                           setState(() {
                             Config_G.Usernames = _controlleruser.text;
                           });
+
                           await _makeGetRequest(_controller.value.text);
-                          if (check == true) {
+                          if (checks == true) {
+                            setState(() {
+                              check_loadingbar = false;
+                            });
                             Navigator.pushReplacement(
                                 context,
                                 PageTransition(
@@ -324,6 +333,20 @@ class login extends State {
                                   ),
                                 )
                               ])),
+                      check_loadingbar
+                          ? Center(
+                              child: FutureBuilder(
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                  } else if (snapshot.hasError) {
+                                    return Text("${snapshot.error}");
+                                  }
+                                  // By default, show a loading spinner
+                                  return CircularProgressIndicator();
+                                },
+                              ),
+                            )
+                          : SizedBox(),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 6,
                       ),

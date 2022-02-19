@@ -1,11 +1,13 @@
+import 'Information_Shop.dart';
+
 class Information_Cutome {
+  late int id;
   late String namecustome;
   late String telephone;
   late String Nickname;
-  late List<String> nameshop =[];
-  late String numberlocal;
-  late String stresst;
-  late String Postcodet;
+  late List<Information_Shop> nameshop =[];
+
+
 
   String get information_name {
     return namecustome;
@@ -31,32 +33,11 @@ class Information_Cutome {
     this.Nickname = Nickname;
   }
 
-  List<String> get information_nameshops {
+  List<Information_Shop> get information_nameshops {
     return nameshop;
   }
 
   void set information_nameshop(String nameshop) {
-    this.nameshop = nameshop as List<String>;
-  }
-  String get information_numberlocal {
-    return numberlocal;
-  }
-
-  void set information_numberlocal(String numberlocal) {
-    this.numberlocal = numberlocal;
-  }
-  String get information_stresst {
-    return stresst;
-  }
-
-  void set information__stresst(String stresst) {
-    this.stresst = stresst;
-  }
-  String get information__Postcodet {
-    return Postcodet;
-  }
-
-  void set information_Postcodet(String Postcodet) {
-    this.Postcodet = Postcodet;
+    this.nameshop = nameshop as List<Information_Shop>;
   }
 }

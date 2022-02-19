@@ -36,7 +36,8 @@ class W_SignUp extends State {
     int k = 1;
     for (Information_Cutome i in Config_G.NameCustom_shop) {
       _allUsers.add({
-        "id": "${k}",
+        "customer_id": "${i.id}",
+        // "shop_id" : "${i.nameshop[0].}"
         "name": "${i.namecustome}-${i.Nickname}",
         "shop": "${i.nameshop}"
       });
@@ -569,7 +570,7 @@ class W_SignUp extends State {
                                           int k =0;
                                           for(Information_Cutome i in Config_G.NameCustom_shop){
                                             if(i.namecustome==_nameCustom.text){
-                                              i.nameshop.add(_NaneShop.text);
+                                              // i.nameshop.add(_NaneShop.text);
                                             }
                                             k+=1;
                                           }

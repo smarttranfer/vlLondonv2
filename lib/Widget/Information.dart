@@ -123,8 +123,8 @@ class OrderTitle extends StatelessWidget {
                                     ),
                                     TextField(
                                       decoration: InputDecoration(
-                                        hintText:
-                                            "${Config_G.NameCustom_shop[index].numberlocal}",
+                                        // hintText:
+                                            // "${Config_G.NameCustom_shop[index].numberlocal}",
                                         icon: Icon(
                                             Icons.add_location_alt_outlined),
                                         labelText: 'Apartment number',
@@ -135,8 +135,8 @@ class OrderTitle extends StatelessWidget {
                                     ),
                                     TextField(
                                       decoration: InputDecoration(
-                                        hintText:
-                                            "${Config_G.NameCustom_shop[index].Postcodet}",
+                                        // hintText:
+                                        //     "${Config_G.NameCustom_shop[index].Postcodet}",
                                         icon: Icon(
                                             Icons.add_location_alt_outlined),
                                         labelText: 'Post code',
@@ -147,8 +147,8 @@ class OrderTitle extends StatelessWidget {
                                     ),
                                     TextField(
                                       decoration: InputDecoration(
-                                        hintText:
-                                            " ${Config_G.NameCustom_shop[index].stresst}",
+                                        // hintText:
+                                        //     " ${Config_G.NameCustom_shop[index].stresst}",
                                         icon: Icon(
                                             Icons.add_location_alt_outlined),
                                         labelText: 'Stresst shop',

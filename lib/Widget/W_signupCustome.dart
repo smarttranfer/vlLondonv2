@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/Widget/W_Login.dart';
@@ -42,8 +44,6 @@ class W_SignUp extends State<W_SignUpCustom> {
       CheckSameCustome modelchek = new CheckSameCustome();
       modelchek.information_name = i.namecustome.toString();
       modelchek.information_nickname = i.Nickname.toString();
-      modelchek.post_numberloacl =
-          "${i.numberlocal.split(" ")}${i.Postcodet.split(" ")}";
       modelCustome.add(modelchek);
     }
     super.initState();
@@ -485,26 +485,6 @@ class W_SignUp extends State<W_SignUpCustom> {
                                       Expanded(
                                         child: TextFormField(
                                           controller: _postcode,
-                                          onChanged: (v) {
-                                            for (CheckSameCustome i
-                                                in modelCustome) {
-                                              if ("${_numberlocal.text.split(" ")}${v.toString().split(" ")}"
-                                                  .contains(
-                                                      i.post_numberloacl)) {
-                                                setState(() {
-                                                  post_numberloacl_label =
-                                                      false;
-                                                  post_numberloacl_color =
-                                                      false;
-                                                  checkdone = false;
-                                                });
-                                              } else {
-                                                post_numberloacl_label = true;
-                                                post_numberloacl_color = true;
-                                                checkdone = true;
-                                              }
-                                            }
-                                          },
                                           decoration: InputDecoration(
                                             labelText: Config_G.check_lang
                                                 ? (post_numberloacl_label
@@ -593,15 +573,20 @@ class W_SignUp extends State<W_SignUpCustom> {
                                           _stresst.text,
                                           _postcode.text);
                                       if (check == true) {
+                                        Information_Shop  s0 = new Information_Shop();
+                                        print(json.decode(Config_G.id_Custome_shop));
+                                        s0.id = json.decode(Config_G.id_Custome_shop)["data"]["shop_id"];
+                                        s0.post_code = _postcode.text;
+                                        s0.building_number = _numberlocal.text;
+                                        s0.nameshop = _shop.text;
+                                        s0.address = _stresst.text;
                                         Information_Cutome s1 =
                                             new Information_Cutome();
+                                        s1.id = json.decode(Config_G.id_Custome_shop)["data"]["customer_id"];
                                         s1.namecustome = _Name.text;
                                         s1.telephone = _phone.text;
                                         s1.Nickname = _nickname.text;
-                                        s1.nameshop.add(_shop.text);
-                                        s1.numberlocal = _numberlocal.text;
-                                        s1.stresst = _stresst.text;
-                                        s1.Postcodet = _postcode.text;
+                                        s1.nameshop.add(s0);
                                         Config_G.NameCustom_shop.add(s1);
                                         CheckSameCustome modelchek =
                                             new CheckSameCustome();
@@ -623,11 +608,11 @@ class W_SignUp extends State<W_SignUpCustom> {
                                       } else {
                                         Fluttertoast.showToast(
                                             msg: Config_G.check_lang
-                                                ? "không thể đăng ký được account"
-                                                : "Unable to register an account",
+                                                ? "${json.decode(Config_G.id_Custome_shop)["message"].toString()}"
+                                                : "Already exists in the database",
                                             toastLength: Toast.LENGTH_SHORT,
                                             gravity: ToastGravity.CENTER,
-                                            timeInSecForIosWeb: 2,
+                                            timeInSecForIosWeb: 10,
                                             backgroundColor: Colors.red,
                                             textColor: Colors.white,
                                             fontSize: 16.0);
@@ -635,11 +620,11 @@ class W_SignUp extends State<W_SignUpCustom> {
                                     } else {
                                       Fluttertoast.showToast(
                                           msg: Config_G.check_lang
-                                              ? "không thể đăng ký được account"
-                                              : "Unable to register an account",
+                                              ? "${json.decode(Config_G.id_Custome_shop)["message"].toString()}"
+                                              : "Already exists in the database",
                                           toastLength: Toast.LENGTH_SHORT,
                                           gravity: ToastGravity.CENTER,
-                                          timeInSecForIosWeb: 2,
+                                          timeInSecForIosWeb: 10,
                                           backgroundColor: Colors.red,
                                           textColor: Colors.white,
                                           fontSize: 16.0);

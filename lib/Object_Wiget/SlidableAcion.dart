@@ -71,27 +71,27 @@ class ListViewsCustome extends StatelessWidget {
                                                         },
                                                         controller:
                                                         _controllershop..text = "${Config_G.NameCustom_shop[index].nameshop[0]}")),
-                                                new PopupMenuButton<String>(
-                                                  icon: const Icon(
-                                                      Icons.arrow_drop_down),
-                                                  onSelected: (String value) {
-                                                    _controllershop.text = value;
-                                                    indexshop = Config_G.NameCustom_shop[index].nameshop.indexWhere((indexshop) => indexshop==value);
-
-                                                  },
-                                                  itemBuilder:
-                                                      (BuildContext context) {
-                                                    return Config_G.NameCustom_shop[index].nameshop.map<
-                                                        PopupMenuItem<
-                                                            String>>(
-                                                            (String value) {
-                                                          return new PopupMenuItem(
-                                                              child:
-                                                              new Text(value),
-                                                              value: value);
-                                                        }).toList();
-                                                  },
-                                                )
+                                                // new PopupMenuButton<String>(
+                                                //   icon: const Icon(
+                                                //       Icons.arrow_drop_down),
+                                                //   onSelected: (String value) {
+                                                //     _controllershop.text = value;
+                                                //     indexshop = Config_G.NameCustom_shop[index].nameshop.indexWhere((indexshop) => indexshop==value);
+                                                //
+                                                //   },
+                                                //   itemBuilder:
+                                                //       (BuildContext context) {
+                                                //     return Config_G.NameCustom_shop[index].nameshop.map<
+                                                //         PopupMenuItem<
+                                                //             String>>(
+                                                //             (String value) {
+                                                //           return new PopupMenuItem(
+                                                //               child:
+                                                //               new Text(value),
+                                                //               value: value);
+                                                //         }).toList();
+                                                //   },
+                                                // )
                                               ])),
                                       TextField(
                                         decoration: InputDecoration(
@@ -139,38 +139,38 @@ class ListViewsCustome extends StatelessWidget {
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
-                                          hintText:
-                                              "${Config_G.NameCustom_shop[index].numberlocal}",
+                                          // hintText:
+                                          //     "${Config_G.NameCustom_shop[index].numberlocal}",
                                           icon: Icon(
                                               Icons.add_location_alt_outlined),
                                           labelText: 'Apartment number',
                                         ),
-                                        controller: _controllernumber
-                                          ..text =
-                                              "${Config_G.NameCustom_shop[index].numberlocal}",
+                                        // controller: _controllernumber
+                                        //   ..text =
+                                        //       "${Config_G.NameCustom_shop[index].numberlocal}",
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
-                                          hintText:
-                                              "${Config_G.NameCustom_shop[index].Postcodet}",
+                                          // hintText:
+                                          //     "${Config_G.NameCustom_shop[index].Postcodet}",
                                           icon: Icon(
                                               Icons.local_post_office_outlined),
                                           labelText: 'Post code',
                                         ),
-                                        controller: _controllerpostcode
-                                          ..text =
-                                              "${Config_G.NameCustom_shop[index].Postcodet}",
+                                        // controller: _controllerpostcode
+                                        //   ..text =
+                                        //       "${Config_G.NameCustom_shop[index].Postcodet}",
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
-                                          hintText:
-                                              " ${Config_G.NameCustom_shop[index].stresst}",
+                                          // hintText:
+                                          //     " ${Config_G.NameCustom_shop[index].stresst}",
                                           icon: Icon(Icons.edit_road_rounded),
                                           labelText: 'Stresst shop',
                                         ),
-                                        controller: _controllerstresst
-                                          ..text =
-                                              "${Config_G.NameCustom_shop[index].stresst}",
+                                        // controller: _controllerstresst
+                                        //   ..text =
+                                        //       "${Config_G.NameCustom_shop[index].stresst}",
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -190,35 +190,35 @@ class ListViewsCustome extends StatelessWidget {
                                                   .Nickname =
                                               _controllernickname.text
                                                   .toString();
-                                          if (Config_G.NameCustom_shop[index]
-                                                  .nameshop
-                                                  .toList()[indexshop]
-                                                  .toUpperCase() ==
-                                              _controllershop.text
-                                                  .toString()
-                                                  .toUpperCase()) {
-                                          } else {
-                                            Config_G
-                                                .NameCustom_shop[index].nameshop[indexshop]=_controllershop.text
-                                                .toString();
+                                          // if (Config_G.NameCustom_shop[index]
+                                          //         .nameshop
+                                          //         .toList()[indexshop]
+                                          //         .toUpperCase() ==
+                                          //     _controllershop.text
+                                          //         .toString()
+                                          //         .toUpperCase()) {
+                                          // } else {
+                                          //   Config_G
+                                          //       .NameCustom_shop[index].nameshop[indexshop]=_controllershop.text
+                                          //       .toString();
+                                          //
+                                          // }
 
-                                          }
-
-                                          Config_G.NameCustom_shop[index]
-                                                  .telephone =
-                                              _controllertelephone.text
-                                                  .toString();
-                                          Config_G.NameCustom_shop[index]
-                                                  .numberlocal =
-                                              _controllernumber.text.toString();
-                                          Config_G.NameCustom_shop[index]
-                                                  .Postcodet =
-                                              _controllerpostcode.text
-                                                  .toString();
-                                          Config_G.NameCustom_shop[index]
-                                                  .stresst =
-                                              _controllerstresst.text
-                                                  .toString();
+                                          // Config_G.NameCustom_shop[index]
+                                          //         .telephone =
+                                          //     _controllertelephone.text
+                                          //         .toString();
+                                          // Config_G.NameCustom_shop[index]
+                                          //         .numberlocal =
+                                          //     _controllernumber.text.toString();
+                                          // Config_G.NameCustom_shop[index]
+                                          //         .Postcodet =
+                                          //     _controllerpostcode.text
+                                          //         .toString();
+                                          // Config_G.NameCustom_shop[index]
+                                          //         .stresst =
+                                          //     _controllerstresst.text
+                                          //         .toString();
                                           Fluttertoast.showToast(
                                               msg: "Sửa thông tin thành công ",
                                               toastLength: Toast.LENGTH_SHORT,
