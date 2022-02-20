@@ -76,7 +76,7 @@ class BtnFilter extends StatelessWidget {
                             )),
                             Center(
                               child: Text(
-                                ActionJS.splitString(Subcontent).substring(1, ActionJS.splitString(Subcontent).length-1),
+                                ActionJS.splitString(Subcontent),
                                 style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 17,
