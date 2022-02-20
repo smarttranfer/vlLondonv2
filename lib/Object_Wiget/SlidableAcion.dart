@@ -255,8 +255,8 @@ class ListViewsCustome extends StatelessWidget {
                             },
                             icon: Icon(Icons.edit)),
                         IconButton(
-                            onPressed: () {
-                              ActionJS.Deletes( foundUsers[index]["id_chop"],foundUsers[index]["customer_id"]);
+                            onPressed: () async{
+                              await ActionJS.Deletes( foundUsers[index]["id_chop"],foundUsers[index]["customer_id"]);
                               Config_G.NameCustom_shop.removeAt(index);
                               Navigator.pushReplacement(
                                   context,
