@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:vl_ui/Button/DetailBtn.dart';
 import 'package:vl_ui/Button/OptionButton.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
@@ -9,10 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vl_ui/model/CheckSameCustome.dart';
+import 'package:vl_ui/model/Information_Cutome.dart';
+import 'package:vl_ui/model/Information_Shop.dart';
 import 'TimeLineLog.dart';
 import 'W_CreateChanger.dart';
 import 'W_DealManager.dart';
 import 'W_static.dart';
+import 'package:http/http.dart' as http;
 
 class W_Home extends StatefulWidget {
   @override
@@ -21,9 +27,66 @@ class W_Home extends StatefulWidget {
   }
 }
 
-class Home extends State {
+class Home extends State<W_Home> {
   bool checkdataToday = false;
   bool checkdataYesterday = false;
+  static bool check_loding_data = true;
+  @override
+  void initState() {
+    super.initState();
+    asyncMethod();
+  }
+
+  void asyncMethod() async {
+    await GetInformation();
+  }
+
+  Future<void> GetInformation() async {
+    try {
+      var headers = {
+        'Authorization': 'Bearer ${Config_G.Token_app}',
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request(
+          'GET', Uri.parse('http://103.161.16.61:27554/customer/info/all'));
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+      Config_G.id_Custome_shop = await response.stream.bytesToString();
+      if (json.decode(Config_G.id_Custome_shop)["status"].toString() == "200") {
+        for (var i in json.decode(Config_G.id_Custome_shop)["data"]) {
+          Information_Cutome s1 = new Information_Cutome();
+          s1.id = i["id"];
+          s1.namecustome = i["full_name"];
+          s1.telephone = i["phone"];
+          s1.Nickname = i["username"];
+          for (var shop in i["shops"]) {
+            Information_Shop s0 = new Information_Shop();
+            s0.id = shop["id"];
+            s0.telephone = shop["phone"];
+            s0.post_code = shop["post_code"];
+            s0.building_number = shop["building_number"];
+            s0.nameshop = shop["name"];
+            s0.address = shop["street_name"];
+            s1.nameshop.add(s0);
+          }
+          Config_G.NameCustom_shop.add(s1);
+          CheckSameCustome modelchek = new CheckSameCustome();
+          modelchek.information_name = i["full_name"];
+          modelchek.information_nickname = i["username"];
+          Config_G.modelCustome.add(modelchek);
+        }
+        setState(() {
+          check_loding_data = false;
+        });
+      } else {
+        check_loding_data = false;
+        print(response.reasonPhrase);
+      }
+    } on Exception catch (e) {
+      print("Exception" + e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -198,8 +261,10 @@ class Home extends State {
                                     PopupMenuItem(
                                       child: InkWell(
                                           onTap: () {
+                                            Config_G.NameCustom_shop.clear();
                                             setState(() {
                                               login.check_loadingbar = false;
+                                              check_loding_data = true;
                                             });
                                             Navigator.pushReplacement(
                                                 context,
@@ -435,15 +500,41 @@ class Home extends State {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text(
-                                                  "\€ ${Config_G.moneys()}",
-                                                  style: TextStyle(
-                                                    color: Colors.green,
-                                                    fontSize: 25,
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
+                                                check_loding_data
+                                                    ? Center(
+                                                        child: FutureBuilder(
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            if (snapshot
+                                                                .hasData) {
+                                                              for (Information_Cutome i
+                                                                  in Config_G
+                                                                      .NameCustom_shop) {
+                                                                print(i.id);
+                                                              }
+                                                            } else if (snapshot
+                                                                .hasError) {
+                                                              return Text(
+                                                                  "${snapshot.error}");
+                                                            }
+                                                            // By default, show a loading spinner
+                                                            return CircularProgressIndicator(
+                                                              color:
+                                                                  Colors.green,
+                                                            );
+                                                          },
+                                                        ),
+                                                      )
+                                                    : Text(
+                                                        "\€ ${Config_G.moneys()}",
+                                                        style: TextStyle(
+                                                          color: Colors.green,
+                                                          fontSize: 25,
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
                                                 InkWell(
                                                   onTap: () {
                                                     Navigator.push(
@@ -636,24 +727,26 @@ class Home extends State {
                                             MediaQuery.of(context).size.height /
                                                 2.7,
                                         child: Config_G.checknull()
-                                            ? Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Center(
-                                                      child: Text(
-                                                    Config_G.check_lang
-                                                        ? "Không có dữ liệu."
-                                                        : "Not Found Data.",
-                                                    style: TextStyle(
+                                            ? Center(
+                                                child: FutureBuilder(
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot.hasData) {
+                                                      for (Information_Cutome i
+                                                          in Config_G
+                                                              .NameCustom_shop) {
+                                                        print(i.id);
+                                                      }
+                                                    } else if (snapshot
+                                                        .hasError) {
+                                                      return Text(
+                                                          "${snapshot.error}");
+                                                    }
+                                                    // By default, show a loading spinner
+                                                    return CircularProgressIndicator(
                                                       color: Colors.green,
-                                                      fontSize: 15,
-                                                      fontFamily: 'Poppins',
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ))
-                                                ],
+                                                    );
+                                                  },
+                                                ),
                                               )
                                             : SingleChildScrollView(
                                                 physics: ScrollPhysics(),

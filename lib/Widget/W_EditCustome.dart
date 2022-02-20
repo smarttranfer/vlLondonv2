@@ -5,8 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
+import 'package:vl_ui/model/CheckSameCustome.dart';
+import 'package:vl_ui/model/Information_Cutome.dart';
+import 'package:vl_ui/model/Information_Shop.dart';
 import 'W_Signupmanger.dart';
-
 
 class AnimeApp extends StatefulWidget {
   AnimeApp({Key? key}) : super(key: key);
@@ -16,14 +18,17 @@ class AnimeApp extends StatefulWidget {
 }
 
 class AnimeAppState extends State<AnimeApp> {
-
-  late Future<List<Show>> shows;
+  static bool checkdone_send_shop_edit = false;
+  static bool checkdone_send_Custome_edit = false;
+  final List<Map<String, dynamic>> _allUsers = [];
+  List<Map<String, dynamic>> _foundUsers = [];
   String searchString = "";
   bool checknull = false;
+  bool check_loding_data = true;
   @override
   void initState() {
-    super.initState();
-    shows = fetchShows();
+    Config_G.NameCustom_shop.clear();
+    asyncMethod();
     if (Config_G.NameCustom_shop.isEmpty) {
       setState(() {
         checknull = true;
@@ -32,6 +37,74 @@ class AnimeAppState extends State<AnimeApp> {
       setState(() {
         checknull = false;
       });
+    }
+    super.initState();
+  }
+
+  void asyncMethod() async {
+    await GetInformation();
+    for (Information_Cutome i in Config_G.NameCustom_shop) {
+      for (var shop in i.nameshop) {
+        _allUsers.add({
+          "customer_id": i.id,
+          "id_chop": shop.id.toInt(),
+          "name_nickname": "${i.namecustome}-${i.Nickname}",
+          "name":"${i.namecustome}",
+          "nickname":"${i.Nickname}",
+          "shop": shop.nameshop,
+          "phone_shop": "${shop.telephone}",
+          "phone_custom": "${i.telephone}",
+          "Apartment_number":"${shop.building_number}",
+          "Post_code":"${shop.post_code}",
+          "stresst":"${shop.address}",
+        });
+      }
+    }
+    _foundUsers = _allUsers;
+  }
+
+  Future<void> GetInformation() async {
+    try {
+      var headers = {
+        'Authorization': 'Bearer ${Config_G.Token_app}',
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request(
+          'GET', Uri.parse('http://103.161.16.61:27554/customer/info/all'));
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+      Config_G.id_Custome_shop = await response.stream.bytesToString();
+      if (json.decode(Config_G.id_Custome_shop)["status"].toString() == "200") {
+        for (var i in json.decode(Config_G.id_Custome_shop)["data"]) {
+          Information_Cutome s1 = new Information_Cutome();
+          s1.id = i["id"];
+          s1.namecustome = i["full_name"];
+          s1.telephone = i["phone"];
+          s1.Nickname = i["username"];
+          for (var shop in i["shops"]) {
+            Information_Shop s0 = new Information_Shop();
+            s0.id = shop["id"];
+            s0.telephone = shop["phone"];
+            s0.post_code = shop["post_code"];
+            s0.building_number = shop["building_number"];
+            s0.nameshop = shop["name"];
+            s0.address = shop["street_name"];
+            s1.nameshop.add(s0);
+          }
+          Config_G.NameCustom_shop.add(s1);
+          CheckSameCustome modelchek = new CheckSameCustome();
+          modelchek.information_name = i["full_name"];
+          modelchek.information_nickname = i["username"];
+          Config_G.modelCustome.add(modelchek);
+        }
+        setState(() {
+          check_loding_data = false;
+        });
+      } else {
+        print(response.reasonPhrase);
+      }
+    } on Exception catch (e) {
+      print("Exception" + e.toString());
     }
   }
 
@@ -124,65 +197,35 @@ class AnimeAppState extends State<AnimeApp> {
                                     BoxShadow(
                                         blurRadius: 7.0, color: Colors.black)
                                   ]),
-                              child: checknull
-                                  ? Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Center(
-                                            child: Text(
-                                          Config_G.check_lang
-                                              ? "Không có dữ liệu"
-                                              : "No data",
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: 20,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.bold,
+                              child: Card(
+                                  elevation: 50,
+                                  child: check_loding_data
+                                      ? Center(
+                                          child: FutureBuilder(
+                                            builder: (context, snapshot) {
+                                              if (snapshot.hasData) {
+                                                for (Information_Cutome i
+                                                    in Config_G
+                                                        .NameCustom_shop) {
+                                                  print(i.id);
+                                                }
+                                              } else if (snapshot.hasError) {
+                                                return Text(
+                                                    "${snapshot.error}");
+                                              }
+                                              // By default, show a loading spinner
+                                              return CircularProgressIndicator(
+                                                color: Colors.green,
+                                              );
+                                            },
                                           ),
-                                        ))
-                                      ],
-                                    )
-                                  : Card(
-                                      elevation: 50,
-                                      child: ListViewsCustome()))))
+                                        )
+                                      : ListViewsCustome(
+                                          foundUsers: _allUsers)))))
                 ],
               ),
             )));
   }
 }
 
-class Show {
-  final int malId;
-  final String title;
-  final String imageUrl;
-  final double score;
 
-  Show({
-    required this.malId,
-    required this.title,
-    required this.imageUrl,
-    required this.score,
-  });
-
-  factory Show.fromJson(Map<String, dynamic> json) {
-    return Show(
-      malId: json['mal_id'],
-      title: json['title'],
-      imageUrl: json['image_url'],
-      score: json['score'],
-    );
-  }
-}
-
-Future<List<Show>> fetchShows() async {
-  final response =
-      await http.get(Uri.parse('https://api.jikan.moe/v3/top/anime/1'));
-
-  if (response.statusCode == 200) {
-    var topShowsJson = jsonDecode(response.body)['top'] as List;
-    return topShowsJson.map((show) => Show.fromJson(show)).toList();
-  } else {
-    throw Exception('Failed to load shows');
-  }
-}

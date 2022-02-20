@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/Widget/W_Login.dart';
@@ -574,7 +573,6 @@ class W_SignUp extends State<W_SignUpCustom> {
                                           _postcode.text);
                                       if (check == true) {
                                         Information_Shop  s0 = new Information_Shop();
-                                        print(json.decode(Config_G.id_Custome_shop));
                                         s0.id = json.decode(Config_G.id_Custome_shop)["data"]["shop_id"];
                                         s0.post_code = _postcode.text;
                                         s0.building_number = _numberlocal.text;

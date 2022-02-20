@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/Widget/W_EditCustome.dart';
 import 'package:flutter/material.dart';
@@ -17,16 +20,19 @@ final TextEditingController _controllerstresst = TextEditingController();
 class ListViewsCustome extends StatelessWidget {
   const ListViewsCustome({
     Key? key,
+    required this.foundUsers,
   }) : super(key: key);
 
+  final List<Map<String, dynamic>> foundUsers;
   @override
   Widget build(BuildContext context) {
     final TextEditingController _controllershop = new TextEditingController();
     int indexshop = 0;
+    print(foundUsers.length);
     return Scaffold(
         body: ListView.builder(
             padding: const EdgeInsets.all(15),
-            itemCount: Config_G.NameCustom_shop.length,
+            itemCount: foundUsers.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
                   elevation: 50,
@@ -35,10 +41,8 @@ class ListViewsCustome extends StatelessWidget {
                   ),
                   shadowColor: Colors.black54,
                   child: ListTile(
-                    title: Text(
-                        "${Config_G.NameCustom_shop[index].namecustome}-${Config_G.NameCustom_shop[index].Nickname}"),
-                    subtitle: Text(
-                        "${Config_G.NameCustom_shop[index].nameshop.toString().substring(1, Config_G.NameCustom_shop[index].nameshop.toString().length - 1)}"),
+                    title: Text("${foundUsers[index]["name_nickname"]}"),
+                    subtitle: Text("${foundUsers[index]["shop"]}"),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -56,121 +60,125 @@ class ListViewsCustome extends StatelessWidget {
                                           padding: EdgeInsets.only(),
                                           child: new Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                                  MainAxisAlignment.center,
                                               children: <Widget>[
                                                 new Expanded(
                                                     child: new TextField(
-                                                        decoration: InputDecoration(
+                                                        decoration:
+                                                            InputDecoration(
                                                           hintText:
-                                                          "${Config_G.NameCustom_shop[index].nameshop[0]}",
-                                                          icon: Icon(Icons.shopping_cart_outlined),
-                                                          labelText: 'Name Shop',
+                                                              foundUsers[index]
+                                                                  ["shop"],
+                                                          icon: Icon(
+                                                            Icons
+                                                                .shopping_cart_outlined,
+                                                            color: Colors.green,
+                                                          ),
+                                                          labelText:
+                                                              'Name Shop',
                                                         ),
-                                                        onChanged: (v){
-                                                          print(v);
-                                                        },
                                                         controller:
-                                                        _controllershop..text = "${Config_G.NameCustom_shop[index].nameshop[0]}")),
-                                                // new PopupMenuButton<String>(
-                                                //   icon: const Icon(
-                                                //       Icons.arrow_drop_down),
-                                                //   onSelected: (String value) {
-                                                //     _controllershop.text = value;
-                                                //     indexshop = Config_G.NameCustom_shop[index].nameshop.indexWhere((indexshop) => indexshop==value);
-                                                //
-                                                //   },
-                                                //   itemBuilder:
-                                                //       (BuildContext context) {
-                                                //     return Config_G.NameCustom_shop[index].nameshop.map<
-                                                //         PopupMenuItem<
-                                                //             String>>(
-                                                //             (String value) {
-                                                //           return new PopupMenuItem(
-                                                //               child:
-                                                //               new Text(value),
-                                                //               value: value);
-                                                //         }).toList();
-                                                //   },
-                                                // )
+                                                            _controllershop
+                                                              ..text =
+                                                                  foundUsers[
+                                                                          index]
+                                                                      [
+                                                                      "shop"])),
                                               ])),
                                       TextField(
                                         decoration: InputDecoration(
-                                          hintText:
-                                              "${Config_G.NameCustom_shop[index].namecustome}",
-                                          icon: Icon(Icons.person_pin_outlined),
+                                          hintText: foundUsers[index]["name"],
+                                          icon: Icon(
+                                            Icons.person_pin_outlined,
+                                            color: Colors.green,
+                                          ),
                                           labelText: 'Name Custome',
                                         ),
                                         controller: _controlleruser
-                                          ..text =
-                                              ("${Config_G.NameCustom_shop[index].namecustome}"),
+                                          ..text = (foundUsers[index]["name"]),
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
-                                          hintText:
-                                              "${Config_G.NameCustom_shop[index].namecustome}",
-                                          icon: Icon(Icons.person_pin_outlined),
+                                          hintText: foundUsers[index]
+                                              ["nickname"],
+                                          icon: Icon(
+                                            Icons.person_pin_outlined,
+                                            color: Colors.green,
+                                          ),
                                           labelText: 'Nick Name',
                                         ),
                                         controller: _controllernickname
                                           ..text =
-                                              ("${Config_G.NameCustom_shop[index].Nickname}"),
+                                              foundUsers[index]["nickname"],
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
-                                          hintText:
-                                              "${Config_G.NameCustom_shop[index].telephone}",
-                                          icon: Icon(Icons.phone),
+                                          hintText: foundUsers[index]
+                                              ["phone_custom"],
+                                          icon: Icon(
+                                            Icons.phone,
+                                            color: Colors.green,
+                                          ),
                                           labelText: 'Telephone Custome',
                                         ),
                                         controller: _controllertelephone
                                           ..text =
-                                              "${Config_G.NameCustom_shop[index].telephone}",
+                                              foundUsers[index]["phone_custom"],
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
-                                          hintText:
-                                              "${Config_G.NameCustom_shop[index].telephone}",
-                                          icon: Icon(Icons.phone),
+                                          hintText: foundUsers[index]
+                                              ["phone_shop"],
+                                          icon: Icon(
+                                            Icons.phone,
+                                            color: Colors.green,
+                                          ),
                                           labelText: 'Telephone Shop',
                                         ),
                                         controller: _controllertelephone
                                           ..text =
-                                              "${Config_G.NameCustom_shop[index].telephone}",
+                                              foundUsers[index]["phone_shop"],
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
-                                          // hintText:
-                                          //     "${Config_G.NameCustom_shop[index].numberlocal}",
+                                          hintText: foundUsers[index]
+                                              ["Apartment_number"],
                                           icon: Icon(
-                                              Icons.add_location_alt_outlined),
+                                            Icons.add_location_alt_outlined,
+                                            color: Colors.green,
+                                          ),
                                           labelText: 'Apartment number',
                                         ),
-                                        // controller: _controllernumber
-                                        //   ..text =
-                                        //       "${Config_G.NameCustom_shop[index].numberlocal}",
+                                        controller: _controllernumber
+                                          ..text = foundUsers[index]
+                                              ["Apartment_number"],
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
-                                          // hintText:
-                                          //     "${Config_G.NameCustom_shop[index].Postcodet}",
+                                          hintText: foundUsers[index]
+                                              ["Post_code"],
                                           icon: Icon(
-                                              Icons.local_post_office_outlined),
+                                            Icons.local_post_office_outlined,
+                                            color: Colors.green,
+                                          ),
                                           labelText: 'Post code',
                                         ),
-                                        // controller: _controllerpostcode
-                                        //   ..text =
-                                        //       "${Config_G.NameCustom_shop[index].Postcodet}",
+                                        controller: _controllerpostcode
+                                          ..text =
+                                              foundUsers[index]["Post_code"],
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
-                                          // hintText:
-                                          //     " ${Config_G.NameCustom_shop[index].stresst}",
-                                          icon: Icon(Icons.edit_road_rounded),
+                                          hintText: foundUsers[index]
+                                              ["stresst"],
+                                          icon: Icon(
+                                            Icons.edit_road_rounded,
+                                            color: Colors.green,
+                                          ),
                                           labelText: 'Stresst shop',
                                         ),
-                                        // controller: _controllerstresst
-                                        //   ..text =
-                                        //       "${Config_G.NameCustom_shop[index].stresst}",
+                                        controller: _controllerstresst
+                                          ..text = foundUsers[index]["stresst"],
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -182,63 +190,50 @@ class ListViewsCustome extends StatelessWidget {
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.white,
                                                 fontSize: 20)),
-                                        onPressed: () {
-                                          Config_G.NameCustom_shop[index]
-                                                  .namecustome =
-                                              _controlleruser.text.toString();
-                                          Config_G.NameCustom_shop[index]
-                                                  .Nickname =
-                                              _controllernickname.text
-                                                  .toString();
-                                          // if (Config_G.NameCustom_shop[index]
-                                          //         .nameshop
-                                          //         .toList()[indexshop]
-                                          //         .toUpperCase() ==
-                                          //     _controllershop.text
-                                          //         .toString()
-                                          //         .toUpperCase()) {
-                                          // } else {
-                                          //   Config_G
-                                          //       .NameCustom_shop[index].nameshop[indexshop]=_controllershop.text
-                                          //       .toString();
-                                          //
-                                          // }
+                                        onPressed: () async {
+                                          await ActionJS.EditCustome_shop(
+                                              foundUsers[index]["shop"],
+                                              foundUsers[index]
+                                                  ["Apartment_number"],
+                                              foundUsers[index]["stresst"],
+                                              foundUsers[index]["phone_shop"],
+                                              foundUsers[index]["Post_code"],
+                                              foundUsers[index]["id_chop"]
+                                                  );
+                                          await ActionJS.EditCustome_Custome( foundUsers[index]["phone_custom"], foundUsers[index]["name"], foundUsers[index]["nickname"],foundUsers[index]["customer_id"]);
+                                          if(AnimeAppState.checkdone_send_shop_edit == true && AnimeAppState.checkdone_send_Custome_edit == true){
+                                            Fluttertoast.showToast(
+                                                msg: "Sửa thông tin thành công ",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 2,
+                                                backgroundColor: Colors.green,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
+                                            Navigator.of(context).pop();
+                                            Navigator.pushReplacement(
+                                                context,
+                                                PageTransition(
+                                                    type: PageTransitionType
+                                                        .rightToLeft,
+                                                    duration:
+                                                    Duration(milliseconds: 0),
+                                                    reverseDuration: Duration(
+                                                        milliseconds: Config_G
+                                                            .timeDruation),
+                                                    child: AnimeApp()));
 
-                                          // Config_G.NameCustom_shop[index]
-                                          //         .telephone =
-                                          //     _controllertelephone.text
-                                          //         .toString();
-                                          // Config_G.NameCustom_shop[index]
-                                          //         .numberlocal =
-                                          //     _controllernumber.text.toString();
-                                          // Config_G.NameCustom_shop[index]
-                                          //         .Postcodet =
-                                          //     _controllerpostcode.text
-                                          //         .toString();
-                                          // Config_G.NameCustom_shop[index]
-                                          //         .stresst =
-                                          //     _controllerstresst.text
-                                          //         .toString();
-                                          Fluttertoast.showToast(
-                                              msg: "Sửa thông tin thành công ",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.BOTTOM,
-                                              timeInSecForIosWeb: 2,
-                                              backgroundColor: Colors.green,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                          Navigator.of(context).pop();
-                                          Navigator.pushReplacement(
-                                              context,
-                                              PageTransition(
-                                                  type: PageTransitionType
-                                                      .rightToLeft,
-                                                  duration:
-                                                      Duration(milliseconds: 0),
-                                                  reverseDuration: Duration(
-                                                      milliseconds: Config_G
-                                                          .timeDruation),
-                                                  child: AnimeApp()));
+                                          }else{
+                                            Fluttertoast.showToast(
+                                                msg: json.decode(Config_G.check_done_edit_shop)["data"] + json.decode(Config_G.check_done_edit_shop)["message"] ,
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 10,
+                                                backgroundColor: Colors.red,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
+                                          }
+
                                         },
                                         style: ElevatedButton.styleFrom(
                                           primary: Colors.green,
@@ -261,6 +256,7 @@ class ListViewsCustome extends StatelessWidget {
                             icon: Icon(Icons.edit)),
                         IconButton(
                             onPressed: () {
+                              ActionJS.Deletes( foundUsers[index]["id_chop"],foundUsers[index]["customer_id"]);
                               Config_G.NameCustom_shop.removeAt(index);
                               Navigator.pushReplacement(
                                   context,

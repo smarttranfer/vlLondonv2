@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:vl_ui/Button/BtnFilter.dart';
+import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/Widget/W_Login.dart';
 import 'package:vl_ui/model/CheckSameCustome.dart';
@@ -11,17 +14,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:page_transition/page_transition.dart';
-
-import 'Filter.dart';
+import 'package:http/http.dart' as http;
 
 class W_SignUpshop extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return W_SignUp();
+    return W_SignUp_shopo();
   }
 }
 
-class W_SignUp extends State {
+class W_SignUp_shopo extends State {
   final TextEditingController _NaneShop = TextEditingController();
   final TextEditingController _numberlocal = TextEditingController();
   final TextEditingController _stresst = TextEditingController();
@@ -30,21 +32,75 @@ class W_SignUp extends State {
   final TextEditingController _nameCustom = TextEditingController();
   final List<Map<String, dynamic>> _allUsers = [];
   List<Map<String, dynamic>> _foundUsers = [];
+  static bool checkdone_send_shop = false;
+  bool check_loding_data = true;
   String Nicknames = '';
+  int customer_id =0;
   @override
   initState() {
-    int k = 1;
+    super.initState();
+    Config_G.NameCustom_shop.clear();
+    asyncMethod();
+
+
+  }
+  void asyncMethod() async {
+    await GetInformation();
     for (Information_Cutome i in Config_G.NameCustom_shop) {
-      _allUsers.add({
-        "customer_id": "${i.id}",
-        // "shop_id" : "${i.nameshop[0].}"
-        "name": "${i.namecustome}-${i.Nickname}",
-        "shop": "${i.nameshop}"
-      });
-      k += 1;
+      for (var shop in i.nameshop) {
+        _allUsers.add({
+          "customer_id": i.id,
+          "id_chop": shop.id,
+          "name": "${i.namecustome}-${i.Nickname}",
+          "shop": shop.nameshop
+        });
+      }
     }
     _foundUsers = _allUsers;
-    super.initState();
+  }
+  Future<void> GetInformation() async {
+    try {
+      var headers = {
+        'Authorization': 'Bearer ${Config_G.Token_app}',
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request(
+          'GET', Uri.parse('http://103.161.16.61:27554/customer/info/all'));
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+      Config_G.id_Custome_shop = await response.stream.bytesToString();
+      if (json.decode(Config_G.id_Custome_shop)["status"].toString() == "200") {
+        for (var i in json.decode(Config_G.id_Custome_shop)["data"]) {
+          Information_Cutome s1 = new Information_Cutome();
+          s1.id = i["id"];
+          s1.namecustome = i["full_name"];
+          s1.telephone = i["phone"];
+          s1.Nickname = i["username"];
+          for (var shop in i["shops"]) {
+            Information_Shop s0 = new Information_Shop();
+            s0.id = shop["id"];
+            s0.telephone = shop["phone"];
+            s0.post_code = shop["post_code"];
+            s0.building_number = shop["building_number"];
+            s0.nameshop = shop["name"];
+            s0.address = shop["street_name"];
+            s1.nameshop.add(s0);
+          }
+          Config_G.NameCustom_shop.add(s1);
+          CheckSameCustome modelchek = new CheckSameCustome();
+          modelchek.information_name = i["full_name"];
+          modelchek.information_nickname = i["username"];
+          Config_G.modelCustome.add(modelchek);
+          setState(() {
+            check_loding_data = false;
+          });
+        }
+      } else {
+        print(response.reasonPhrase);
+      }
+    } on Exception catch (e) {
+      print("Exception" + e.toString());
+    }
   }
 
   void _runFilter(String enteredKeyword) {
@@ -68,7 +124,27 @@ class W_SignUp extends State {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        body: SingleChildScrollView(
+        body:check_loding_data? Center(
+          child: FutureBuilder(
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                for (Information_Cutome i
+                in Config_G
+                    .NameCustom_shop) {
+                  print(i.id);
+                }
+              } else if (snapshot
+                  .hasError) {
+                return Text(
+                    "${snapshot.error}");
+              }
+              // By default, show a loading spinner
+              return CircularProgressIndicator(
+                color: Colors.green,
+              );
+            },
+          ),
+        ):SingleChildScrollView(
             padding: EdgeInsets.only(bottom: 5),
             child: Container(
                 padding: EdgeInsets.only(bottom: 2),
@@ -328,9 +404,10 @@ class W_SignUp extends State {
                                                                                             }
                                                                                             indexs += 1;
                                                                                           }
+                                                                                          customer_id = _foundUsers[index]["customer_id"];
                                                                                         });
                                                                                       },
-                                                                                      child: BtnFilter(Content: "${_foundUsers[index]["name"].toString()}", Subcontent: '${_foundUsers[index]["shop"].toString()}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
+                                                                                      child: BtnFilter(Content: "${_foundUsers[index]["name"].toString()}", Subcontent: '${_foundUsers[index]["shop"]}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
                                                                             ))
                                                                 : const Text(
                                                                     'Không tìm thấy kết quả',
@@ -540,7 +617,7 @@ class W_SignUp extends State {
                                               bottom:
                                                   15) //content padding inside button
                                           ),
-                                      onPressed: () {
+                                      onPressed: () async {
                                         if (_phone.text.isEmpty |
                                             _numberlocal.text.isEmpty |
                                             _stresst.text.isEmpty |
@@ -557,26 +634,32 @@ class W_SignUp extends State {
                                               textColor: Colors.white,
                                               fontSize: 16.0);
                                         } else {
-                                          Fluttertoast.showToast(
-                                              msg: Config_G.check_lang
-                                                  ? "Thêm thông tin shop thành công."
-                                                  : "Add successful shop information.",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.CENTER,
-                                              timeInSecForIosWeb: 2,
-                                              backgroundColor: Colors.red,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                          int k =0;
-                                          for(Information_Cutome i in Config_G.NameCustom_shop){
-                                            if(i.namecustome==_nameCustom.text){
-                                              // i.nameshop.add(_NaneShop.text);
-                                            }
-                                            k+=1;
+                                          await ActionJS.Signshope( _phone.text, _NaneShop.text, _numberlocal.text, _stresst.text, _postcode.text, customer_id);
+                                          if(checkdone_send_shop == true){
+
+                                            Fluttertoast.showToast(
+                                                msg: Config_G.check_lang
+                                                    ? "Thêm thông tin shop thành công."
+                                                    : "Add successful shop information.",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 10,
+                                                backgroundColor: Colors.green,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
+                                            Navigator.pop(context);
+                                          }else{
+                                            Fluttertoast.showToast(
+                                                msg: Config_G.check_lang
+                                                    ? "${json.decode(Config_G.check_done_reshop)["message"]}"
+                                                    : "${json.decode(Config_G.check_done_reshop)["message"]}",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 10,
+                                                backgroundColor: Colors.red,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
                                           }
-
-
-                                          Navigator.pop(context);
                                         }
                                       },
                                       child: Text(

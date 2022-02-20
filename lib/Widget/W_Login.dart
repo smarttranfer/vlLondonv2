@@ -342,7 +342,7 @@ class login extends State {
                                     return Text("${snapshot.error}");
                                   }
                                   // By default, show a loading spinner
-                                  return CircularProgressIndicator();
+                                  return CircularProgressIndicator(color: Colors.green,);
                                 },
                               ),
                             )

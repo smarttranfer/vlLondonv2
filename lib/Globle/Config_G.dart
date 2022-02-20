@@ -14,6 +14,9 @@ class Config_G{
   static String url_SignCustome = 'http://103.161.16.61:27554/customer/register';
   static String Token_app = "";
   static String id_Custome_shop = "";
+  static String check_done_reshop = "";
+  static String check_done_edit_shop = "";
+  static String check_done_edit_custome = "";
   static String namecustom_chossen = "";
   static String ColorsBtnOption = "#388118";
   static String Usernames = "";
