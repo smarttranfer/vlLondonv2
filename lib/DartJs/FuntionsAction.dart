@@ -32,8 +32,9 @@ class ActionJS {
       request.body = json.encode({
         "full_name": "${namecustome}",
         "username": "${nickname}",
-        "phone": "${phone}",
+        "phone_customer": "${phone}",
         "name_shop": "${name_shop}",
+        "phone_shop": "${phone}",
         "building_number": "${building_number}",
         "street_name": "${street_name}",
         "post_code": "${post_code}"
@@ -41,6 +42,7 @@ class ActionJS {
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
       Config_G.id_Custome_shop = await response.stream.bytesToString();
+      print(Config_G.id_Custome_shop);
       if (json.decode(Config_G.id_Custome_shop)["status"].toString() == "200") {
         W_SignUp.check = true;
         return Config_G.id_Custome_shop;
@@ -63,6 +65,7 @@ class ActionJS {
       String post_code,
       int id_Custome) async {
     try {
+      print('"name": "${name_shop}","building_number": "${building_number}","street_name": "${street_name}","phone": "${phone}","post_code": "${post_code}","customer_id": ${id_Custome}');
       var headers = {
         'Authorization': 'Bearer ${Config_G.Token_app}',
         'Content-Type': 'application/json'
@@ -164,16 +167,62 @@ class ActionJS {
     }
   }
 
-  static Future<bool> Deletes(int id_shop, int id_custome) async {
+  static Future<bool> EditCustome_Custome_Shop(
+      String phone,
+      String name,
+      String username,
+      String name_shop,
+      String building_number,
+      String street_name,
+      String phone_shop,
+      String post_code,
+      int id_custome,
+      int id_shop) async {
+    try {
+      print('"full_name": "${name}", "username": "${username}", "phone_customer": "${phone}", "name_shop": "${name_shop}", "phone_shop": "${phone}", "building_number": "${building_number}", "street_name": "${street_name}", "post_code": "${post_code}"');
+      var headers = {
+        'Authorization': 'Bearer ${Config_G.Token_app}',
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request(
+          'PUT',
+          Uri.parse(
+              'http://103.161.16.61:27554/customer/${id_custome}/shop/${id_shop}'));
+      request.body = json.encode({
+      "full_name": "${name}",
+      "username": "${username}",
+      "phone_customer": "${phone}",
+      "name_shop": "${name_shop}",
+      "phone_shop": "${phone}",
+      "building_number": "${building_number}",
+      "street_name": "${street_name}",
+      "post_code": "${post_code}",
+      });
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+      Config_G.check_done_edit_custome_shop = await response.stream.bytesToString();
+      if (json.decode(Config_G.check_done_edit_custome_shop)["status"].toString() ==
+          "200") {
+        AnimeAppState.checkdone_send_Custome__shop_edit = true;
+        print(Config_G.check_done_edit_custome_shop);
+      } else {
+        print(Config_G.check_done_edit_custome_shop);
+        AnimeAppState.checkdone_send_Custome__shop_edit = false;
+      }
+      return false;
+    } on Exception catch (e) {
+      print("Exception" + e.toString());
+      AnimeAppState.checkdone_send_Custome__shop_edit = false;
+      return false;
+    }
+  }
+
+  static Future<bool> Deletes(int id_shop) async {
     try {
       var headers = {
         'Authorization': 'Bearer ${Config_G.Token_app}',
         'Content-Type': 'application/json'
       };
-      var request = http.Request('DELETE',
-          Uri.parse('http://103.161.16.61:27554/customer/${id_custome}'));
-      request.headers.addAll(headers);
-      http.StreamedResponse response = await request.send();
       var request_shop = http.Request(
           'DELETE', Uri.parse('http://103.161.16.61:27554/shop/${id_shop}'));
       request_shop.headers.addAll(headers);

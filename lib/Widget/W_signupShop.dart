@@ -35,15 +35,14 @@ class W_SignUp_shopo extends State {
   static bool checkdone_send_shop = false;
   bool check_loding_data = true;
   String Nicknames = '';
-  int customer_id =0;
+  int customer_id = 0;
   @override
   initState() {
     super.initState();
     Config_G.NameCustom_shop.clear();
     asyncMethod();
-
-
   }
+
   void asyncMethod() async {
     await GetInformation();
     for (Information_Cutome i in Config_G.NameCustom_shop) {
@@ -58,6 +57,7 @@ class W_SignUp_shopo extends State {
     }
     _foundUsers = _allUsers;
   }
+
   Future<void> GetInformation() async {
     try {
       var headers = {
@@ -124,27 +124,7 @@ class W_SignUp_shopo extends State {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        body:check_loding_data? Center(
-          child: FutureBuilder(
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                for (Information_Cutome i
-                in Config_G
-                    .NameCustom_shop) {
-                  print(i.id);
-                }
-              } else if (snapshot
-                  .hasError) {
-                return Text(
-                    "${snapshot.error}");
-              }
-              // By default, show a loading spinner
-              return CircularProgressIndicator(
-                color: Colors.green,
-              );
-            },
-          ),
-        ):SingleChildScrollView(
+        body: SingleChildScrollView(
             padding: EdgeInsets.only(bottom: 5),
             child: Container(
                 padding: EdgeInsets.only(bottom: 2),
@@ -368,56 +348,76 @@ class W_SignUp_shopo extends State {
                                                               ),
                                                             ],
                                                           ),
-                                                          Expanded(
-                                                            child: _foundUsers
-                                                                    .isNotEmpty
-                                                                ? ListView
-                                                                    .builder(
-                                                                        itemCount:
-                                                                            _foundUsers
-                                                                                .length,
-                                                                        itemBuilder: (context,
-                                                                                index) =>
-                                                                            Card(
-                                                                              key: ValueKey(_foundUsers[index]["id"]),
-                                                                              color: Colors.white,
-                                                                              elevation: 4,
-                                                                              margin: const EdgeInsets.symmetric(vertical: 10),
-                                                                              child: Card(
-                                                                                  shape: RoundedRectangleBorder(
-                                                                                    borderRadius: BorderRadius.circular(50.0),
-                                                                                  ),
-                                                                                  elevation: 50,
-                                                                                  shadowColor: Colors.black12,
-                                                                                  child: InkWell(
-                                                                                      onTap: () {
-                                                                                        setState(() {
-                                                                                          Navigator.pop(context);
-                                                                                          Config_G.check_namecustom_chossen = false;
-                                                                                          int indexs = 0;
-                                                                                          for (String i in "${_foundUsers[index]["name"].toString()}".split("").toList()) {
-                                                                                            if (i == "-") {
-                                                                                              Config_G.namecustom_chossen = "${_foundUsers[index]["name"].toString()}".substring(0, indexs);
-                                                                                              Nicknames = "${_foundUsers[index]["name"].toString()}".substring(
-                                                                                                indexs + 1,
-                                                                                              );
-                                                                                            }
-                                                                                            indexs += 1;
-                                                                                          }
-                                                                                          customer_id = _foundUsers[index]["customer_id"];
-                                                                                        });
-                                                                                      },
-                                                                                      child: BtnFilter(Content: "${_foundUsers[index]["name"].toString()}", Subcontent: '${_foundUsers[index]["shop"]}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
-                                                                            ))
-                                                                : const Text(
-                                                                    'Không tìm thấy kết quả',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            24,
+                                                          check_loding_data
+                                                              ? Center(
+                                                                  child:
+                                                                      FutureBuilder(
+                                                                    builder:
+                                                                        (context,
+                                                                            snapshot) {
+                                                                      if (snapshot
+                                                                          .hasData) {
+                                                                        for (Information_Cutome i
+                                                                            in Config_G.NameCustom_shop) {
+                                                                          print(
+                                                                              i.id);
+                                                                        }
+                                                                      } else if (snapshot
+                                                                          .hasError) {
+                                                                        return Text(
+                                                                            "${snapshot.error}");
+                                                                      }
+                                                                      // By default, show a loading spinner
+                                                                      return CircularProgressIndicator(
                                                                         color: Colors
-                                                                            .green),
+                                                                            .green,
+                                                                      );
+                                                                    },
                                                                   ),
-                                                          ),
+                                                                )
+                                                              : Expanded(
+                                                                  child: _foundUsers
+                                                                          .isNotEmpty
+                                                                      ? ListView.builder(
+                                                                          itemCount: _foundUsers.length,
+                                                                          itemBuilder: (context, index) => Card(
+                                                                                key: ValueKey(_foundUsers[index]["id"]),
+                                                                                color: Colors.white,
+                                                                                elevation: 4,
+                                                                                margin: const EdgeInsets.symmetric(vertical: 10),
+                                                                                child: Card(
+                                                                                    shape: RoundedRectangleBorder(
+                                                                                      borderRadius: BorderRadius.circular(50.0),
+                                                                                    ),
+                                                                                    elevation: 50,
+                                                                                    shadowColor: Colors.black12,
+                                                                                    child: InkWell(
+                                                                                        onTap: () {
+                                                                                          setState(() {
+                                                                                            Navigator.pop(context);
+                                                                                            Config_G.check_namecustom_chossen = false;
+                                                                                            int indexs = 0;
+                                                                                            for (String i in "${_foundUsers[index]["name"].toString()}".split("").toList()) {
+                                                                                              if (i == "-") {
+                                                                                                Config_G.namecustom_chossen = "${_foundUsers[index]["name"].toString()}".substring(0, indexs);
+                                                                                                Nicknames = "${_foundUsers[index]["name"].toString()}".substring(
+                                                                                                  indexs + 1,
+                                                                                                );
+                                                                                              }
+                                                                                              indexs += 1;
+                                                                                            }
+                                                                                            customer_id = _foundUsers[index]["customer_id"];
+                                                                                          });
+                                                                                        },
+                                                                                        child: BtnFilter(Content: "${_foundUsers[index]["name"].toString()}", Subcontent: '${_foundUsers[index]["shop"]}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
+                                                                              ))
+                                                                      : const Text(
+                                                                          'Không tìm thấy kết quả',
+                                                                          style: TextStyle(
+                                                                              fontSize: 24,
+                                                                              color: Colors.green),
+                                                                        ),
+                                                                ),
                                                         ],
                                                       ),
                                                     ),
@@ -634,9 +634,14 @@ class W_SignUp_shopo extends State {
                                               textColor: Colors.white,
                                               fontSize: 16.0);
                                         } else {
-                                          await ActionJS.Signshope( _phone.text, _NaneShop.text, _numberlocal.text, _stresst.text, _postcode.text, customer_id);
-                                          if(checkdone_send_shop == true){
-
+                                          await ActionJS.Signshope(
+                                              _phone.text,
+                                              _NaneShop.text,
+                                              _numberlocal.text,
+                                              _stresst.text,
+                                              _postcode.text,
+                                              customer_id);
+                                          if (checkdone_send_shop == true) {
                                             Fluttertoast.showToast(
                                                 msg: Config_G.check_lang
                                                     ? "Thêm thông tin shop thành công."
@@ -648,11 +653,11 @@ class W_SignUp_shopo extends State {
                                                 textColor: Colors.white,
                                                 fontSize: 16.0);
                                             Navigator.pop(context);
-                                          }else{
+                                          } else {
                                             Fluttertoast.showToast(
                                                 msg: Config_G.check_lang
-                                                    ? "${json.decode(Config_G.check_done_reshop)["message"]}"
-                                                    : "${json.decode(Config_G.check_done_reshop)["message"]}",
+                                                    ? "${json.decode(Config_G.check_done_reshop)["data"]}+${json.decode(Config_G.check_done_reshop)["message"]}"
+                                                    : "${json.decode(Config_G.check_done_reshop)["data"]}+${json.decode(Config_G.check_done_reshop)["message"]}",
                                                 toastLength: Toast.LENGTH_SHORT,
                                                 gravity: ToastGravity.BOTTOM,
                                                 timeInSecForIosWeb: 10,

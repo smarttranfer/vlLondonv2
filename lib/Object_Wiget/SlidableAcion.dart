@@ -191,19 +191,25 @@ class ListViewsCustome extends StatelessWidget {
                                                 color: Colors.white,
                                                 fontSize: 20)),
                                         onPressed: () async {
-                                          await ActionJS.EditCustome_shop(
-                                              foundUsers[index]["shop"],
-                                              foundUsers[index]
-                                                  ["Apartment_number"],
-                                              foundUsers[index]["stresst"],
-                                              foundUsers[index]["phone_shop"],
-                                              foundUsers[index]["Post_code"],
-                                              foundUsers[index]["id_chop"]
-                                                  );
-                                          await ActionJS.EditCustome_Custome( foundUsers[index]["phone_custom"], foundUsers[index]["name"], foundUsers[index]["nickname"],foundUsers[index]["customer_id"]);
-                                          if(AnimeAppState.checkdone_send_shop_edit == true && AnimeAppState.checkdone_send_Custome_edit == true){
+                                          await ActionJS
+                                              .EditCustome_Custome_Shop(
+                                                  _controllertelephone.text,
+                                                  _controlleruser.text,
+                                                  _controllernickname.text,
+                                                  _controllershop.text,
+                                                  _controllernumber.text,
+                                                  _controllerstresst.text,
+                                                  _controllertelephone.text,
+                                                  _controllerpostcode.text,
+                                                  foundUsers[index]
+                                                      ["customer_id"],
+                                                  foundUsers[index]["id_chop"]);
+                                          if (AnimeAppState
+                                                  .checkdone_send_Custome__shop_edit ==
+                                              true) {
                                             Fluttertoast.showToast(
-                                                msg: "Sửa thông tin thành công ",
+                                                msg:
+                                                    "Sửa thông tin thành công ",
                                                 toastLength: Toast.LENGTH_SHORT,
                                                 gravity: ToastGravity.BOTTOM,
                                                 timeInSecForIosWeb: 2,
@@ -216,16 +222,20 @@ class ListViewsCustome extends StatelessWidget {
                                                 PageTransition(
                                                     type: PageTransitionType
                                                         .rightToLeft,
-                                                    duration:
-                                                    Duration(milliseconds: 0),
+                                                    duration: Duration(
+                                                        milliseconds: 0),
                                                     reverseDuration: Duration(
                                                         milliseconds: Config_G
                                                             .timeDruation),
                                                     child: AnimeApp()));
-
-                                          }else{
+                                          } else {
                                             Fluttertoast.showToast(
-                                                msg: json.decode(Config_G.check_done_edit_shop)["data"] + json.decode(Config_G.check_done_edit_shop)["message"] ,
+                                                msg: json.decode(Config_G
+                                                            .check_done_edit_shop)[
+                                                        "data"] +
+                                                    json.decode(Config_G
+                                                            .check_done_edit_shop)[
+                                                        "message"],
                                                 toastLength: Toast.LENGTH_SHORT,
                                                 gravity: ToastGravity.BOTTOM,
                                                 timeInSecForIosWeb: 10,
@@ -233,7 +243,6 @@ class ListViewsCustome extends StatelessWidget {
                                                 textColor: Colors.white,
                                                 fontSize: 16.0);
                                           }
-
                                         },
                                         style: ElevatedButton.styleFrom(
                                           primary: Colors.green,
@@ -254,20 +263,57 @@ class ListViewsCustome extends StatelessWidget {
                               ).show();
                             },
                             icon: Icon(Icons.edit)),
-                        IconButton(
-                            onPressed: () async{
-                              await ActionJS.Deletes( foundUsers[index]["id_chop"],foundUsers[index]["customer_id"]);
-                              Config_G.NameCustom_shop.removeAt(index);
-                              Navigator.pushReplacement(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.rightToLeft,
-                                      duration: Duration(milliseconds: 0),
-                                      reverseDuration: Duration(
-                                          milliseconds: Config_G.timeDruation),
-                                      child: AnimeApp()));
-                            },
-                            icon: Icon(Icons.delete)),
+                        IgnorePointer(
+                            ignoring: Config_G.ROLE_ADMIN,
+                            child: IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text(Config_G.check_lang
+                                            ? "Thông báo hệ thống"
+                                            : "System Notifications"),
+                                        content: Text(Config_G.check_lang
+                                            ? 'Bạn muốn xóa shop ${foundUsers[index]["shop"]}?'
+                                            : 'You want to delete the shop ${foundUsers[index]["shop"]}?'),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text(Config_G.check_lang
+                                                ? "Đông ý"
+                                                : "YES"),
+                                            onPressed: () async {
+                                              await ActionJS.Deletes(
+                                                  foundUsers[index]["id_chop"]);
+                                              Navigator.of(context).pop();
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  PageTransition(
+                                                      type: PageTransitionType
+                                                          .rightToLeft,
+                                                      duration: Duration(
+                                                          milliseconds: 0),
+                                                      reverseDuration: Duration(
+                                                          milliseconds: Config_G
+                                                              .timeDruation),
+                                                      child: AnimeApp()));
+                                            },
+                                          ),
+                                          FlatButton(
+                                            child: Text(Config_G.check_lang
+                                                ? "Hủy bỏ"
+                                                : "CANCEL"),
+                                            onPressed: () {
+                                              //Put your code here which you want to execute on Cancel button click.
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                icon: Icon(Icons.delete)))
                       ],
                     ),
                   ));

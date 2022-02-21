@@ -20,6 +20,7 @@ class AnimeApp extends StatefulWidget {
 class AnimeAppState extends State<AnimeApp> {
   static bool checkdone_send_shop_edit = false;
   static bool checkdone_send_Custome_edit = false;
+  static bool checkdone_send_Custome__shop_edit = false;
   final List<Map<String, dynamic>> _allUsers = [];
   List<Map<String, dynamic>> _foundUsers = [];
   String searchString = "";
@@ -76,6 +77,7 @@ class AnimeAppState extends State<AnimeApp> {
       Config_G.id_Custome_shop = await response.stream.bytesToString();
       if (json.decode(Config_G.id_Custome_shop)["status"].toString() == "200") {
         for (var i in json.decode(Config_G.id_Custome_shop)["data"]) {
+          print(i);
           Information_Cutome s1 = new Information_Cutome();
           s1.id = i["id"];
           s1.namecustome = i["full_name"];
@@ -176,7 +178,7 @@ class AnimeAppState extends State<AnimeApp> {
                                   BorderRadius.all(Radius.circular(80.0)),
                               borderSide: BorderSide.none,
                             ),
-                            labelText: 'Search',
+                            hintText: 'Search',
                             suffixIcon: Icon(Icons.search)),
                       ),
                     ),

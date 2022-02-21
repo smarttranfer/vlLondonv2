@@ -4,7 +4,9 @@ import 'package:vl_ui/model/Information_Shop.dart';
 import 'package:vl_ui/model/New_Changer.dart';
 
 class Config_G{
-
+  static bool ROLE_ADMIN = true;
+  static bool ROLE_MODERATOR = true;
+  static bool ROLE_USER = true;
   static bool check_lang = false;
   static bool check_namecustom_chossen = false;
   static List<Information_Cutome> NameCustom_shop =[];
@@ -17,6 +19,7 @@ class Config_G{
   static String check_done_reshop = "";
   static String check_done_edit_shop = "";
   static String check_done_edit_custome = "";
+  static String check_done_edit_custome_shop = "";
   static String namecustom_chossen = "";
   static String ColorsBtnOption = "#388118";
   static String Usernames = "";

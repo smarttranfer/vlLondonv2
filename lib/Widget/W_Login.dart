@@ -26,23 +26,44 @@ class login extends State {
   final TextEditingController _controlleruser = TextEditingController();
   static bool checks = false;
   static bool check_loadingbar = false;
+  List<String> roles = [];
   _callNumber() async {
     const number = '0335925341';
     bool? res = await FlutterPhoneDirectCaller.callNumber(number);
   }
 
-  Future<bool> _makeGetRequest(String password) async {
+  Future<bool> _makeGetRequest(String Username , String password) async {
     try {
       setState(() {
         check_loadingbar = true;
       });
-
       String url = 'http://103.161.16.61:27554/auth/login';
       var dio = Dio();
       var response = await dio
-          .post(url, data: {'username': 'admin', 'password': '${password}'});
+          .post(url, data: {'username': '${Username}', 'password': '${password}'});
       var data = response;
+      print(data.data);
       if (data.data["status"].toString() == "200") {
+        for(var role_map in data.data["data"]["roles"]){
+          roles.add(role_map);
+          print(role_map);
+        }
+        if (roles.contains("ROLE_ADMIN")) {
+          setState(() {
+            Config_G.ROLE_ADMIN = false;
+          });
+        }
+        if (roles.contains("ROLE_USER")) {
+          setState(() {
+            Config_G.ROLE_USER = false;
+          });
+        }
+        if (roles.contains("ROLE_MODERATOR")) {
+          setState(() {
+            Config_G.ROLE_MODERATOR = false;
+          });
+        }
+
         setState(() {
           checks = true;
           Config_G.Token_app = data.data["data"]["token"].toString();
@@ -56,6 +77,7 @@ class login extends State {
       }
     } on Exception catch (e) {
       setState(() {
+        print(e.toString());
         checks = false;
       });
       return false;
@@ -258,7 +280,7 @@ class login extends State {
                             Config_G.Usernames = _controlleruser.text;
                           });
 
-                          await _makeGetRequest(_controller.value.text);
+                          await _makeGetRequest(_controlleruser.text,_controller.value.text);
                           if (checks == true) {
                             setState(() {
                               check_loadingbar = false;
@@ -342,7 +364,9 @@ class login extends State {
                                     return Text("${snapshot.error}");
                                   }
                                   // By default, show a loading spinner
-                                  return CircularProgressIndicator(color: Colors.green,);
+                                  return CircularProgressIndicator(
+                                    color: Colors.green,
+                                  );
                                 },
                               ),
                             )

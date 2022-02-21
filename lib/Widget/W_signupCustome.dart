@@ -606,8 +606,8 @@ class W_SignUp extends State<W_SignUpCustom> {
                                       } else {
                                         Fluttertoast.showToast(
                                             msg: Config_G.check_lang
-                                                ? "${json.decode(Config_G.id_Custome_shop)["message"].toString()}"
-                                                : "Already exists in the database",
+                                                ? "${json.decode(Config_G.id_Custome_shop)["data"]} - ${json.decode(Config_G.id_Custome_shop)["message"]}"
+                                                : "${json.decode(Config_G.id_Custome_shop)["data"]} - ${json.decode(Config_G.id_Custome_shop)["message"]}",
                                             toastLength: Toast.LENGTH_SHORT,
                                             gravity: ToastGravity.CENTER,
                                             timeInSecForIosWeb: 10,
@@ -618,8 +618,8 @@ class W_SignUp extends State<W_SignUpCustom> {
                                     } else {
                                       Fluttertoast.showToast(
                                           msg: Config_G.check_lang
-                                              ? "${json.decode(Config_G.id_Custome_shop)["message"].toString()}"
-                                              : "Already exists in the database",
+                                              ? "${json.decode(Config_G.id_Custome_shop)["data"]} - ${json.decode(Config_G.id_Custome_shop)["message"]}"
+                                              : "${json.decode(Config_G.id_Custome_shop)["data"]} - ${json.decode(Config_G.id_Custome_shop)["message"]}",
                                           toastLength: Toast.LENGTH_SHORT,
                                           gravity: ToastGravity.CENTER,
                                           timeInSecForIosWeb: 10,
