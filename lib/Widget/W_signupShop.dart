@@ -46,12 +46,21 @@ class W_SignUp_shopo extends State {
   void asyncMethod() async {
     await GetInformation();
     for (Information_Cutome i in Config_G.NameCustom_shop) {
-      for (var shop in i.nameshop) {
+      if (i.nameshop.length > 0) {
+        for (var shop in i.nameshop) {
+          _allUsers.add({
+            "customer_id": i.id,
+            "id_chop": shop.id,
+            "name": "${i.namecustome}-${i.Nickname}",
+            "shop": shop.nameshop
+          });
+        }
+      } else {
         _allUsers.add({
           "customer_id": i.id,
-          "id_chop": shop.id,
+          "id_chop": "",
           "name": "${i.namecustome}-${i.Nickname}",
-          "shop": shop.nameshop
+          "shop": ""
         });
       }
     }
@@ -656,8 +665,8 @@ class W_SignUp_shopo extends State {
                                           } else {
                                             Fluttertoast.showToast(
                                                 msg: Config_G.check_lang
-                                                    ? "${json.decode(Config_G.check_done_reshop)["data"]}+${json.decode(Config_G.check_done_reshop)["message"]}"
-                                                    : "${json.decode(Config_G.check_done_reshop)["data"]}+${json.decode(Config_G.check_done_reshop)["message"]}",
+                                                    ? "${json.decode(Config_G.check_done_reshop)["data"]} ${json.decode(Config_G.check_done_reshop)["message"]}"
+                                                    : "${json.decode(Config_G.check_done_reshop)["data"]} ${json.decode(Config_G.check_done_reshop)["message"]}",
                                                 toastLength: Toast.LENGTH_SHORT,
                                                 gravity: ToastGravity.BOTTOM,
                                                 timeInSecForIosWeb: 10,

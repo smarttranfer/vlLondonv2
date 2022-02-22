@@ -191,19 +191,24 @@ class ListViewsCustome extends StatelessWidget {
                                                 color: Colors.white,
                                                 fontSize: 20)),
                                         onPressed: () async {
-                                          await ActionJS
-                                              .EditCustome_Custome_Shop(
-                                                  _controllertelephone.text,
-                                                  _controlleruser.text,
-                                                  _controllernickname.text,
-                                                  _controllershop.text,
-                                                  _controllernumber.text,
-                                                  _controllerstresst.text,
-                                                  _controllertelephone.text,
-                                                  _controllerpostcode.text,
-                                                  foundUsers[index]
-                                                      ["customer_id"],
-                                                  foundUsers[index]["id_chop"]);
+                                          if (foundUsers[index]["id_chop"].runtimeType == int) {
+                                            await ActionJS
+                                                .EditCustome_Custome_Shop(
+                                                    _controllertelephone.text,
+                                                    _controlleruser.text,
+                                                    _controllernickname.text,
+                                                    _controllershop.text,
+                                                    _controllernumber.text,
+                                                    _controllerstresst.text,
+                                                    _controllertelephone.text,
+                                                    _controllerpostcode.text,
+                                                    foundUsers[index]
+                                                        ["customer_id"],
+                                                    foundUsers[index]
+                                                        ["id_chop"]);
+                                          } else  {
+                                            await ActionJS.EditCustome_Custome(_controllertelephone.text, _controlleruser.text, _controllernickname.text, foundUsers[index]["customer_id"]);
+                                          }
                                           if (AnimeAppState
                                                   .checkdone_send_Custome__shop_edit ==
                                               true) {

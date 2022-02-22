@@ -20,7 +20,7 @@ class ListViewsBill extends StatelessWidget {
             return ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: Config_G.modelBill.length,
+                itemCount: ActionJS.show_transation(Config_G.modelBill.length),
                 itemBuilder: (BuildContext context, int index) {
                   return Row(children: [
                     Flexible(
@@ -65,7 +65,7 @@ class ListViewsBill extends StatelessWidget {
                                             ),
                                             Column(children: [
                                               Text(
-                                                "${ActionJS.splitString(provider.getCustomeBill(index).toString())}",
+                                                "${ActionJS.splitString(Config_G.modelBill[index].namecustome)}",
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 15,
@@ -74,7 +74,7 @@ class ListViewsBill extends StatelessWidget {
                                                 ),
                                               ),
                                               Text(
-                                                "${ActionJS.splitString(provider.getShopBill(index))}",
+                                                "${ActionJS.splitString(Config_G.modelBill[index].nameshop)}",
                                                 style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 15,
@@ -90,7 +90,7 @@ class ListViewsBill extends StatelessWidget {
                                                   30,
                                             ),
                                             Text(
-                                              "- ${provider.getMoneyBill(index)}",
+                                              "-  ${ActionJS.splitString(Config_G.modelBill[index].money.toString())}",
                                               style: TextStyle(
                                                 color: Colors.green,
                                                 fontSize: 20,

@@ -2,7 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 
 import 'W_DealManager.dart';
@@ -12,10 +12,12 @@ class OrderTitle extends StatelessWidget {
     Key? key,
     required this.date,
     required this.index,
+    required this.id_transaction,
   }) : super(key: key);
 
   final String date;
   final int index;
+  final int id_transaction;
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +126,7 @@ class OrderTitle extends StatelessWidget {
                                     TextField(
                                       decoration: InputDecoration(
                                         // hintText:
-                                            // "${Config_G.NameCustom_shop[index].numberlocal}",
+                                        // "${Config_G.NameCustom_shop[index].numberlocal}",
                                         icon: Icon(
                                             Icons.add_location_alt_outlined),
                                         labelText: 'Apartment number',
@@ -238,32 +240,46 @@ class OrderTitle extends StatelessWidget {
                         child: Row(
                       children: [
                         TextButton(
-                          style: TextButton.styleFrom(
-                            textStyle: const TextStyle(
-                              color: Colors.green,
-                              fontSize: 20,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
+                            style: TextButton.styleFrom(
+                              textStyle: const TextStyle(
+                                color: Colors.green,
+                                fontSize: 20,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          onPressed: () {
-                            Config_G.modelBill.removeAt(index);
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        DealManagers()));
-                          },
-                          child: Text(
-                            Config_G.check_lang ? "Xóa" : 'Delete',
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 20,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
+                            onPressed: () async{
+                              if (Config_G.ROLE_ADMIN == false) {
+                                Config_G.modelBill.removeAt(index);
+                                await ActionJS.Delete_transaction(id_transaction);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            DealManagers()));
+                              }
+                            },
+                            child: Config_G.ROLE_ADMIN
+                                ? Text(
+                                    Config_G.check_lang
+                                        ? "Không quyền xóa"
+                                        : 'Not remove permissions',
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 20,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                : Text(
+                                    Config_G.check_lang ? "Xóa" : 'Delete',
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 20,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))
                       ],
                     ))
                   ]),

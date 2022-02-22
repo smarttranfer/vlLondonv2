@@ -42,11 +42,9 @@ class login extends State {
       var response = await dio
           .post(url, data: {'username': '${Username}', 'password': '${password}'});
       var data = response;
-      print(data.data);
       if (data.data["status"].toString() == "200") {
         for(var role_map in data.data["data"]["roles"]){
           roles.add(role_map);
-          print(role_map);
         }
         if (roles.contains("ROLE_ADMIN")) {
           setState(() {

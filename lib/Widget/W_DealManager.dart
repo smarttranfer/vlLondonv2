@@ -1,7 +1,5 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
@@ -22,10 +20,9 @@ class _HomePageState extends State<DealManagers> {
   List<Map<String, dynamic>> _foundUsers = [];
   @override
   initState() {
-    int k = 1;
     for (Information_Bill i in Config_G.modelBill) {
       _allUsers.add({
-        "id": "${k}",
+        "id": "${i.id_bill}",
         "name": "${i.namecustome}",
         "nickname": "${i.namecustome}",
         "shop": "${i.nameshop}",
@@ -33,7 +30,6 @@ class _HomePageState extends State<DealManagers> {
         "date": "${i.date}",
         "code": "${i.code}"
       });
-      k += 1;
     }
     _foundUsers = _allUsers;
     super.initState();
@@ -173,6 +169,7 @@ class _HomePageState extends State<DealManagers> {
                                     Padding(
                                       padding: const EdgeInsets.all(20.0),
                                       child: OrderTitle(
+                                        id_transaction: int.parse(_foundUsers[index]["id"].toString()),
                                         date: _foundUsers[index]["date"]
                                             .toString(),
                                         index: index,

@@ -45,19 +45,35 @@ class AnimeAppState extends State<AnimeApp> {
   void asyncMethod() async {
     await GetInformation();
     for (Information_Cutome i in Config_G.NameCustom_shop) {
-      for (var shop in i.nameshop) {
+      if (i.nameshop.length > 0) {
+        for (var shop in i.nameshop) {
+          _allUsers.add({
+            "customer_id": i.id,
+            "id_chop": shop.id.toInt(),
+            "name_nickname": "${i.namecustome}-${i.Nickname}",
+            "name": "${i.namecustome}",
+            "nickname": "${i.Nickname}",
+            "shop": shop.nameshop,
+            "phone_shop": "${shop.telephone}",
+            "phone_custom": "${i.telephone}",
+            "Apartment_number": "${shop.building_number}",
+            "Post_code": "${shop.post_code}",
+            "stresst": "${shop.address}",
+          });
+        }
+      } else {
         _allUsers.add({
           "customer_id": i.id,
-          "id_chop": shop.id.toInt(),
+          "id_chop": "",
           "name_nickname": "${i.namecustome}-${i.Nickname}",
-          "name":"${i.namecustome}",
-          "nickname":"${i.Nickname}",
-          "shop": shop.nameshop,
-          "phone_shop": "${shop.telephone}",
+          "name": "${i.namecustome}",
+          "nickname": "${i.Nickname}",
+          "shop": "",
+          "phone_shop": "",
           "phone_custom": "${i.telephone}",
-          "Apartment_number":"${shop.building_number}",
-          "Post_code":"${shop.post_code}",
-          "stresst":"${shop.address}",
+          "Apartment_number": "",
+          "Post_code": "",
+          "stresst": "",
         });
       }
     }
@@ -229,5 +245,3 @@ class AnimeAppState extends State<AnimeApp> {
             )));
   }
 }
-
-

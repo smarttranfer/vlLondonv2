@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:vl_ui/Button/DetailBtn.dart';
 import 'package:vl_ui/Button/OptionButton.dart';
+import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/Object_Wiget/ListBill.dart';
 import 'package:vl_ui/Widget/W_Login.dart';
@@ -31,59 +32,23 @@ class Home extends State<W_Home> {
   bool checkdataToday = false;
   bool checkdataYesterday = false;
   static bool check_loding_data = true;
+  static bool data_Sum = false;
+  static double sumMoney = 0.0;
   @override
   void initState() {
     super.initState();
+    sumMoney = 0.0;
+    Config_G.modelBill.clear();
     asyncMethod();
   }
 
   void asyncMethod() async {
-    await GetInformation();
-  }
-
-  Future<void> GetInformation() async {
-    try {
-      var headers = {
-        'Authorization': 'Bearer ${Config_G.Token_app}',
-        'Content-Type': 'application/json'
-      };
-      var request = http.Request(
-          'GET', Uri.parse('http://103.161.16.61:27554/customer/info/all'));
-      request.headers.addAll(headers);
-      http.StreamedResponse response = await request.send();
-      Config_G.id_Custome_shop = await response.stream.bytesToString();
-      if (json.decode(Config_G.id_Custome_shop)["status"].toString() == "200") {
-        for (var i in json.decode(Config_G.id_Custome_shop)["data"]) {
-          Information_Cutome s1 = new Information_Cutome();
-          s1.id = i["id"];
-          s1.namecustome = i["full_name"];
-          s1.telephone = i["phone"];
-          s1.Nickname = i["username"];
-          for (var shop in i["shops"]) {
-            Information_Shop s0 = new Information_Shop();
-            s0.id = shop["id"];
-            s0.telephone = shop["phone"];
-            s0.post_code = shop["post_code"];
-            s0.building_number = shop["building_number"];
-            s0.nameshop = shop["name"];
-            s0.address = shop["street_name"];
-            s1.nameshop.add(s0);
-          }
-          Config_G.NameCustom_shop.add(s1);
-          CheckSameCustome modelchek = new CheckSameCustome();
-          modelchek.information_name = i["full_name"];
-          modelchek.information_nickname = i["username"];
-          Config_G.modelCustome.add(modelchek);
-        }
-        setState(() {
-          check_loding_data = false;
-        });
-      } else {
+    await ActionJS.Get_Transation_Map_Shop_Custome();
+    if(data_Sum == true){
+      setState(() {
         check_loding_data = false;
-        print(response.reasonPhrase);
-      }
-    } on Exception catch (e) {
-      print("Exception" + e.toString());
+      });
+
     }
   }
 
@@ -263,6 +228,9 @@ class Home extends State<W_Home> {
                                           onTap: () {
                                             Config_G.NameCustom_shop.clear();
                                             setState(() {
+                                              Config_G.ROLE_ADMIN = true;
+                                              Config_G.ROLE_MODERATOR = true;
+                                              Config_G.ROLE_USER = true;
                                               login.check_loadingbar = false;
                                               check_loding_data = true;
                                             });
@@ -284,7 +252,11 @@ class Home extends State<W_Home> {
                                               IconButton(
                                                 icon: Image.asset(
                                                     "assest/IconBtn/logout.png"),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  setState(() {
+
+                                                  });
+                                                },
                                               ),
                                               Text(
                                                 Config_G.check_lang
@@ -488,10 +460,7 @@ class Home extends State<W_Home> {
                                           ],
                                         ),
                                         SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              300,
+                                          height: MediaQuery.of(context).size.height/300,
                                         ),
                                         Container(
                                             padding: EdgeInsets.all(5),
@@ -526,7 +495,7 @@ class Home extends State<W_Home> {
                                                         ),
                                                       )
                                                     : Text(
-                                                        "\€ ${Config_G.moneys()}",
+                                                        "\€ ${sumMoney}",
                                                         style: TextStyle(
                                                           color: Colors.green,
                                                           fontSize: 25,

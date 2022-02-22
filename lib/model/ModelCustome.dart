@@ -16,7 +16,7 @@ class Bill with ChangeNotifier{
     listmodelbill.nameshop = shop;
     listmodelbill.code = code;
     listmodelbill.date = date;
-    listmodelbill.money = money;
+    // listmodelbill.money = money;
     listmodelbill.note = note;
     Config_G.modelBill.add(listmodelbill);
     Config_G.modelBill.length;

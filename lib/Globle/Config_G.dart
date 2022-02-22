@@ -13,13 +13,17 @@ class Config_G{
   static List<Information_Shop> NameShop=[];
   static List<CheckSameCustome> modelCustome = [];
   static List<Information_Bill> modelBill = [];
-  static String url_SignCustome = 'http://103.161.16.61:27554/customer/register';
+  static String url = 'http://103.161.16.61:27554';
   static String Token_app = "";
+  static String Create_Transation = "";
   static String id_Custome_shop = "";
   static String check_done_reshop = "";
   static String check_done_edit_shop = "";
   static String check_done_edit_custome = "";
   static String check_done_edit_custome_shop = "";
+  static String Response_Transation_Map_Shop_Custome =  "";
+  static String Response_Shop =  "";
+  static String Response_Custome =  "";
   static String namecustom_chossen = "";
   static String ColorsBtnOption = "#388118";
   static String Usernames = "";
@@ -41,16 +45,5 @@ class Config_G{
     }else{
       return false;
     }
-  }
-  static double moneys(){
-    double start = 0;
-    for(Information_Bill i in modelBill){
-      if(i.money.isEmpty){
-        return 0;
-      }else{
-        start+=double.parse(i.money) ;
-      }
-    }
-    return start;
   }
 }
