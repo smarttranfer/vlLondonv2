@@ -27,7 +27,6 @@ class ActionJS {
 
   static Future<String> SignCustome(
       String namecustome,
-      String nickname,
       String phone,
       String name_shop,
       String building_number,
@@ -42,7 +41,6 @@ class ActionJS {
           http.Request('POST', Uri.parse('${Config_G.url}/customer/register'));
       request.body = json.encode({
         "full_name": "${namecustome}",
-        "username": "${nickname}",
         "phone_customer": "${phone}",
         "name_shop": "${name_shop}",
         "phone_shop": "${phone}",
@@ -266,7 +264,7 @@ class ActionJS {
     }
   }
 
-  static Future<bool> Create_transation(int id_shop, String CodeBill,
+  static Future<bool> Create_transation(int id_shop,
       double Money, String Content, String Date) async {
     try {
       var headers = {
@@ -276,7 +274,7 @@ class ActionJS {
       var transation =
           http.Request('POST', Uri.parse('${Config_G.url}/transaction'));
       transation.body = json.encode({
-        "name": "${CodeBill}",
+        // "name": "${CodeBill}",
         "money": Money,
         "content": "${Content}",
         "create_date": "${Date}",

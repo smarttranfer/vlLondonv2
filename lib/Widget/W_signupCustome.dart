@@ -35,7 +35,6 @@ class W_SignUp extends State<W_SignUpCustom> {
   final TextEditingController _stresst = TextEditingController();
   final TextEditingController _postcode = TextEditingController();
   final TextEditingController _phone = TextEditingController();
-  final TextEditingController _nickname = TextEditingController();
   List<CheckSameCustome> modelCustome = [];
   @override
   void initState() {
@@ -102,6 +101,7 @@ class W_SignUp extends State<W_SignUpCustom> {
                                   ),
                                 ],
                               ),
+                              SizedBox(height: MediaQuery.of(context).size.height/(MediaQuery.of(context).size.height/20),),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -188,21 +188,9 @@ class W_SignUp extends State<W_SignUpCustom> {
                                       Expanded(
                                         child: TextFormField(
                                           onChanged: (newText) {
-                                            for (CheckSameCustome checkname
-                                                in modelCustome) {
-                                              if (checkname.information_name ==
-                                                  newText) {
-                                                setState(() {
-                                                  checkcolor = false;
-                                                  checklabel = false;
-                                                  checkdone = false;
-                                                });
-                                              } else {
                                                 setState(() {
                                                   checkdone = true;
                                                 });
-                                              }
-                                            }
                                           },
                                           controller: _Name,
                                           decoration: InputDecoration(
@@ -220,91 +208,6 @@ class W_SignUp extends State<W_SignUpCustom> {
                                             prefixIcon: Icon(
                                               Icons
                                                   .supervised_user_circle_outlined,
-                                              color: Colors.green,
-                                            ),
-                                            hintStyle:
-                                                TextStyle(color: Colors.green),
-                                            filled: true,
-                                            fillColor: Colors.white70,
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12.0)),
-                                              borderSide: BorderSide(
-                                                  color: checkcolor
-                                                      ? Colors.green
-                                                      : Colors.red),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10.0)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.green,
-                                                  width: 2),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  )),
-                              Card(
-                                  elevation: 10,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                  ),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        child: TextFormField(
-                                          onChanged: (newText) {
-                                            if (modelCustome.isEmpty) {
-                                              setState(() {
-                                                checkdone = true;
-                                              });
-                                            } else {
-                                              for (CheckSameCustome checkname
-                                                  in modelCustome) {
-                                                if (checkname
-                                                            .information_name ==
-                                                        _Name.text &&
-                                                    checkname
-                                                            .information_nickname ==
-                                                        newText) {
-                                                  setState(() {
-                                                    checklabelNickname = false;
-                                                    checkcolorNickname = false;
-                                                    checkcolor = false;
-                                                    checklabel = false;
-                                                    checkdone = false;
-                                                  });
-                                                } else {
-                                                  setState(() {
-                                                    checklabelNickname = true;
-                                                    checkcolorNickname = true;
-                                                    checkcolor = true;
-                                                    checklabel = true;
-                                                    checkdone = true;
-                                                  });
-                                                }
-                                              }
-                                            }
-                                          },
-                                          controller: _nickname,
-                                          decoration: InputDecoration(
-                                            labelText: Config_G.check_lang
-                                                ? (checklabelNickname
-                                                    ? "Bí Danh  *"
-                                                    : " ${_Name.text} ${_nickname.text} đã tồn tại trong dữ liệu")
-                                                : (checklabelNickname
-                                                    ? "NickName  *"
-                                                    : " ${_Name.text} ${_nickname.text} already exists in the data"),
-                                            labelStyle: TextStyle(
-                                                color: checkcolor
-                                                    ? Colors.green
-                                                    : Colors.red),
-                                            prefixIcon: Icon(
-                                              Icons.workspaces_outline,
                                               color: Colors.green,
                                             ),
                                             hintStyle:
@@ -545,7 +448,6 @@ class W_SignUp extends State<W_SignUpCustom> {
                                     ),
                                 onPressed: () async {
                                   if (_Name.text.isEmpty |
-                                      _nickname.text.isEmpty |
                                       _shop.text.isEmpty |
                                       _postcode.text.isEmpty |
                                       _numberlocal.text.isEmpty |
@@ -565,7 +467,6 @@ class W_SignUp extends State<W_SignUpCustom> {
                                     if (checkdone == true) {
                                       await ActionJS.SignCustome(
                                           _Name.text,
-                                          _nickname.text,
                                           _phone.text,
                                           _shop.text,
                                           _numberlocal.text,
@@ -583,14 +484,11 @@ class W_SignUp extends State<W_SignUpCustom> {
                                         s1.id = json.decode(Config_G.id_Custome_shop)["data"]["customer_id"];
                                         s1.namecustome = _Name.text;
                                         s1.telephone = _phone.text;
-                                        s1.Nickname = _nickname.text;
                                         s1.nameshop.add(s0);
                                         Config_G.NameCustom_shop.add(s1);
                                         CheckSameCustome modelchek =
                                             new CheckSameCustome();
                                         modelchek.information_name = _Name.text;
-                                        modelchek.information_nickname =
-                                            _nickname.text;
                                         Config_G.modelCustome.add(modelchek);
                                         Fluttertoast.showToast(
                                             msg: Config_G.check_lang

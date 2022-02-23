@@ -14,7 +14,6 @@ import 'package:vl_ui/model/CheckSameCustome.dart';
 import 'package:vl_ui/model/Information_Cutome.dart';
 import 'package:vl_ui/model/Information_Shop.dart';
 import 'package:http/http.dart' as http;
-import 'package:vl_ui/model/New_Changer.dart';
 
 import 'Homepage.dart';
 
@@ -31,7 +30,6 @@ class CreateChange extends State {
   TextEditingController _shop = TextEditingController();
   TextEditingController _nameCustom = TextEditingController();
   TextEditingController dateinput = TextEditingController();
-  TextEditingController _code = TextEditingController();
   TextEditingController _money = TextEditingController();
   TextEditingController _notes = TextEditingController();
   List<DropdownMenuItem<Object>> ListCustom = [];
@@ -130,6 +128,7 @@ class CreateChange extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         resizeToAvoidBottomInset: true,
         body: Container(
             decoration: BoxDecoration(
@@ -151,6 +150,9 @@ class CreateChange extends State {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height /
+                                      25),
                               Row(
                                 children: [
                                   IconButton(
@@ -187,6 +189,9 @@ class CreateChange extends State {
                         ),
                       ],
                     ),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height /
+                            35),
                     Card(
                       margin: EdgeInsets.only(left: 10, right: 10),
                       elevation: 15,
@@ -203,7 +208,7 @@ class CreateChange extends State {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height / 1.2,
+                            height: MediaQuery.of(context).size.height / 1.3,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -251,24 +256,10 @@ class CreateChange extends State {
                                   height: 2,
                                   margin: EdgeInsets.only(left: 20, right: 20),
                                 ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 50,
-                                ),
-                                // ------------------------------------------------------------
+                                SizedBox(height: MediaQuery.of(context).size.height/35,),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              25,
-                                        ),
-                                      ],
-                                    ),
                                     Card(
                                         elevation: 10,
                                         shape: RoundedRectangleBorder(
@@ -289,33 +280,16 @@ class CreateChange extends State {
                                                   ),
                                                   child: TextField(
                                                       controller: _nameCustom
-                                                        ..text = Config_G
-                                                                .check_namecustom_chossen
-                                                            ? ""
-                                                            : Config_G
-                                                                .namecustom_chossen,
+                                                        ..text = Config_G.check_namecustom_chossen ? "" : Config_G.namecustom_chossen,
                                                       decoration:
                                                           InputDecoration(
-                                                        labelText: Config_G
-                                                                .check_lang
-                                                            ? 'Tên chủ khách hàng *'
-                                                            : 'Customer name *',
-                                                        labelStyle: TextStyle(
-                                                            color:
-                                                                Colors.green),
-                                                        prefixIcon: Icon(
-                                                          Icons
-                                                              .supervised_user_circle_outlined,
-                                                          color: Colors.green,
-                                                        ),
-                                                        hintStyle: TextStyle(
-                                                            color:
-                                                                Colors.green),
+                                                        labelText: Config_G.check_lang ? 'Tên chủ khách hàng *' : 'Customer name *',
+                                                        labelStyle: TextStyle(color: Colors.green),
+                                                        prefixIcon: Icon(Icons.supervised_user_circle_outlined, color: Colors.green,),
+                                                        hintStyle: TextStyle(color: Colors.green),
                                                         filled: true,
-                                                        fillColor:
-                                                            Colors.white70,
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
+                                                        fillColor: Colors.white70,
+                                                        enabledBorder: OutlineInputBorder(
                                                           borderRadius:
                                                               BorderRadius.all(
                                                                   Radius
@@ -397,39 +371,25 @@ class CreateChange extends State {
                                                                           decoration: BoxDecoration(
                                                                               color: Colors.green,
                                                                               borderRadius: BorderRadius.all(Radius.circular(20))),
-                                                                          height:
-                                                                              3,
-                                                                          width:
-                                                                              20,
-                                                                          margin: EdgeInsets.only(
-                                                                              left: 20,
-                                                                              right: 20),
+                                                                          height: 3,
+                                                                          width: 20,
+                                                                          margin: EdgeInsets.only(left: 20, right: 20),
                                                                         ),
-                                                                        Text(
-                                                                          "Result",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color:
-                                                                                Colors.green,
-                                                                            fontSize:
-                                                                                20,
-                                                                            fontFamily:
-                                                                                'Poppins',
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
+                                                                        Text("Result",
+                                                                          style: TextStyle(
+                                                                            color: Colors.green,
+                                                                            fontSize: 20,
+                                                                            fontFamily: 'Poppins',
+                                                                            fontWeight: FontWeight.bold,
                                                                           ),
                                                                         ),
                                                                         Container(
                                                                           decoration: BoxDecoration(
                                                                               color: Colors.green,
                                                                               borderRadius: BorderRadius.all(Radius.circular(20))),
-                                                                          height:
-                                                                              3,
-                                                                          width:
-                                                                              20,
-                                                                          margin: EdgeInsets.only(
-                                                                              left: 20,
-                                                                              right: 20),
+                                                                          height: 3,
+                                                                          width: 20,
+                                                                          margin: EdgeInsets.only(left: 20, right: 20),
                                                                         ),
                                                                       ],
                                                                     ),
@@ -507,10 +467,7 @@ class CreateChange extends State {
                                     Row(
                                       children: [
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              25,
+                                          width: MediaQuery.of(context).size.width / 25,
                                         ),
                                       ],
                                     ),
@@ -530,24 +487,13 @@ class CreateChange extends State {
                                                     child: new TextField(
                                                         decoration:
                                                             InputDecoration(
-                                                          labelText: Config_G
-                                                                  .check_lang
-                                                              ? 'Tên Shop *'
-                                                              : 'Name Shop *',
+                                                          labelText: Config_G.check_lang ? 'Tên Shop *' : 'Name Shop *',
                                                           labelStyle: TextStyle(
-                                                              color:
-                                                                  Colors.green),
-                                                          prefixIcon: Icon(
-                                                            Icons
-                                                                .view_list_outlined,
-                                                            color: Colors.green,
-                                                          ),
-                                                          hintStyle: TextStyle(
-                                                              color:
-                                                                  Colors.green),
+                                                              color: Colors.green),
+                                                          prefixIcon: Icon(Icons.view_list_outlined, color: Colors.green,),
+                                                          hintStyle: TextStyle(color: Colors.green),
                                                           filled: true,
-                                                          fillColor:
-                                                              Colors.white70,
+                                                          fillColor: Colors.white70,
                                                           enabledBorder:
                                                               OutlineInputBorder(
                                                             borderRadius:
@@ -580,72 +526,16 @@ class CreateChange extends State {
                                     Row(
                                       children: [
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              25,
+                                          width: MediaQuery.of(context).size.width / 25,
                                         ),
                                       ],
                                     ),
-                                    Card(
-                                        elevation: 10,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15.0),
-                                        ),
-                                        child: Card(
-                                            elevation: 10,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0),
-                                            ),
-                                            child: TextField(
-                                              controller: _code,
-                                              autocorrect: true,
-                                              decoration: InputDecoration(
-                                                labelText: Config_G.check_lang
-                                                    ? 'Mã hóa đơn *'
-                                                    : 'Code Bill *',
-                                                labelStyle: TextStyle(
-                                                    color: Colors.green),
-                                                prefixIcon: Icon(
-                                                  Icons.view_list_outlined,
-                                                  color: Colors.green,
-                                                ),
-                                                hintStyle: TextStyle(
-                                                    color: Colors.green),
-                                                filled: true,
-                                                fillColor: Colors.white70,
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              12.0)),
-                                                  borderSide: BorderSide(
-                                                      color: Colors.green,
-                                                      width: 2),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              10.0)),
-                                                  borderSide: BorderSide(
-                                                      color: Colors.green,
-                                                      width: 2),
-                                                ),
-                                              ),
-                                            ))),
+
                                     // -----------------------------------------------------------
                                     Row(
                                       children: [
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              25,
+                                          width: MediaQuery.of(context).size.width / 25,
                                         ),
                                       ],
                                     ),
@@ -727,10 +617,7 @@ class CreateChange extends State {
                                     Row(
                                       children: [
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              25,
+                                          width: MediaQuery.of(context).size.width / 25,
                                         ),
                                       ],
                                     ),
@@ -791,10 +678,7 @@ class CreateChange extends State {
                                     Row(
                                       children: [
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              25,
+                                          width: MediaQuery.of(context).size.width / 25,
                                         ),
                                       ],
                                     ),
@@ -814,15 +698,9 @@ class CreateChange extends State {
                                               controller: _notes,
                                               autocorrect: true,
                                               decoration: InputDecoration(
-                                                labelText: Config_G.check_lang
-                                                    ? 'Ghi chú'
-                                                    : 'Note',
-                                                labelStyle: TextStyle(
-                                                    color: Colors.green),
-                                                prefixIcon: Icon(
-                                                  Icons.note_add_rounded,
-                                                  color: Colors.green,
-                                                ),
+                                                labelText: Config_G.check_lang ? 'Ghi chú' : 'Note',
+                                                labelStyle: TextStyle(color: Colors.green),
+                                                prefixIcon: Icon(Icons.note_add_rounded, color: Colors.green,),
                                                 hintStyle: TextStyle(
                                                     color: Colors.green),
                                                 filled: true,
@@ -849,6 +727,7 @@ class CreateChange extends State {
                                                 ),
                                               ),
                                             ))),
+                                    SizedBox(height: MediaQuery.of(context).size.height/20,),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -881,7 +760,6 @@ class CreateChange extends State {
                                               onPressed: () async {
                                                 if (_nameCustom.text.isEmpty |
                                                     _shop.text.isEmpty |
-                                                    _code.text.isEmpty |
                                                     dateinput.text.isEmpty |
                                                     _money.text.isEmpty) {
                                                   Fluttertoast.showToast(
@@ -897,7 +775,7 @@ class CreateChange extends State {
                                                       textColor: Colors.white,
                                                       fontSize: 16.0);
                                                 } else {
-                                                  await ActionJS.Create_transation(id_shop, _code.text, int.parse(_money.text).toDouble(),  _notes.text, dateinput.text);
+                                                  await ActionJS.Create_transation(id_shop, int.parse(_money.text).toDouble(),  _notes.text, dateinput.text);
                                                   if(check_done_transation == true){
                                                     Navigator.pushReplacement(
                                                         context,
@@ -944,11 +822,7 @@ class CreateChange extends State {
                                                       fontSize: 10)),
                                             ))),
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              30,
-                                        ),
+                                          width: MediaQuery.of(context).size.width / 30,),
                                         Card(
                                             elevation: 10,
                                             shape: RoundedRectangleBorder(

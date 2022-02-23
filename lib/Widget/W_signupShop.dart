@@ -188,6 +188,13 @@ class W_SignUp_shopo extends State {
                                         ),
                                       ],
                                     ),
+                                    SizedBox(
+                                      height: MediaQuery.of(context)
+                                              .size
+                                              .height /
+                                          (MediaQuery.of(context).size.height /
+                                              25),
+                                    ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -208,10 +215,69 @@ class W_SignUp_shopo extends State {
                                       ],
                                     ),
                                     SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              25,
+                                      height: MediaQuery.of(context)
+                                              .size
+                                              .height /
+                                          (MediaQuery.of(context).size.height /
+                                              25),
                                     ),
+                                    Card(
+                                        elevation: 10,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Expanded(
+                                                  flex: 2,
+                                                  child: Center(
+                                                      child: IntlPhoneField(
+                                                    controller: _phone,
+                                                    decoration: InputDecoration(
+                                                      labelText: Config_G
+                                                              .check_lang
+                                                          ? 'Số Điện Thoại *'
+                                                          : 'Phone Number *',
+                                                      prefixIcon: Icon(
+                                                        Icons
+                                                            .phone_iphone_outlined,
+                                                        color: Colors.green,
+                                                      ),
+                                                      hintStyle: TextStyle(
+                                                          color: Colors.green),
+                                                      filled: true,
+                                                      fillColor: Colors.white70,
+                                                      enabledBorder:
+                                                          UnderlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    12.0)),
+                                                        borderSide: BorderSide(
+                                                            color: Colors.green,
+                                                            width: 2),
+                                                      ),
+                                                      focusedBorder:
+                                                          UnderlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    10.0)),
+                                                        borderSide: BorderSide(
+                                                            color: Colors.green,
+                                                            width: 2),
+                                                      ),
+                                                    ),
+                                                    initialCountryCode: 'GB',
+                                                    onChanged: (phone) {
+                                                      print(
+                                                          phone.completeNumber);
+                                                    },
+                                                  )))
+                                            ])),
                                     Card(
                                         elevation: 10,
                                         shape: RoundedRectangleBorder(
@@ -587,32 +653,9 @@ class W_SignUp_shopo extends State {
                                           MediaQuery.of(context).size.height /
                                               40,
                                     ),
-                                    Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                              flex: 2,
-                                              child: IntlPhoneField(
-                                                controller: _phone,
-                                                decoration: InputDecoration(
-                                                    labelText:
-                                                        Config_G.check_lang
-                                                            ? 'Số Điện Thoại'
-                                                            : 'Phone Number',
-                                                    enabledBorder:
-                                                        UnderlineInputBorder(
-                                                            borderSide: BorderSide(
-                                                                color: Colors
-                                                                    .green))),
-                                                initialCountryCode: 'GB',
-                                                onChanged: (phone) {},
-                                              ))
-                                        ]),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                           primary: HexColor("#237401"),
-                                          //background color of button
                                           elevation: 3,
                                           //elevation of button
                                           shape: RoundedRectangleBorder(
