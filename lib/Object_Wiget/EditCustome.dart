@@ -7,7 +7,6 @@ import 'package:vl_ui/Widget/W_EditCustome.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:vl_ui/model/Information_Cutome.dart';
 
 final TextEditingController _controllershop = TextEditingController();
 final TextEditingController _controllernickname = TextEditingController();
@@ -22,14 +21,6 @@ class ListViewsCustome extends StatelessWidget {
     Key? key,
     required this.foundUsers,
   }) : super(key: key);
-
-  bool check_shop(String nameShop) {
-    if (nameShop.isEmpty) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   final List<Map<String, dynamic>> foundUsers;
   @override
@@ -64,36 +55,6 @@ class ListViewsCustome extends StatelessWidget {
                                 body: Container(
                                   child: Column(
                                     children: <Widget>[
-                                      Padding(
-                                          padding: EdgeInsets.only(),
-                                          child: new Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                new Expanded(
-                                                    child: new TextField(
-                                                        readOnly: check_shop(
-                                                            foundUsers[index]
-                                                                ["shop"]),
-                                                        // focusNode: FocusNode(),
-                                                        decoration:
-                                                            InputDecoration(
-                                                          icon: Icon(
-                                                            Icons
-                                                                .shopping_cart_outlined,
-                                                            color: Colors.green,
-                                                          ),
-                                                          labelText:
-                                                              'Name Shop',
-                                                        ),
-                                                        controller:
-                                                            _controllershop
-                                                              ..text =
-                                                                  foundUsers[
-                                                                          index]
-                                                                      [
-                                                                      "shop"])),
-                                              ])),
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText: foundUsers[index]["name"],
@@ -109,7 +70,7 @@ class ListViewsCustome extends StatelessWidget {
                                       TextField(
                                         decoration: InputDecoration(
                                           hintText: foundUsers[index]
-                                              ["phone_custom"],
+                                          ["phone_custom"],
                                           icon: Icon(
                                             Icons.phone,
                                             color: Colors.green,
@@ -118,62 +79,7 @@ class ListViewsCustome extends StatelessWidget {
                                         ),
                                         controller: _controllertelephone
                                           ..text =
-                                              foundUsers[index]["phone_custom"],
-                                      ),
-                                      TextField(
-                                        readOnly: check_shop(
-                                            foundUsers[index]["shop"]),
-                                        decoration: InputDecoration(
-                                          icon: Icon(
-                                            Icons.phone,
-                                            color: Colors.green,
-                                          ),
-                                          labelText: 'Telephone Shop',
-                                        ),
-                                        controller: _controllertelephone
-                                          ..text =
-                                              foundUsers[index]["phone_shop"],
-                                      ),
-                                      TextField(
-                                        readOnly: check_shop(
-                                            foundUsers[index]["shop"]),
-                                        decoration: InputDecoration(
-                                          icon: Icon(
-                                            Icons.add_location_alt_outlined,
-                                            color: Colors.green,
-                                          ),
-                                          labelText: 'Apartment number',
-                                        ),
-                                        controller: _controllernumber
-                                          ..text = foundUsers[index]
-                                              ["Apartment_number"],
-                                      ),
-                                      TextField(
-                                        readOnly: check_shop(
-                                            foundUsers[index]["shop"]),
-                                        decoration: InputDecoration(
-                                          icon: Icon(
-                                            Icons.local_post_office_outlined,
-                                            color: Colors.green,
-                                          ),
-                                          labelText: 'Post code',
-                                        ),
-                                        controller: _controllerpostcode
-                                          ..text =
-                                              foundUsers[index]["Post_code"],
-                                      ),
-                                      TextField(
-                                        readOnly: check_shop(
-                                            foundUsers[index]["shop"]),
-                                        decoration: InputDecoration(
-                                          icon: Icon(
-                                            Icons.edit_road_rounded,
-                                            color: Colors.green,
-                                          ),
-                                          labelText: 'Stresst shop',
-                                        ),
-                                        controller: _controllerstresst
-                                          ..text = foundUsers[index]["stresst"],
+                                          foundUsers[index]["phone_custom"],
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -186,38 +92,24 @@ class ListViewsCustome extends StatelessWidget {
                                                 color: Colors.white,
                                                 fontSize: 20)),
                                         onPressed: () async {
-                                          print(check_shop(
-                                              foundUsers[index]["shop"]));
-                                          if (check_shop(
-                                                  foundUsers[index]["shop"]) ==
-                                              false) {
-                                            await ActionJS
-                                                .EditCustome_Custome_Shop(
-                                                    _controllertelephone.text,
-                                                    _controlleruser.text,
-                                                    _controllernickname.text,
-                                                    _controllershop.text,
-                                                    _controllernumber.text,
-                                                    _controllerstresst.text,
-                                                    _controllertelephone.text,
-                                                    _controllerpostcode.text,
-                                                    foundUsers[index]
-                                                        ["customer_id"],
-                                                    foundUsers[index]
-                                                        ["id_chop"]);
-                                          } else {
-                                            await ActionJS.EditCustome_Custome(
-                                                _controllertelephone.text,
-                                                _controlleruser.text,
-                                                foundUsers[index]
-                                                    ["customer_id"]);
-                                          }
-                                          if (AnimeAppState
-                                                  .checkdone_send_Custome__shop_edit ==
-                                              true) {
+                                          await ActionJS
+                                              .EditCustome_Custome_Shop(
+                                              _controllertelephone.text,
+                                              _controlleruser.text,
+                                              _controllernickname.text,
+                                              _controllershop.text,
+                                              _controllernumber.text,
+                                              _controllerstresst.text,
+                                              _controllertelephone.text,
+                                              _controllerpostcode.text,
+                                              foundUsers[index]
+                                              ["customer_id"],
+                                              foundUsers[index]
+                                              ["id_chop"]);
+                                          if (AnimeAppState.checkdone_send_Custome__shop_edit == true) {
                                             Fluttertoast.showToast(
                                                 msg:
-                                                    "Sửa thông tin thành công ",
+                                                "Sửa thông tin thành công ",
                                                 toastLength: Toast.LENGTH_SHORT,
                                                 gravity: ToastGravity.BOTTOM,
                                                 timeInSecForIosWeb: 2,
@@ -239,11 +131,11 @@ class ListViewsCustome extends StatelessWidget {
                                           } else {
                                             Fluttertoast.showToast(
                                                 msg: json.decode(Config_G
-                                                            .check_done_edit_shop)[
-                                                        "data"] +
+                                                    .check_done_edit_shop)[
+                                                "data"] +
                                                     json.decode(Config_G
-                                                            .check_done_edit_shop)[
-                                                        "message"],
+                                                        .check_done_edit_shop)[
+                                                    "message"],
                                                 toastLength: Toast.LENGTH_SHORT,
                                                 gravity: ToastGravity.BOTTOM,
                                                 timeInSecForIosWeb: 10,
@@ -282,29 +174,17 @@ class ListViewsCustome extends StatelessWidget {
                                         title: Text(Config_G.check_lang
                                             ? "Thông báo hệ thống"
                                             : "System Notifications"),
-                                        content: Text(check_shop(
-                                                foundUsers[index]["shop"])
-                                            ? (Config_G.check_lang
-                                                ? 'Bạn muốn xóa khách hang ${foundUsers[index]["name"]}?'
-                                                : 'You want to delete Customer ${foundUsers[index]["name"]}?')
-                                            : (Config_G.check_lang
-                                                ? 'Bạn muốn xóa shop ${foundUsers[index]["shop"]}?'
-                                                : 'You want to delete the shop ${foundUsers[index]["shop"]}?')),
+                                        content: Text(Config_G.check_lang
+                                            ? 'Bạn muốn xóa shop ${foundUsers[index]["shop"]}?'
+                                            : 'You want to delete the shop ${foundUsers[index]["shop"]}?'),
                                         actions: <Widget>[
                                           FlatButton(
                                             child: Text(Config_G.check_lang
                                                 ? "Đông ý"
                                                 : "YES"),
                                             onPressed: () async {
-                                              check_shop(
-                                                      foundUsers[index]["shop"])
-                                                  ? await await ActionJS
-                                                      .Deletes_Custome(
-                                                          foundUsers[index]
-                                                              ["customer_id"])
-                                                  : await ActionJS.Deletes(
-                                                      foundUsers[index]
-                                                          ["id_chop"]);
+                                              await ActionJS.Deletes(
+                                                  foundUsers[index]["id_chop"]);
                                               Navigator.of(context).pop();
                                               Navigator.pushReplacement(
                                                   context,

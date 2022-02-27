@@ -63,7 +63,7 @@ class ListViewsBill extends StatelessWidget {
                                                       .width /
                                                   25,
                                             ),
-                                            Column(children: [
+                                            Row(children: [
                                               Text(
                                                 "${ActionJS.splitString(Config_G.modelBill[index].namecustome)}",
                                                 style: TextStyle(
@@ -83,21 +83,21 @@ class ListViewsBill extends StatelessWidget {
                                                 ),
                                               ),
                                             ]),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  30,
-                                            ),
-                                            Text(
-                                              "-  ${ActionJS.splitString(Config_G.modelBill[index].money.toString())}",
-                                              style: TextStyle(
-                                                color: Colors.green,
-                                                fontSize: 20,
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
+                                            Flexible(
+                                                fit: FlexFit.loose,
+                                                child: Text(
+                                                  "${Config_G.modelBill[index].money.toString()}",
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  softWrap: false,
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontSize: 20,
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ))
                                           ],
                                         ),
                                       ]))

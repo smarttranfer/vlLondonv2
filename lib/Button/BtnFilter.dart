@@ -66,7 +66,7 @@ class BtnFilter extends StatelessWidget {
                           children: [
                             Center(
                                 child: Text(
-                              Content,
+                              Content + "-" + Subcontent,
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 17,
@@ -74,17 +74,17 @@ class BtnFilter extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             )),
-                            Center(
-                              child: Text(
-                                ActionJS.splitString(Subcontent),
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 17,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            )
+                            // Center(
+                            //   child: Text(
+                            //     ActionJS.splitString(Subcontent),
+                            //     style: TextStyle(
+                            //       color: Colors.green,
+                            //       fontSize: 17,
+                            //       fontFamily: 'Poppins',
+                            //       fontWeight: FontWeight.bold,
+                            //     ),
+                            //   ),
+                            // )
                           ],
                         )
                       ],

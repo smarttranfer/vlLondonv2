@@ -14,6 +14,7 @@ class Config_G{
   static List<CheckSameCustome> modelCustome = [];
   static List<Information_Bill> modelBill = [];
   static String url = 'http://103.161.16.61:27554';
+  // static String url = 'http://192.168.45.89:27554';
   static String Token_app = "";
   static String Create_Transation = "";
   static String id_Custome_shop = "";

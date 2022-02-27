@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
-import 'package:vl_ui/model/CheckSameCustome.dart';
 import 'package:vl_ui/model/Information_Cutome.dart';
 import 'package:vl_ui/model/Information_Shop.dart';
 import 'W_Signupmanger.dart';
@@ -50,9 +49,8 @@ class AnimeAppState extends State<AnimeApp> {
           _allUsers.add({
             "customer_id": i.id,
             "id_chop": shop.id.toInt(),
-            "name_nickname": "${i.namecustome}-${i.Nickname}",
+            "name_nickname": "${i.namecustome}",
             "name": "${i.namecustome}",
-            "nickname": "${i.Nickname}",
             "shop": shop.nameshop,
             "phone_shop": "${shop.telephone}",
             "phone_custom": "${i.telephone}",
@@ -65,9 +63,8 @@ class AnimeAppState extends State<AnimeApp> {
         _allUsers.add({
           "customer_id": i.id,
           "id_chop": "",
-          "name_nickname": "${i.namecustome}-${i.Nickname}",
+          "name_nickname": "${i.namecustome}",
           "name": "${i.namecustome}",
-          "nickname": "${i.Nickname}",
           "shop": "",
           "phone_shop": "",
           "phone_custom": "${i.telephone}",
@@ -87,7 +84,7 @@ class AnimeAppState extends State<AnimeApp> {
         'Content-Type': 'application/json'
       };
       var request = http.Request(
-          'GET', Uri.parse('http://103.161.16.61:27554/customer/info/all'));
+          'GET', Uri.parse('${Config_G.url}/customer/info/all'));
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
       Config_G.id_Custome_shop = await response.stream.bytesToString();
@@ -96,9 +93,8 @@ class AnimeAppState extends State<AnimeApp> {
           print(i);
           Information_Cutome s1 = new Information_Cutome();
           s1.id = i["id"];
-          s1.namecustome = i["full_name"];
+          s1.namecustome = i["name"];
           s1.telephone = i["phone"];
-          s1.Nickname = i["username"];
           for (var shop in i["shops"]) {
             Information_Shop s0 = new Information_Shop();
             s0.id = shop["id"];
@@ -110,10 +106,6 @@ class AnimeAppState extends State<AnimeApp> {
             s1.nameshop.add(s0);
           }
           Config_G.NameCustom_shop.add(s1);
-          CheckSameCustome modelchek = new CheckSameCustome();
-          modelchek.information_name = i["full_name"];
-          modelchek.information_nickname = i["username"];
-          Config_G.modelCustome.add(modelchek);
         }
         setState(() {
           check_loding_data = false;

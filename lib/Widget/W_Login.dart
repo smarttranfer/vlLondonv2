@@ -37,7 +37,7 @@ class login extends State {
       setState(() {
         check_loadingbar = true;
       });
-      String url = 'http://103.161.16.61:27554/auth/login';
+      String url = '${Config_G.url}/auth/login';
       var dio = Dio();
       var response = await dio
           .post(url, data: {'username': '${Username}', 'password': '${password}'});
