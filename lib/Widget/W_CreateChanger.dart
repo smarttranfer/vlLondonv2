@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
@@ -27,7 +28,7 @@ class CreateChange extends State {
   TextEditingController _shop = TextEditingController();
   TextEditingController _nameCustom = TextEditingController();
   TextEditingController dateinput = TextEditingController();
-  TextEditingController _money = TextEditingController();
+  var _money = new MoneyMaskedTextController(precision: 2);
   TextEditingController _notes = TextEditingController();
   List<DropdownMenuItem<Object>> ListCustom = [];
   List<DropdownMenuItem<Object>> ListShop = [];
@@ -44,6 +45,16 @@ class CreateChange extends State {
     Config_G.NameCustom_shop.clear();
     asyncMethod();
     super.initState();
+  }
+
+  String moneycheck(String value) {
+    if (value.length > 2) {
+      return value.substring(0, value.length - 2) +
+          "." +
+          value.substring(value.length - 2);
+    } else {
+      return value;
+    }
   }
 
   void asyncMethod() async {
@@ -65,8 +76,8 @@ class CreateChange extends State {
         'Authorization': 'Bearer ${Config_G.Token_app}',
         'Content-Type': 'application/json'
       };
-      var request = http.Request(
-          'GET', Uri.parse('${Config_G.url}/customer/info/all'));
+      var request =
+          http.Request('GET', Uri.parse('${Config_G.url}/customer/info/all'));
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
       Config_G.id_Custome_shop = await response.stream.bytesToString();
@@ -79,7 +90,11 @@ class CreateChange extends State {
           for (var shop in i["shops"]) {
             Information_Shop s0 = new Information_Shop();
             s0.id = shop["id"];
-            s0.telephone = shop["phone"];
+            if (shop["phone"] == null) {
+              s0.telephone = "";
+            } else {
+              s0.telephone = shop["phone"];
+            }
             s0.post_code = shop["post_code"];
             s0.building_number = shop["building_number"];
             s0.nameshop = shop["name"];
@@ -634,7 +649,7 @@ class CreateChange extends State {
                                                     controller: dateinput,
                                                     autocorrect: true,
                                                     decoration: InputDecoration(
-                                                      hintText: 'yyyy-MM-dd',
+                                                      hintText: 'dd-MM-yyyy',
                                                       prefixIcon: Icon(
                                                         Icons
                                                             .calendar_today_sharp,
@@ -684,7 +699,7 @@ class CreateChange extends State {
                                                             pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                                                         String formattedDate =
                                                             DateFormat(
-                                                                    'yyyy-MM-dd')
+                                                                    'dd-MM-yyyy')
                                                                 .format(
                                                                     pickedDate);
                                                         print(
@@ -891,9 +906,7 @@ class CreateChange extends State {
                                                       await ActionJS
                                                           .Create_transation(
                                                               id_shop,
-                                                              int.parse(_money
-                                                                      .text)
-                                                                  .toDouble(),
+                                                              _money.numberValue,
                                                               _notes.text,
                                                               dateinput.text);
                                                       if (check_done_transation ==
@@ -932,7 +945,7 @@ class CreateChange extends State {
                                                                     ? "Thông báo hệ thống"
                                                                     : "System Notifications"),
                                                                 content: Text(Config_G
-                                                                    .check_lang
+                                                                        .check_lang
                                                                     ? 'Tính năng đang bảo trì !'
                                                                     : 'Feature under maintenance!'),
                                                                 actions: <

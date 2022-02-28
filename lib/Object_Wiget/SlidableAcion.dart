@@ -36,7 +36,6 @@ class ListViewsCustome extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController _controllershop = new TextEditingController();
     int indexshop = 0;
-    print(foundUsers.length);
     return Scaffold(
         body: ListView.builder(
             padding: const EdgeInsets.all(15),

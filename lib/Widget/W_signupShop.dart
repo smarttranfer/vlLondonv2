@@ -82,7 +82,12 @@ class W_SignUp_shopo extends State {
           for (var shop in i["shops"]) {
             Information_Shop s0 = new Information_Shop();
             s0.id = shop["id"];
-            s0.telephone = shop["phone"];
+            if(shop["phone"] == null){
+              s0.telephone = "";
+            }else{
+              s0.telephone = shop["phone"];
+            }
+            // s0.telephone = shop["phone"];
             s0.post_code = shop["post_code"];
             s0.building_number = shop["building_number"];
             s0.nameshop = shop["name"];
