@@ -23,6 +23,7 @@ class AnimeAppState extends State<AnimeApp> {
   final TextEditingController _controllernickname = TextEditingController();
   final TextEditingController _controlleruser = TextEditingController();
   final TextEditingController _controllertelephone = TextEditingController();
+  final TextEditingController _controllertelephoneC = TextEditingController();
   final TextEditingController _controllernumber = TextEditingController();
   final TextEditingController _controllerpostcode = TextEditingController();
   final TextEditingController _controllerstresst = TextEditingController();
@@ -345,13 +346,13 @@ class AnimeAppState extends State<AnimeApp> {
                                                                         ),
                                                                         labelText: 'Telephone Custome',
                                                                       ),
-                                                                      controller: _controllertelephone
+                                                                      controller: _controllertelephoneC
                                                                         ..text =
                                                                         _foundUsers[index]["phone_custom"],
                                                                     ),
                                                                     TextField(
                                                                       readOnly: check_shop(
-                                                                          _foundUsers[index]["phone_custom"]),
+                                                                          _foundUsers[index]["phone_shop"]),
                                                                       decoration: InputDecoration(
                                                                         icon: Icon(
                                                                           Icons.phone,
