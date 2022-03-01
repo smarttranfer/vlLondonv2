@@ -331,7 +331,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                           Icons.person_pin_outlined,
                                                                           color: Colors.green,
                                                                         ),
-                                                                        labelText: 'Name Custome',
+                                                                        labelText: 'Name Customer',
                                                                       ),
                                                                       controller: _controlleruser
                                                                         ..text = (_foundUsers[index]["name"]),
@@ -344,7 +344,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                           Icons.phone,
                                                                           color: Colors.green,
                                                                         ),
-                                                                        labelText: 'Telephone Custome',
+                                                                        labelText: 'Phone Customer',
                                                                       ),
                                                                       controller: _controllertelephoneC
                                                                         ..text =
@@ -358,7 +358,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                           Icons.phone,
                                                                           color: Colors.green,
                                                                         ),
-                                                                        labelText: 'Telephone Shop',
+                                                                        labelText: 'Phone Shop',
                                                                       ),
                                                                       controller: _controllertelephone
                                                                         ..text =
@@ -400,7 +400,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                           Icons.edit_road_rounded,
                                                                           color: Colors.green,
                                                                         ),
-                                                                        labelText: 'Stresst shop',
+                                                                        labelText: 'Stresst',
                                                                       ),
                                                                       controller: _controllerstresst
                                                                         ..text = _foundUsers[index]["stresst"],

@@ -209,10 +209,10 @@ class W_SignUp extends State<W_SignUpCustom> {
                                               decoration: InputDecoration(
                                                 labelText: Config_G.check_lang
                                                     ? (checklabel
-                                                        ? "Họ và tên  *"
+                                                        ? "Tên Khách Hàng *"
                                                         : "${_Name.text} đã tồn tại trong dữ liệu")
                                                     : (checklabel
-                                                        ? "First and last name  *"
+                                                        ? "Customer Name *"
                                                         : "${_Name.text} already exists in the data"),
                                                 labelStyle: TextStyle(
                                                     color: checkcolor
@@ -269,7 +269,7 @@ class W_SignUp extends State<W_SignUpCustom> {
                                               decoration: InputDecoration(
                                                 labelText: Config_G.check_lang
                                                     ? 'Tên Shop *'
-                                                    : 'Name Shop.',
+                                                    : 'Shop Name *',
                                                 labelStyle: TextStyle(
                                                     color: Colors.green),
                                                 prefixIcon: Icon(
@@ -321,10 +321,10 @@ class W_SignUp extends State<W_SignUpCustom> {
                                               decoration: InputDecoration(
                                                 labelText: Config_G.check_lang
                                                     ? (post_numberloacl_color
-                                                        ? 'Số tòa nhà *'
+                                                        ? 'Số Nhà *'
                                                         : '${_numberlocal.text}${_postcode.text} đã tồn tại.')
                                                     : (post_numberloacl_color
-                                                        ? 'Building number *'
+                                                        ? 'House Number *'
                                                         : '${_numberlocal.text}${_postcode.text} already exist.'),
                                                 labelStyle: TextStyle(
                                                     color:

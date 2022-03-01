@@ -304,8 +304,8 @@ class W_SignUp_shopo extends State {
                                                 controller: _nameCustom,
                                                 decoration: InputDecoration(
                                                   labelText: Config_G.check_lang
-                                                      ? 'Tên chủ khách hàng *'
-                                                      : 'Customer owner name *',
+                                                      ? 'Tên Khách Hàng *'
+                                                      : 'Customer Name *',
                                                   labelStyle: TextStyle(
                                                       color: Colors.green),
                                                   prefixIcon: Icon(
@@ -546,8 +546,8 @@ class W_SignUp_shopo extends State {
                                             controller: _numberlocal,
                                             decoration: InputDecoration(
                                               labelText: Config_G.check_lang
-                                                  ? 'Số tòa nhà*'
-                                                  : 'Building number*',
+                                                  ? 'Số Nhà*'
+                                                  : 'House Number*',
                                               labelStyle: TextStyle(
                                                   color: Colors.green),
                                               prefixIcon: Icon(
@@ -586,7 +586,7 @@ class W_SignUp_shopo extends State {
                                             decoration: InputDecoration(
                                               labelText: Config_G.check_lang
                                                   ? 'Tên Đường*'
-                                                  : "'Street names*'",
+                                                  : "Street*",
                                               labelStyle: TextStyle(
                                                   color: Colors.green),
                                               prefixIcon: Icon(

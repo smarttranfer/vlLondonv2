@@ -1,4 +1,5 @@
 import 'package:vl_ui/model/CheckSameCustome.dart';
+import 'package:vl_ui/model/Infomation_Custome_Bill.dart';
 import 'package:vl_ui/model/Information_Cutome.dart';
 import 'package:vl_ui/model/Information_Shop.dart';
 import 'package:vl_ui/model/New_Changer.dart';
@@ -13,7 +14,9 @@ class Config_G{
   static List<Information_Shop> NameShop=[];
   static List<CheckSameCustome> modelCustome = [];
   static List<Information_Bill> modelBill = [];
+  static List<Information_Custome_Bill> model_Custome_Bill = [];
   static String url = 'http://103.161.16.61:27554';
+  static String Get_Invoice = "";
   // static String url = 'http://192.168.45.89:27554';
   static String Token_app = "";
   static String Create_Transation = "";

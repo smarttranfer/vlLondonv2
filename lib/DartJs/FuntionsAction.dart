@@ -6,6 +6,8 @@ import 'package:vl_ui/Widget/W_EditCustome.dart';
 import 'package:vl_ui/Widget/W_signupCustome.dart';
 import 'package:http/http.dart' as http;
 import 'package:vl_ui/Widget/W_signupShop.dart';
+import 'package:vl_ui/model/Infomation_Custome_Bill.dart';
+import 'package:vl_ui/model/Information_Invoices_owe.dart';
 import 'package:vl_ui/model/New_Changer.dart';
 
 class ActionJS {
@@ -13,9 +15,10 @@ class ActionJS {
     if (content.length > 10) {
       return content.substring(0, 5) + "...";
     } else {
-      return content+ " ";
+      return content + " ";
     }
   }
+
   static int show_transation(int lengs) {
     if (lengs > 10) {
       return 10;
@@ -23,6 +26,7 @@ class ActionJS {
       return lengs;
     }
   }
+
   static Future<String> SignCustome(
       String namecustome,
       String phone,
@@ -206,7 +210,8 @@ class ActionJS {
       });
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
-      Config_G.check_done_edit_custome_shop = await response.stream.bytesToString();
+      Config_G.check_done_edit_custome_shop =
+          await response.stream.bytesToString();
       print(Config_G.check_done_edit_custome_shop);
       if (json
               .decode(Config_G.check_done_edit_custome_shop)["status"]
@@ -239,14 +244,15 @@ class ActionJS {
       return false;
     }
   }
+
   static Future<bool> Deletes_Custome(int id_shop) async {
     try {
       var headers = {
         'Authorization': 'Bearer ${Config_G.Token_app}',
         'Content-Type': 'application/json'
       };
-      var request_shop =
-      http.Request('DELETE', Uri.parse('${Config_G.url}/customer/${id_shop}'));
+      var request_shop = http.Request(
+          'DELETE', Uri.parse('${Config_G.url}/customer/${id_shop}'));
       request_shop.headers.addAll(headers);
       http.StreamedResponse response_shop = await request_shop.send();
       return true;
@@ -274,8 +280,8 @@ class ActionJS {
     }
   }
 
-  static Future<bool> Create_transation(int id_shop,
-        Money, String Content, String Date) async {
+  static Future<bool> Create_transation(
+      int id_shop, Money, String Content, String Date) async {
     try {
       print(id_shop);
       var headers = {
@@ -309,36 +315,98 @@ class ActionJS {
     }
   }
 
+  static Future<void> Get_Voice() async {
+    try {
+      var headers = {
+        'Authorization': 'Bearer ${Config_G.Token_app}',
+        'Content-Type': 'application/json'
+      };
+      var Transation_Voice =
+          http.Request('GET', Uri.parse('${Config_G.url}/invoice/info/all'));
+      Transation_Voice.headers.addAll(headers);
+      http.StreamedResponse Map_Voice = await Transation_Voice.send();
+      Config_G.Get_Invoice = await Map_Voice.stream.bytesToString();
+      if (json.decode(Config_G.Get_Invoice)["status"].toString() == "200") {
+        Config_G.model_Custome_Bill.clear();
+        print(json.decode(Config_G.Get_Invoice)["data"]);
+        for (var i in json.decode(Config_G.Get_Invoice)["data"]) {
+          Information_Custome_Bill In1 = new Information_Custome_Bill();
+          In1.customer_id = i["customer_id"];
+          In1.name_Custome = i["name"];
+          In1.unallocated = i["unallocated"];
+          if (i["owe"] == null) {
+            In1.owe = 0.0;
+          } else {
+            In1.owe = i["owe"];
+          }
+          In1.total_owe = i["total_owe"];
+          In1.total_pay = i["total_pay"];
+          for (var k in i["invoices_owe"]) {
+            Information_Invoices_owe In2 = new Information_Invoices_owe();
+            In2.id_invoices = k["id"];
+            In2.name_Bill = k["name"];
+            In2.Content = k["content"];
+            In2.original_amount = k["original_amount"];
+            In2.user_id = k["user_id"];
+            In2.shop_id = k["shop_id"];
+            In2.create_date = k["create_date"];
+            In1.list_invoices.add(In2);
+          }
+          Config_G.model_Custome_Bill.add(In1);
+        }
+      }
+    } on Exception catch (e) {
+      print(e.toString());
+    }
+  }
+
   static Future<void> Get_Transation_Map_Shop_Custome() async {
     try {
       var headers = {
         'Authorization': 'Bearer ${Config_G.Token_app}',
         'Content-Type': 'application/json'
       };
-      var Transation_Map_Shop_Custome = http.Request('GET', Uri.parse('${Config_G.url}/invoice/all'));
+      var Transation_Map_Shop_Custome =
+          http.Request('GET', Uri.parse('${Config_G.url}/invoice/all'));
       Transation_Map_Shop_Custome.headers.addAll(headers);
-      http.StreamedResponse Map_Shop_Customes = await Transation_Map_Shop_Custome.send();
-      Config_G.Response_Transation_Map_Shop_Custome = await Map_Shop_Customes.stream.bytesToString();
+      http.StreamedResponse Map_Shop_Customes =
+          await Transation_Map_Shop_Custome.send();
+      Config_G.Response_Transation_Map_Shop_Custome =
+          await Map_Shop_Customes.stream.bytesToString();
       print(Config_G.Response_Transation_Map_Shop_Custome);
-      if (json.decode(Config_G.Response_Transation_Map_Shop_Custome)["status"].toString() == "200") {
+      if (json
+              .decode(Config_G.Response_Transation_Map_Shop_Custome)["status"]
+              .toString() ==
+          "200") {
         Home.data_Sum = true;
-        for (var i in json.decode(Config_G.Response_Transation_Map_Shop_Custome)["data"]) {
+        for (var i in json
+            .decode(Config_G.Response_Transation_Map_Shop_Custome)["data"]) {
           Home.sumMoney += i["original_amount"];
-          var Infor_Shop = http.Request('GET', Uri.parse('${Config_G.url}/shop/${i["shop_id"]}'));
+          var Infor_Shop = http.Request(
+              'GET', Uri.parse('${Config_G.url}/shop/${i["shop_id"]}'));
           Infor_Shop.headers.addAll(headers);
           http.StreamedResponse Response_shop = await Infor_Shop.send();
           Config_G.Response_Shop = await Response_shop.stream.bytesToString();
-          if (json.decode(Config_G.Response_Shop)["status"].toString() == "200") {
-            var Infor_Custome = http.Request('GET', Uri.parse('${Config_G.url}/customer/${json.decode(Config_G.Response_Shop)["data"]["customer_id"]}'));
+          if (json.decode(Config_G.Response_Shop)["status"].toString() ==
+              "200") {
+            var Infor_Custome = http.Request(
+                'GET',
+                Uri.parse(
+                    '${Config_G.url}/customer/${json.decode(Config_G.Response_Shop)["data"]["customer_id"]}'));
             Infor_Custome.headers.addAll(headers);
             http.StreamedResponse Response_Custome = await Infor_Custome.send();
-            Config_G.Response_Custome = await Response_Custome.stream.bytesToString();
+            Config_G.Response_Custome =
+                await Response_Custome.stream.bytesToString();
             Information_Bill listmodelbill = new Information_Bill();
             listmodelbill.id_shop = i["shop_id"];
-            listmodelbill.id_Custome = json.decode(Config_G.Response_Shop)["data"]["customer_id"];
+            listmodelbill.id_Custome =
+                json.decode(Config_G.Response_Shop)["data"]["customer_id"];
             listmodelbill.id_bill = i["id"];
-            listmodelbill.namecustome = json.decode(Config_G.Response_Custome)["data"]["name"].toString();
-            listmodelbill.nameshop = json.decode(Config_G.Response_Shop)["data"]["name"].toString();
+            listmodelbill.namecustome = json
+                .decode(Config_G.Response_Custome)["data"]["name"]
+                .toString();
+            listmodelbill.nameshop =
+                json.decode(Config_G.Response_Shop)["data"]["name"].toString();
             listmodelbill.date = i["create_date"].toString();
             listmodelbill.code = i["name"].toString();
             listmodelbill.money = i["original_amount"];

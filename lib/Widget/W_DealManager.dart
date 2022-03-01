@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/Widget/Homepage.dart';
+import 'package:vl_ui/model/Infomation_Custome_Bill.dart';
 import 'package:vl_ui/model/New_Changer.dart';
 
 import 'Information.dart';
@@ -20,19 +22,23 @@ class _HomePageState extends State<DealManagers> {
   List<Map<String, dynamic>> _foundUsers = [];
   @override
   initState() {
-    for (Information_Bill i in Config_G.modelBill) {
+    asyncMethod();
+    for (Information_Custome_Bill i in Config_G.model_Custome_Bill) {
       _allUsers.add({
-        "id": "${i.id_bill}",
-        "name": "${i.namecustome}",
-        "nickname": "${i.namecustome}",
-        "shop": "${i.nameshop}",
-        "mony": "${i.money}",
-        "date": "${i.date}",
-        "code": "${i.code}"
+        "id": "${i.customer_id}",
+        "name": "${i.name_Custome}",
+        "total_owe": "${i.owe}",
+        "Debt_transtion": "${i.list_invoices.length}",
+        "unallocated": "${i.unallocated}",
       });
     }
     _foundUsers = _allUsers;
+    print(_foundUsers.length);
     super.initState();
+  }
+
+  void asyncMethod() async {
+    await ActionJS.Get_Voice();
   }
 
   void _runFilter(String enteredKeyword) {
@@ -170,8 +176,6 @@ class _HomePageState extends State<DealManagers> {
                                       padding: const EdgeInsets.all(20.0),
                                       child: OrderTitle(
                                         id_transaction: int.parse(_foundUsers[index]["id"].toString()),
-                                        date: _foundUsers[index]["date"]
-                                            .toString(),
                                         index: index,
                                       ),
                                     ),
@@ -220,9 +224,9 @@ class _HomePageState extends State<DealManagers> {
                                                       bottom: 10,
                                                       right: 5),
                                                   child: Container(
-                                                      width: 150,
+                                                      width: MediaQuery.of(context).size.width/1.6,
                                                       child: Text(
-                                                        'Shop : ${_foundUsers[index]["shop"].toString()}',
+                                                        '${Config_G.check_lang?"Giao dich nợ":"Debt transaction"} : ${_foundUsers[index]["Debt_transtion"].toString()}',
                                                         overflow: TextOverflow
                                                             .visible,
                                                         maxLines: 5,
@@ -250,13 +254,21 @@ class _HomePageState extends State<DealManagers> {
                                                       left: 20,
                                                       bottom: 10,
                                                       right: 5),
-                                                  child: Text(
-                                                    "Code Bill :${_foundUsers[index]["code"].toString()}",
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ))
+
+                                                  child: Container(
+                                                      width: MediaQuery.of(context).size.width/1.6,
+                                                      child: Row(children: [
+                                                        Text(
+                                                          "${Config_G.check_lang?"Tiền hiện có":"Amount"} :${_foundUsers[index]["unallocated"].toString()}",
+                                                          style: TextStyle(
+                                                            overflow: TextOverflow.visible,
+                                                            fontWeight: FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        Icon(Icons.arrow_drop_up,
+                                                          color: Colors.blue,)
+                                                      ],)
+                                                      ))
                                             ],
                                           ),
                                         ),
@@ -276,13 +288,18 @@ class _HomePageState extends State<DealManagers> {
                                                       left: 20,
                                                       bottom: 10,
                                                       right: 5),
-                                                  child: Text(
-                                                    "Money : ${_foundUsers[index]["mony"].toString()}",
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                  child: Row(children: [
+                                                    Text(
+                                                      "Money : ${_foundUsers[index]["total_owe"].toString()}",
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                      ),
                                                     ),
-                                                  ))
+                                                    Icon(Icons.arrow_drop_down,
+                                                      color: Colors.red,
+                                                    )
+                                                  ],))
                                             ],
                                           ),
                                         )
@@ -292,8 +309,7 @@ class _HomePageState extends State<DealManagers> {
                                     Padding(
                                         padding: const EdgeInsets.all(10.0),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Card(
                                                 elevation: 10,
@@ -304,14 +320,12 @@ class _HomePageState extends State<DealManagers> {
                                                 ),
                                                 child: Center(
                                                     child: ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                          primary: HexColor(
-                                                              "#237401"), //background color of button
-                                                          elevation:
-                                                              3, //elevation of button
-                                                          shape:
-                                                              RoundedRectangleBorder(
+                                                  style: ElevatedButton.styleFrom(
+                                                          minimumSize: const Size(200, 50),
+                                                          maximumSize: const Size(200, 50),
+                                                          primary: HexColor("#237401"), //background color of button
+                                                          elevation: 3, //elevation of button
+                                                          shape: RoundedRectangleBorder(
                                                                   //to set border radius to button
                                                                   borderRadius:
                                                                       BorderRadius
@@ -320,71 +334,23 @@ class _HomePageState extends State<DealManagers> {
                                                           padding: EdgeInsets.only(
                                                               left: 30,
                                                               right: 30,
-                                                              top: 20,
+                                                              top: 5,
                                                               bottom:
-                                                                  15) //content padding inside button
+                                                                  5) //content padding inside button
                                                           ),
                                                   onPressed: () {},
                                                   child: Text(
                                                       Config_G.check_lang
-                                                          ? 'Thanh toán bill'
-                                                          : 'Bill payment',
+                                                          ? 'Chi Tiết'
+                                                          : 'Detail',
                                                       style: TextStyle(
                                                           fontFamily: 'Poppins',
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           color: Colors.white,
-                                                          fontSize: 10)),
+                                                          fontSize: 20)),
                                                 ))),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  30,
-                                            ),
-                                            Card(
-                                                elevation: 10,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15.0),
-                                                ),
-                                                child: Center(
-                                                    child: ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                          primary: HexColor(
-                                                                  "#237401")
-                                                              .withOpacity(
-                                                                  0.5), //background color of button
-                                                          elevation:
-                                                              3, //elevation of button
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                                  //to set border radius to button
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              15)),
-                                                          padding: EdgeInsets.only(
-                                                              left: 30,
-                                                              right: 30,
-                                                              top: 20,
-                                                              bottom:
-                                                                  15) //content padding inside button
-                                                          ),
-                                                  onPressed: () {},
-                                                  child: Text(
-                                                      Config_G.check_lang
-                                                          ? 'Thanh toán hêt'
-                                                          : 'Pay all Bills ',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Poppins',
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.white,
-                                                          fontSize: 10)),
-                                                )))
+
                                           ],
                                         )),
                                   ],
@@ -393,12 +359,15 @@ class _HomePageState extends State<DealManagers> {
                             ),
                           )),
                     )
-                  : Text(
-                      Config_G.check_lang
-                          ? 'Không tìm thấy kết quả'
-                          : "Not found data",
-                      style: TextStyle(fontSize: 24, color: Colors.green),
-                    ),
+                  : Center(
+                child: FutureBuilder(
+                  builder: (context, snapshot) {
+                    return CircularProgressIndicator(
+                      color: Colors.green,
+                    );
+                  },
+                ),
+              ),
             ),
           ],
         ),
