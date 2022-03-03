@@ -48,17 +48,17 @@ class login extends State {
         }
         if (roles.contains("ROLE_ADMIN")) {
           setState(() {
-            Config_G.ROLE_ADMIN = false;
+            Config_G.ROLE_ADMIN = true;
           });
         }
         if (roles.contains("ROLE_USER")) {
           setState(() {
-            Config_G.ROLE_USER = false;
+            Config_G.ROLE_USER = true;
           });
         }
         if (roles.contains("ROLE_MODERATOR")) {
           setState(() {
-            Config_G.ROLE_MODERATOR = false;
+            Config_G.ROLE_MODERATOR = true;
           });
         }
 

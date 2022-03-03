@@ -47,14 +47,15 @@ class ListViewsBill extends StatelessWidget {
                                           children: [
                                             Padding(
                                                 padding:
-                                                    EdgeInsets.only(left: 2),
+                                                    EdgeInsets.only(left: 5,bottom: 5,top: 5),
                                                 child: Container(
                                                   margin:
                                                       EdgeInsets.only(left: 2),
                                                   height: 50,
                                                   width: 50,
-                                                  child: SvgPicture.asset(
-                                                    "assest/IconBtn/contacts.svg",
+                                                  child: CircleAvatar(
+                                                    backgroundColor: Colors.green.withOpacity(0.6),
+                                                    child: Text(Config_G.modelBill[index].namecustome.substring(0,1),style: TextStyle(color: Colors.white),),
                                                   ),
                                                 )),
                                             SizedBox(
@@ -74,6 +75,15 @@ class ListViewsBill extends StatelessWidget {
                                                 ),
                                               ),
                                               Text(
+                                                "-",
+                                                style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 15,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                              Text(
                                                 "${ActionJS.splitString(Config_G.modelBill[index].nameshop)}",
                                                 style: TextStyle(
                                                   color: Colors.grey,
@@ -83,6 +93,15 @@ class ListViewsBill extends StatelessWidget {
                                                 ),
                                               ),
                                             ]),
+                                            Text(
+                                              "-",
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 15,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
                                             Flexible(
                                                 fit: FlexFit.loose,
                                                 child: Text(
@@ -92,7 +111,7 @@ class ListViewsBill extends StatelessWidget {
                                                       TextOverflow.visible,
                                                   softWrap: false,
                                                   style: TextStyle(
-                                                    color: Colors.green,
+                                                    color: Colors.redAccent,
                                                     fontSize: 20,
                                                     fontFamily: 'Poppins',
                                                     fontWeight: FontWeight.bold,

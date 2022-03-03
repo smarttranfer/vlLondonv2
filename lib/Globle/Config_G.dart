@@ -5,9 +5,9 @@ import 'package:vl_ui/model/Information_Shop.dart';
 import 'package:vl_ui/model/New_Changer.dart';
 
 class Config_G{
-  static bool ROLE_ADMIN = true;
-  static bool ROLE_MODERATOR = true;
-  static bool ROLE_USER = true;
+  static bool ROLE_ADMIN = false;
+  static bool ROLE_MODERATOR = false;
+  static bool ROLE_USER = false;
   static bool check_lang = false;
   static bool check_namecustom_chossen = false;
   static List<Information_Cutome> NameCustom_shop =[];

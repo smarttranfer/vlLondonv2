@@ -23,6 +23,7 @@ class W_CreateChange extends StatefulWidget {
 }
 
 class CreateChange extends State {
+  static String Statemonet =  '';
   int indexchossens = 0;
   int id_shop = 0;
   TextEditingController _shop = TextEditingController();
@@ -41,6 +42,7 @@ class CreateChange extends State {
   static bool check_done_transation = false;
   @override
   void initState() {
+    Statemonet =  'Please wait …';
     dateinput.text = "";
     Config_G.NameCustom_shop.clear();
     asyncMethod();
@@ -108,9 +110,13 @@ class CreateChange extends State {
         }
       } else {
         print(response.reasonPhrase);
+        check_loding_data = true;
+        Statemonet = Config_G.check_lang?"Không thể lấy được dữ liệu . kiểm tra lại Network ":"Cant not get data. Please check Network";
       }
     } on Exception catch (e) {
       print("Exception" + e.toString());
+      check_loding_data = true;
+      Statemonet = Config_G.check_lang?"Không thể lấy được dữ liệu . kiểm tra lại Network ":"Cant not get data. Please check Network";
     }
   }
 
@@ -428,21 +434,25 @@ class CreateChange extends State {
                                                                         ),
                                                                         check_loding_data
                                                                             ? Center(
-                                                                                child: FutureBuilder(
-                                                                                  builder: (context, snapshot) {
-                                                                                    if (snapshot.hasData) {
-                                                                                      for (Information_Cutome i in Config_G.NameCustom_shop) {
-                                                                                        print(i.id);
-                                                                                      }
-                                                                                    } else if (snapshot.hasError) {
-                                                                                      return Text("${snapshot.error}");
-                                                                                    }
-                                                                                    // By default, show a loading spinner
-                                                                                    return CircularProgressIndicator(
-                                                                                      color: Colors.green,
-                                                                                    );
-                                                                                  },
-                                                                                ),
+                                                                                child:  Column (children: [
+                                                                                  CircularProgressIndicator(
+                                                                                    backgroundColor: Colors.green.withOpacity(0.5),
+                                                                                    color: Colors.green,
+                                                                                  ),
+                                                                                  SizedBox(
+                                                                                    height:
+                                                                                    MediaQuery.of(context).size.height /
+                                                                                        100,
+                                                                                  ),
+                                                                                  Padding(
+                                                                                      child: Text(
+                                                                                        Statemonet,
+                                                                                        style: TextStyle(color: Colors.green, fontSize: 16),
+                                                                                        textAlign: TextAlign.center,
+                                                                                      ),
+                                                                                      padding: EdgeInsets.only(bottom: 4))
+                                                                                ],)
+
                                                                               )
                                                                             : Expanded(
                                                                                 child: _foundUsers.isNotEmpty
