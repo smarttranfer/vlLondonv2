@@ -193,6 +193,7 @@ class ActionJS {
       int id_custome,
       int id_shop) async {
     try {
+      print('${Config_G.url}/customer/${id_custome}/shop/${id_shop}');
       var headers = {
         'Authorization': 'Bearer ${Config_G.Token_app}',
         'Content-Type': 'application/json'
@@ -203,7 +204,7 @@ class ActionJS {
         "name_customer": "${name}",
         "phone_customer": "${phone}",
         "name_shop": "${name_shop}",
-        "phone_shop": "${phone}",
+        "phone_shop": "${phone_shop}",
         "building_number": "${building_number}",
         "street_name": "${street_name}",
         "post_code": "${post_code}",
