@@ -160,9 +160,7 @@ class ActionJS {
       });
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
-      Config_G.check_done_edit_custome_shop =
-          await response.stream.bytesToString();
-      print(Config_G.check_done_edit_custome_shop);
+      Config_G.check_done_edit_custome_shop = await response.stream.bytesToString();
       if (json
               .decode(Config_G.check_done_edit_custome_shop)["status"]
               .toString() ==
@@ -203,7 +201,7 @@ class ActionJS {
         "name_customer": "${name}",
         "phone_customer": "${phone}",
         "name_shop": "${name_shop}",
-        "phone_shop": "${phone}",
+        "phone_shop": "${phone_shop}",
         "building_number": "${building_number}",
         "street_name": "${street_name}",
         "post_code": "${post_code}",
@@ -371,13 +369,9 @@ class ActionJS {
       Transation_Map_Shop_Custome.headers.addAll(headers);
       http.StreamedResponse Map_Shop_Customes =
           await Transation_Map_Shop_Custome.send();
-      Config_G.Response_Transation_Map_Shop_Custome =
-          await Map_Shop_Customes.stream.bytesToString();
+      Config_G.Response_Transation_Map_Shop_Custome = await Map_Shop_Customes.stream.bytesToString();
       print(Config_G.Response_Transation_Map_Shop_Custome);
-      if (json
-              .decode(Config_G.Response_Transation_Map_Shop_Custome)["status"]
-              .toString() ==
-          "200") {
+      if (json.decode(Config_G.Response_Transation_Map_Shop_Custome)["status"].toString() == "200") {
         Home.data_Sum = true;
         for (var i in json
             .decode(Config_G.Response_Transation_Map_Shop_Custome)["data"]) {
@@ -416,7 +410,7 @@ class ActionJS {
         }
       }
     } on Exception catch (e) {
-      print(e.toString());
+      Home.data_Sum = false;
       Home.check_loding_data = true;
     }
   }

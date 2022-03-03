@@ -19,6 +19,8 @@ import 'W_DealManager.dart';
 import 'W_static.dart';
 import 'package:http/http.dart' as http;
 
+
+
 class W_Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -27,6 +29,7 @@ class W_Home extends StatefulWidget {
 }
 
 class Home extends State<W_Home> {
+  static String Statemonet =  '';
   bool checkdataToday = false;
   bool checkdataYesterday = false;
   static bool check_loding_data = true;
@@ -41,12 +44,17 @@ class Home extends State<W_Home> {
   }
 
   void asyncMethod() async {
+    Statemonet =  'Please wait …';
     await ActionJS.Get_Transation_Map_Shop_Custome();
-    if(data_Sum == true){
+    if (data_Sum == true) {
       setState(() {
         check_loding_data = false;
       });
-
+    }else{
+      setState(() {
+        check_loding_data = false;
+        Statemonet = Config_G.check_lang?"Không thể lấy được dữ liệu . kiểm tra lại Network ":"Cant not get data. Please check Network";
+      });
     }
   }
 
@@ -226,9 +234,9 @@ class Home extends State<W_Home> {
                                           onTap: () {
                                             Config_G.NameCustom_shop.clear();
                                             setState(() {
-                                              Config_G.ROLE_ADMIN = true;
-                                              Config_G.ROLE_MODERATOR = true;
-                                              Config_G.ROLE_USER = true;
+                                              Config_G.ROLE_ADMIN = false;
+                                              Config_G.ROLE_MODERATOR = false;
+                                              Config_G.ROLE_USER = false;
                                               login.check_loadingbar = false;
                                               check_loding_data = true;
                                             });
@@ -251,9 +259,7 @@ class Home extends State<W_Home> {
                                                 icon: Image.asset(
                                                     "assest/IconBtn/logout.png"),
                                                 onPressed: () {
-                                                  setState(() {
-
-                                                  });
+                                                  setState(() {});
                                                 },
                                               ),
                                               Text(
@@ -458,7 +464,10 @@ class Home extends State<W_Home> {
                                           ],
                                         ),
                                         SizedBox(
-                                          height: MediaQuery.of(context).size.height/300,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              300,
                                         ),
                                         Container(
                                             padding: EdgeInsets.all(5),
@@ -495,7 +504,7 @@ class Home extends State<W_Home> {
                                                     : Text(
                                                         "\€ ${sumMoney}",
                                                         style: TextStyle(
-                                                          color: Colors.green,
+                                                          color: Colors.redAccent,
                                                           fontSize: 25,
                                                           fontFamily: 'Poppins',
                                                           fontWeight:
@@ -695,26 +704,28 @@ class Home extends State<W_Home> {
                                                 2.7,
                                         child: Config_G.checknull()
                                             ? Center(
-                                                child: FutureBuilder(
-                                                  builder: (context, snapshot) {
-                                                    if (snapshot.hasData) {
-                                                      for (Information_Cutome i
-                                                          in Config_G
-                                                              .NameCustom_shop) {
-                                                        print(i.id);
-                                                      }
-                                                    } else if (snapshot
-                                                        .hasError) {
-                                                      return Text(
-                                                          "${snapshot.error}");
-                                                    }
-                                                    // By default, show a loading spinner
-                                                    return CircularProgressIndicator(
-                                                      color: Colors.green,
-                                                    );
-                                                  },
-                                                ),
-                                              )
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+
+                                                  CircularProgressIndicator(
+                                                    backgroundColor: Colors.white,
+                                                    color: Colors.green,
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                    MediaQuery.of(context).size.height /
+                                                        100,
+                                                  ),
+                                                  Padding(
+                                                      child: Text(
+                                                        Statemonet,
+                                                        style: TextStyle(color: Colors.green, fontSize: 16),
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                      padding: EdgeInsets.only(bottom: 4))
+                                                ],
+                                              ))
                                             : SingleChildScrollView(
                                                 physics: ScrollPhysics(),
                                                 child:

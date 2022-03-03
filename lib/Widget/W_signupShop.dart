@@ -23,6 +23,7 @@ class W_SignUpshop extends StatefulWidget {
 }
 
 class W_SignUp_shopo extends State {
+  static String Statemonet =  '';
   final TextEditingController _NaneShop = TextEditingController();
   final TextEditingController _numberlocal = TextEditingController();
   final TextEditingController _stresst = TextEditingController();
@@ -37,6 +38,7 @@ class W_SignUp_shopo extends State {
   int customer_id = 0;
   @override
   initState() {
+    Statemonet =  'Please wait …';
     super.initState();
     Config_G.NameCustom_shop.clear();
     asyncMethod();
@@ -100,9 +102,17 @@ class W_SignUp_shopo extends State {
           });
         }
       } else {
+        setState(() {
+          check_loding_data = true;
+          Statemonet = Config_G.check_lang?"Không thể lấy được dữ liệu . kiểm tra lại Network ":"Cant not get data. Please check Network";
+        });
         print(response.reasonPhrase);
       }
     } on Exception catch (e) {
+      setState(() {
+        check_loding_data = true;
+        Statemonet = Config_G.check_lang?"Không thể lấy được dữ liệu . kiểm tra lại Network ":"Cant not get data. Please check Network";
+      });
       print("Exception" + e.toString());
     }
   }
@@ -435,28 +445,28 @@ class W_SignUp_shopo extends State {
                                                               ),
                                                               check_loding_data
                                                                   ? Center(
-                                                                      child:
-                                                                          FutureBuilder(
-                                                                        builder:
-                                                                            (context,
-                                                                                snapshot) {
-                                                                          if (snapshot
-                                                                              .hasData) {
-                                                                            for (Information_Cutome i
-                                                                                in Config_G.NameCustom_shop) {
-                                                                              print(i.id);
-                                                                            }
-                                                                          } else if (snapshot
-                                                                              .hasError) {
-                                                                            return Text("${snapshot.error}");
-                                                                          }
-                                                                          // By default, show a loading spinner
-                                                                          return CircularProgressIndicator(
-                                                                            color:
-                                                                                Colors.green,
-                                                                          );
-                                                                        },
+                                                                      child: Column(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        children: [
+                                                                        CircularProgressIndicator(
+                                                                        color: Colors.green,
+                                                                        backgroundColor: Colors.green.withOpacity(0.5),
                                                                       ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                          MediaQuery.of(context).size.height /
+                                                                              100,
+                                                                        ),
+                                                                        Padding(
+                                                                            child: Text(
+                                                                              Statemonet,
+                                                                              style: TextStyle(color: Colors.green, fontSize: 16),
+                                                                              textAlign: TextAlign.center,
+                                                                            ),
+                                                                            padding: EdgeInsets.only(bottom: 4))
+                                                                      ],)
+
+
                                                                     )
                                                                   : Expanded(
                                                                       child: _foundUsers
@@ -677,8 +687,7 @@ class W_SignUp_shopo extends State {
                                                       15) //content padding inside button
                                               ),
                                           onPressed: () async {
-                                            if (_phone.text.isEmpty |
-                                                _numberlocal.text.isEmpty |
+                                            if (_numberlocal.text.isEmpty |
                                                 _stresst.text.isEmpty |
                                                 _postcode.text.isEmpty |
                                                 _NaneShop.text.isEmpty) {

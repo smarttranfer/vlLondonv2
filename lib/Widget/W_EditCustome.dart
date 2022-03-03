@@ -31,6 +31,7 @@ class AnimeAppState extends State<AnimeApp> {
   static bool checkdone_send_shop_edit = false;
   static bool checkdone_send_Custome_edit = false;
   static bool checkdone_send_Custome__shop_edit = false;
+  static String Statemonet =  '';
   final List<Map<String, dynamic>> _allUsers = [];
   List<Map<String, dynamic>> _foundUsers = [];
   String searchString = "";
@@ -38,6 +39,7 @@ class AnimeAppState extends State<AnimeApp> {
   bool check_loding_data = true;
   @override
   void initState() {
+    Statemonet =  'Please wait …';
     Config_G.NameCustom_shop.clear();
     asyncMethod();
     if (Config_G.NameCustom_shop.isEmpty) {
@@ -150,9 +152,19 @@ class AnimeAppState extends State<AnimeApp> {
           check_loding_data = false;
         });
       } else {
+        setState(() {
+          check_loding_data = true;
+          Statemonet = Config_G.check_lang?"Không thể lấy được dữ liệu . kiểm tra lại Network ":"Cant not get data. Please check Network";
+        });
+
         print(response.reasonPhrase);
       }
     } on Exception catch (e) {
+      setState(() {
+        check_loding_data = true;
+        Statemonet = Config_G.check_lang?"Không thể lấy được dữ liệu . kiểm tra lại Network ":"Cant not get data. Please check Network";
+      });
+
       print("Exception" + e.toString());
     }
   }
@@ -248,24 +260,26 @@ class AnimeAppState extends State<AnimeApp> {
                                   elevation: 50,
                                   child: check_loding_data
                                       ? Center(
-                                          child: FutureBuilder(
-                                            builder: (context, snapshot) {
-                                              if (snapshot.hasData) {
-                                                for (Information_Cutome i
-                                                    in Config_G
-                                                        .NameCustom_shop) {
-                                                  print(i.id);
-                                                }
-                                              } else if (snapshot.hasError) {
-                                                return Text(
-                                                    "${snapshot.error}");
-                                              }
-                                              // By default, show a loading spinner
-                                              return CircularProgressIndicator(
-                                                color: Colors.green,
-                                              );
-                                            },
-                                          ),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                            CircularProgressIndicator(
+                                              backgroundColor: Colors.green.withOpacity(0.5),
+                                              color: Colors.green,
+                                            ),
+                                            SizedBox(
+                                              height:
+                                              MediaQuery.of(context).size.height /
+                                                  100,
+                                            ),
+                                            Padding(
+                                                child: Text(
+                                                  Statemonet,
+                                                  style: TextStyle(color: Colors.green, fontSize: 16),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                padding: EdgeInsets.only(bottom: 4))
+                                          ],)
                                         )
                                       : Scaffold(
                                       body: ListView.builder(
@@ -314,7 +328,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                                           color: Colors.green,
                                                                                         ),
                                                                                         labelText:
-                                                                                        'Name Shop',
+                                                                                        Config_G.check_lang?'Tên Shop':'Shop Name',
                                                                                       ),
                                                                                       controller:
                                                                                       _controllershop
@@ -331,7 +345,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                           Icons.person_pin_outlined,
                                                                           color: Colors.green,
                                                                         ),
-                                                                        labelText: 'Name Customer',
+                                                                        labelText: Config_G.check_lang?'Tên Khách Hàng':'Customer Name',
                                                                       ),
                                                                       controller: _controlleruser
                                                                         ..text = (_foundUsers[index]["name"]),
@@ -344,7 +358,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                           Icons.phone,
                                                                           color: Colors.green,
                                                                         ),
-                                                                        labelText: 'Phone Customer',
+                                                                        labelText: Config_G.check_lang?'Số Điện Thoại Khách Hàng':'Customer Phone',
                                                                       ),
                                                                       controller: _controllertelephoneC
                                                                         ..text =
@@ -358,7 +372,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                           Icons.phone,
                                                                           color: Colors.green,
                                                                         ),
-                                                                        labelText: 'Phone Shop',
+                                                                        labelText: Config_G.check_lang?'Số Điện Thoại Shop':'Shop Phone',
                                                                       ),
                                                                       controller: _controllertelephone
                                                                         ..text =
@@ -372,7 +386,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                           Icons.add_location_alt_outlined,
                                                                           color: Colors.green,
                                                                         ),
-                                                                        labelText: 'Apartment number',
+                                                                        labelText: Config_G.check_lang?'Số Nhà':'House Number',
                                                                       ),
                                                                       controller: _controllernumber
                                                                         ..text = _foundUsers[index]
@@ -400,7 +414,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                           Icons.edit_road_rounded,
                                                                           color: Colors.green,
                                                                         ),
-                                                                        labelText: 'Stresst',
+                                                                        labelText: 'Street',
                                                                       ),
                                                                       controller: _controllerstresst
                                                                         ..text = _foundUsers[index]["stresst"],
@@ -409,7 +423,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                       height: 10,
                                                                     ),
                                                                     ElevatedButton(
-                                                                      child: Text("Thay đổi",
+                                                                      child: Text(Config_G.check_lang?"Thay đổi":"Confirm",
                                                                           style: TextStyle(
                                                                               fontFamily: 'Poppins',
                                                                               fontWeight: FontWeight.bold,
@@ -423,7 +437,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                             false) {
                                                                           await ActionJS
                                                                               .EditCustome_Custome_Shop(
-                                                                              _controllertelephone.text,
+                                                                              _controllertelephoneC.text,
                                                                               _controlleruser.text,
                                                                               _controllernickname.text,
                                                                               _controllershop.text,
@@ -442,9 +456,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                               _foundUsers[index]
                                                                               ["customer_id"]);
                                                                         }
-                                                                        if (AnimeAppState
-                                                                            .checkdone_send_Custome__shop_edit ==
-                                                                            true) {
+                                                                        if (AnimeAppState.checkdone_send_Custome__shop_edit == true) {
                                                                           Fluttertoast.showToast(
                                                                               msg:
                                                                               "Sửa thông tin thành công ",
@@ -468,12 +480,7 @@ class AnimeAppState extends State<AnimeApp> {
                                                                                   child: AnimeApp()));
                                                                         } else {
                                                                           Fluttertoast.showToast(
-                                                                              msg: json.decode(Config_G
-                                                                                  .check_done_edit_shop)[
-                                                                              "data"] +
-                                                                                  json.decode(Config_G
-                                                                                      .check_done_edit_shop)[
-                                                                                  "message"],
+                                                                              msg: (json.decode(Config_G.check_done_edit_custome_shop)["data"] ).toString(),
                                                                               toastLength: Toast.LENGTH_SHORT,
                                                                               gravity: ToastGravity.BOTTOM,
                                                                               timeInSecForIosWeb: 10,
@@ -501,8 +508,8 @@ class AnimeAppState extends State<AnimeApp> {
                                                             ).show();
                                                           },
                                                           icon: Icon(Icons.edit)),
-                                                      IgnorePointer(
-                                                          ignoring: Config_G.ROLE_ADMIN,
+                                                      Visibility(
+                                                          visible: Config_G.ROLE_ADMIN,
                                                           child: IconButton(
                                                               onPressed: () {
                                                                 showDialog(
@@ -516,10 +523,10 @@ class AnimeAppState extends State<AnimeApp> {
                                                                           _foundUsers[index]["shop"])
                                                                           ? (Config_G.check_lang
                                                                           ? 'Bạn muốn xóa khách hang ${_foundUsers[index]["name"]}?'
-                                                                          : 'You want to delete Customer ${_foundUsers[index]["name"]}?')
+                                                                          : 'Do you want to delete Customer ${_foundUsers[index]["name"]}?')
                                                                           : (Config_G.check_lang
                                                                           ? 'Bạn muốn xóa shop ${_foundUsers[index]["shop"]}?'
-                                                                          : 'You want to delete the shop ${_foundUsers[index]["shop"]}?')),
+                                                                          : 'Do you want to delete the shop ${_foundUsers[index]["shop"]}?')),
                                                                       actions: <Widget>[
                                                                         FlatButton(
                                                                           child: Text(Config_G.check_lang

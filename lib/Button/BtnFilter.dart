@@ -66,7 +66,7 @@ class BtnFilter extends StatelessWidget {
                           children: [
                             Center(
                                 child: Text(
-                              Content + "-" + Subcontent,
+                              Content,
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 17,
