@@ -280,7 +280,7 @@ class ActionJS {
   }
 
   static Future<bool> Create_transation(
-      int id_shop, Money, String Content, String Date) async {
+      int id_shop, double Money, String Content, String Date) async {
     try {
       print(id_shop);
       var headers = {

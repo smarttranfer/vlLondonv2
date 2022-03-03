@@ -105,7 +105,7 @@ class ListViewsBill extends StatelessWidget {
                                             Flexible(
                                                 fit: FlexFit.loose,
                                                 child: Text(
-                                                  "${Config_G.modelBill[index].money.toString()}",
+                                                  " - ${Config_G.modelBill[index].money.toString()}",
                                                   maxLines: 2,
                                                   overflow:
                                                       TextOverflow.visible,

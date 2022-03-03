@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -29,7 +31,8 @@ class CreateChange extends State {
   TextEditingController _shop = TextEditingController();
   TextEditingController _nameCustom = TextEditingController();
   TextEditingController dateinput = TextEditingController();
-  var _money = new MoneyMaskedTextController(precision: 2);
+  CurrencyTextInputFormatter _money = CurrencyTextInputFormatter();
+  // var _money = new MoneyMaskedTextController(precision: 2,decimalSeparator:'.',thousandSeparator:',',);
   TextEditingController _notes = TextEditingController();
   List<DropdownMenuItem<Object>> ListCustom = [];
   List<DropdownMenuItem<Object>> ListShop = [];
@@ -532,7 +535,7 @@ class CreateChange extends State {
                                                               labelText: Config_G
                                                                       .check_lang
                                                                   ? 'Tên Shop *'
-                                                                  : 'Name Shop *',
+                                                                  : 'Shop Name*',
                                                               labelStyle: TextStyle(
                                                                   color: Colors
                                                                       .green),
@@ -747,9 +750,17 @@ class CreateChange extends State {
                                                           15.0),
                                                 ),
                                                 child: TextField(
+                                                  inputFormatters: <TextInputFormatter>[
+                                                    _money,
+                                                    CurrencyTextInputFormatter(
+                                                      locale: 'uk',
+                                                      decimalDigits: 2,
+                                                      symbol: 'Euro',
+                                                    ),
+                                                  ],
                                                   keyboardType:
                                                       TextInputType.number,
-                                                  controller: _money,
+                                                  // controller: _money,
                                                   autocorrect: true,
                                                   decoration: InputDecoration(
                                                     labelText: Config_G
@@ -892,11 +903,10 @@ class CreateChange extends State {
                                                                   15) //content padding inside button
                                                           ),
                                                   onPressed: () async {
-                                                    if (_nameCustom
-                                                            .text.isEmpty |
+                                                    if (_nameCustom.text.isEmpty |
                                                         _shop.text.isEmpty |
                                                         dateinput.text.isEmpty |
-                                                        _money.text.isEmpty) {
+                                                        _money.toString().isEmpty) {
                                                       print(
                                                           "Bạn cần điền đầy đủ thông tin");
                                                       Fluttertoast.showToast(
@@ -916,7 +926,7 @@ class CreateChange extends State {
                                                       await ActionJS
                                                           .Create_transation(
                                                               id_shop,
-                                                              _money.numberValue,
+                                                              double.parse(_money.getFormattedValue().substring(3).toString().split(",")[0]+_money.getFormattedValue().substring(3).toString().split(",")[1]),
                                                               _notes.text,
                                                               dateinput.text);
                                                       if (check_done_transation ==
