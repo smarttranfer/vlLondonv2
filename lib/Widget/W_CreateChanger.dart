@@ -924,10 +924,11 @@ class CreateChange extends State {
                                                               Colors.white,
                                                           fontSize: 16.0);
                                                     } else {
+                                                      print(_money.getFormattedValue().substring(3).replaceAll(",", ""));
                                                       await ActionJS
                                                           .Create_transation(
                                                               id_shop,
-                                                              double.parse(_money.getFormattedValue().substring(3).toString().split(",")[0]+_money.getFormattedValue().substring(3).toString().split(",")[1]),
+                                                              double.parse(_money.getFormattedValue().substring(3).replaceAll(",", "")),
                                                               _notes.text,
                                                               dateinput.text);
                                                       if (check_done_transation ==
