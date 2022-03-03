@@ -750,12 +750,13 @@ class CreateChange extends State {
                                                           15.0),
                                                 ),
                                                 child: TextField(
-                                                  inputFormatters: <TextInputFormatter>[
+                                                  inputFormatters:[
+                                                    // ThousandsFormatter(),
                                                     _money,
                                                     CurrencyTextInputFormatter(
-                                                      locale: 'uk',
+                                                      locale: 'en',
+                                                      symbol: '',
                                                       decimalDigits: 2,
-                                                      symbol: 'Euro',
                                                     ),
                                                   ],
                                                   keyboardType:
