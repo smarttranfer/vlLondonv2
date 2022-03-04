@@ -502,7 +502,7 @@ class Home extends State<W_Home> {
                                                         ),
                                                       )
                                                     : Text(
-                                                        "\€ ${sumMoney}",
+                                                        "\€ ${sumMoney.toStringAsFixed(3)}",
                                                         style: TextStyle(
                                                           color: Colors.redAccent,
                                                           fontSize: 25,
