@@ -25,7 +25,7 @@ class W_CreateChange extends StatefulWidget {
 }
 
 class CreateChange extends State {
-  static String Statemonet =  '';
+  static String Statemonet = '';
   int indexchossens = 0;
   int id_shop = 0;
   TextEditingController _shop = TextEditingController();
@@ -45,7 +45,7 @@ class CreateChange extends State {
   static bool check_done_transation = false;
   @override
   void initState() {
-    Statemonet =  'Please wait …';
+    Statemonet = 'Please wait …';
     dateinput.text = "";
     Config_G.NameCustom_shop.clear();
     asyncMethod();
@@ -114,12 +114,16 @@ class CreateChange extends State {
       } else {
         print(response.reasonPhrase);
         check_loding_data = true;
-        Statemonet = Config_G.check_lang?"Không thể lấy được dữ liệu . kiểm tra lại Network ":"Cant not get data. Please check Network";
+        Statemonet = Config_G.check_lang
+            ? "Không thể lấy được dữ liệu . kiểm tra lại Network "
+            : "Cant not get data. Please check Network";
       }
     } on Exception catch (e) {
       print("Exception" + e.toString());
       check_loding_data = true;
-      Statemonet = Config_G.check_lang?"Không thể lấy được dữ liệu . kiểm tra lại Network ":"Cant not get data. Please check Network";
+      Statemonet = Config_G.check_lang
+          ? "Không thể lấy được dữ liệu . kiểm tra lại Network "
+          : "Cant not get data. Please check Network";
     }
   }
 
@@ -437,15 +441,14 @@ class CreateChange extends State {
                                                                         ),
                                                                         check_loding_data
                                                                             ? Center(
-                                                                                child:  Column (children: [
+                                                                                child: Column(
+                                                                                children: [
                                                                                   CircularProgressIndicator(
                                                                                     backgroundColor: Colors.green.withOpacity(0.5),
                                                                                     color: Colors.green,
                                                                                   ),
                                                                                   SizedBox(
-                                                                                    height:
-                                                                                    MediaQuery.of(context).size.height /
-                                                                                        100,
+                                                                                    height: MediaQuery.of(context).size.height / 100,
                                                                                   ),
                                                                                   Padding(
                                                                                       child: Text(
@@ -454,9 +457,8 @@ class CreateChange extends State {
                                                                                         textAlign: TextAlign.center,
                                                                                       ),
                                                                                       padding: EdgeInsets.only(bottom: 4))
-                                                                                ],)
-
-                                                                              )
+                                                                                ],
+                                                                              ))
                                                                             : Expanded(
                                                                                 child: _foundUsers.isNotEmpty
                                                                                     ? ListView.builder(
@@ -750,7 +752,7 @@ class CreateChange extends State {
                                                           15.0),
                                                 ),
                                                 child: TextField(
-                                                  inputFormatters:[
+                                                  inputFormatters: [
                                                     // ThousandsFormatter(),
                                                     _money,
                                                     CurrencyTextInputFormatter(
@@ -924,13 +926,33 @@ class CreateChange extends State {
                                                               Colors.white,
                                                           fontSize: 16.0);
                                                     } else {
-                                                      print(_money.getFormattedValue().substring(3).replaceAll(",", ""));
-                                                      await ActionJS
-                                                          .Create_transation(
-                                                              id_shop,
-                                                              double.parse(_money.getFormattedValue().substring(3).replaceAll(",", "")),
-                                                              _notes.text,
-                                                              dateinput.text);
+                                                      print(_money
+                                                          .getFormattedValue()
+                                                          .substring(3)
+                                                          .replaceAll(",", ""));
+                                                      if (_notes.text.isEmpty) {
+                                                        print("1");
+                                                        await ActionJS
+                                                            .Create_transation(
+                                                                id_shop,
+                                                                double.parse(_money.getFormattedValue().substring(3).replaceAll(",", "")),
+                                                                "",
+                                                                dateinput.text);
+                                                      } else {
+                                                        await ActionJS
+                                                            .Create_transation(
+                                                                id_shop,
+                                                                double.parse(_money
+                                                                    .getFormattedValue()
+                                                                    .substring(
+                                                                        3)
+                                                                    .replaceAll(
+                                                                        ",",
+                                                                        "")),
+                                                                _notes.text,
+                                                                dateinput.text);
+                                                      }
+
                                                       if (check_done_transation ==
                                                           true) {
                                                         Navigator.pushReplacement(
@@ -962,14 +984,9 @@ class CreateChange extends State {
                                                                 (BuildContext
                                                                     context) {
                                                               return AlertDialog(
-                                                                title: Text(Config_G
-                                                                        .check_lang
-                                                                    ? "Thông báo hệ thống"
-                                                                    : "System Notifications"),
-                                                                content: Text(Config_G
-                                                                        .check_lang
-                                                                    ? 'Tính năng đang bảo trì !'
-                                                                    : 'Feature under maintenance!'),
+                                                                title: Text(Config_G.check_lang ? "Thông báo hệ thống" : "System Notifications"),
+                                                                content: Text(Config_G.check_lang
+                                                                    ? 'Xảy ra lỗi khi bạn thao tác, Kiểm tra lại đường truyền , dữ liệu đầu vào !' : 'An error occurred when you manipulate, Check the transmission line, input data !'),
                                                                 actions: <
                                                                     Widget>[
                                                                   FlatButton(

@@ -290,7 +290,7 @@ class ActionJS {
       var transation =
           http.Request('POST', Uri.parse('${Config_G.url}/invoice'));
       transation.body = json.encode({
-        "name": "${Content}",
+        "name": "VL London BILL",
         "original_amount": Money,
         "content": "${Content}",
         "create_date": "${Date}",
