@@ -15,7 +15,7 @@ class ActionJS {
     if (content.length > 10) {
       return content.substring(0, 5) + "...";
     } else {
-      return content + " ";
+      return content + "";
     }
   }
 

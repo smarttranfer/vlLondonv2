@@ -16,6 +16,7 @@ import 'package:vl_ui/model/Information_Cutome.dart';
 import 'TimeLineLog.dart';
 import 'W_CreateChanger.dart';
 import 'W_DealManager.dart';
+import 'W_Payment.dart';
 import 'W_static.dart';
 import 'package:http/http.dart' as http;
 
@@ -320,7 +321,7 @@ class Home extends State<W_Home> {
                                         reverseDuration: Duration(
                                             milliseconds:
                                                 Config_G.timeDruation),
-                                        child: DealManagers()));
+                                        child: W_Payment()));
                               },
                               child: OptionBtn(
                                 path: "assest/IconBtn/manager.svg",
