@@ -1,22 +1,14 @@
-import 'dart:convert';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:vl_ui/Button/BtnFilter.dart';
 import 'package:vl_ui/Button/Btn_own.dart';
 import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
-import 'package:vl_ui/Widget/W_Login.dart';
-import 'package:vl_ui/model/CheckSameCustome.dart';
 import 'package:vl_ui/model/Infomation_Custome_Bill.dart';
-import 'package:vl_ui/model/Information_Cutome.dart';
-import 'package:vl_ui/model/Information_Shop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'Homepage.dart';
+import 'W_PaymentInvoice.dart';
 
 class W_Payment extends StatefulWidget {
   @override
@@ -348,7 +340,21 @@ class W_Payments extends State<W_Payment> {
                                                                                         ),
                                                                                         elevation: 50,
                                                                                         shadowColor: Colors.black12,
-                                                                                        child: InkWell(child: BtnFilter_own(lenght: "${_foundUsers[index]["lenght"].toString()}", Content: "${_foundUsers[index]["name"].toString()}", Subcontent: '${_foundUsers[index]["owe"].toString()}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))))),
+                                                                                        child: InkWell(
+                                                                                        onTap: (){
+                                                                                          Navigator.pop(context);
+                                                                                          Navigator.pushReplacement(
+                                                                                              context,
+                                                                                              PageTransition(
+                                                                                                  type: PageTransitionType.rightToLeft,
+                                                                                                  duration: Duration(
+                                                                                                      milliseconds:
+                                                                                                      Config_G.timeDruation),
+                                                                                                  reverseDuration: Duration(
+                                                                                                      milliseconds:
+                                                                                                      Config_G.timeDruation),
+                                                                                                  child: W_PaymentInove()));
+                                                                                        }, child: BtnFilter_own(lenght: "${_foundUsers[index]["lenght"].toString()}", Content: "${_foundUsers[index]["name"].toString()}", Subcontent: '${_foundUsers[index]["owe"].toString()}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))))),
                                                                           ),
 
                                                                         ],
