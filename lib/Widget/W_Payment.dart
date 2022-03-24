@@ -1,5 +1,6 @@
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:vl_ui/Button/Btn_own.dart';
+import 'package:vl_ui/Button/Btn_shop_own.dart';
 import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/model/Infomation_Custome_Bill.dart';
@@ -19,6 +20,9 @@ class W_Payment extends StatefulWidget {
 
 class W_Payments extends State<W_Payment> {
   final List<Map<String, dynamic>> _allUsers = [];
+  static List<Map<String, dynamic>> allInfo_Shop = [];
+  static List<Map<String, dynamic>> billShop = [];
+  static String nameShop = '';
   List<Map<String, dynamic>> _foundUsers = [];
   static String Statemonet = '';
   bool check_loding_data = true;
@@ -64,6 +68,7 @@ class W_Payments extends State<W_Payment> {
 
   void asyncMethod() async {
     await ActionJS.Get_Voice();
+
   }
 
   @override
@@ -253,6 +258,8 @@ class W_Payments extends State<W_Payment> {
                                                           Colors.black12,
                                                       child: InkWell(
                                                           onTap: () async {
+                                                            print(_foundUsers[index]["id"]);
+                                                            await ActionJS.GetInforShop(int.parse(_foundUsers[index]["id"]).toInt());
                                                             return showBarModalBottomSheet(
                                                                 context:
                                                                     context,
@@ -287,12 +294,12 @@ class W_Payments extends State<W_Payment> {
                                                                               Padding(
                                                                                 padding: EdgeInsets.only(left: 2, top: 30),
                                                                                 child: Text(
-                                                                                  "${_foundUsers[index]["name"].toString()}",
+                                                                                  "${_foundUsers[index]["name"]}",
                                                                                   style: TextStyle(
                                                                                     color: Colors.green,
                                                                                     fontSize: 20,
                                                                                     fontFamily: 'Poppins',
-                                                                                    fontWeight: FontWeight.bold,
+                                                                                    fontWeight: FontWeight.w600,
                                                                                   ),
                                                                                 ),
                                                                               )
@@ -315,22 +322,30 @@ class W_Payments extends State<W_Payment> {
                                                                               Padding(
                                                                                 padding: EdgeInsets.only(left: 3, top: 5),
                                                                                 child: Text(
-                                                                                  "${_foundUsers[index]["name"].toString()}",
+                                                                                  "${allInfo_Shop[0]["phone"].toString()}",
                                                                                   style: TextStyle(
                                                                                     color: Colors.green,
                                                                                     fontSize: 20,
                                                                                     fontFamily: 'Poppins',
-                                                                                    fontWeight: FontWeight.bold,
+                                                                                    fontWeight: FontWeight.w600,
                                                                                   ),
                                                                                 ),
                                                                               )
                                                                             ],
                                                                           ),
+
+                                                                          SizedBox(height: MediaQuery.of(context).size.height/50,),
+                                                                          Text("----------***----------",
+                                                                            style: TextStyle(
+                                                                            color: Colors.green,
+                                                                            fontSize: 20,
+                                                                            fontFamily: 'Poppins',
+                                                                            fontWeight: FontWeight.w600,
+                                                                          ),),
                                                                           Expanded(
                                                                             child: ListView.builder(
-                                                                                itemCount: _foundUsers.length,
+                                                                                itemCount: billShop.length,
                                                                                 itemBuilder: (context, index) => Card(
-                                                                                    key: ValueKey(_foundUsers[index]["id"]),
                                                                                     color: Colors.white,
                                                                                     elevation: 4,
                                                                                     margin: const EdgeInsets.symmetric(vertical: 10),
@@ -353,8 +368,8 @@ class W_Payments extends State<W_Payment> {
                                                                                                   reverseDuration: Duration(
                                                                                                       milliseconds:
                                                                                                       Config_G.timeDruation),
-                                                                                                  child: W_PaymentInove()));
-                                                                                        }, child: BtnFilter_own(lenght: "${_foundUsers[index]["lenght"].toString()}", Content: "${_foundUsers[index]["name"].toString()}", Subcontent: '${_foundUsers[index]["owe"].toString()}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))))),
+                                                                                                  child: W_PaymentInove(id: billShop[index]["id"].toString(),nameCustome: _foundUsers[index]["name"] , nameShop: billShop[index]["name"].toString(),total_own:billShop[index]["total_owe"].toString())));
+                                                                                        }, child: BtnFilter_own_shop(lenght: "", Content: "${billShop[index]["name"].toString()}", Subcontent: '${billShop[index]["total_owe"].toString()}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))))),
                                                                           ),
 
                                                                         ],

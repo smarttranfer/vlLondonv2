@@ -11,6 +11,17 @@ import 'package:page_transition/page_transition.dart';
 import 'Homepage.dart';
 
 class W_PaymentInove extends StatefulWidget {
+  const W_PaymentInove({
+    required this.id,
+    required this.nameCustome,
+    required this.nameShop,
+    required this.total_own,
+    Key? key,
+  }) : super(key: key);
+  final String id;
+  final String nameCustome;
+  final String nameShop;
+  final String total_own;
   @override
   State<StatefulWidget> createState() {
     return W_PaymentsInove();
@@ -37,6 +48,52 @@ class W_PaymentsInove extends State<W_PaymentInove> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
+        floatingActionButton:FloatingActionButton(
+          backgroundColor: Colors.green,
+          onPressed: (){
+            //code to execute on button press
+          },
+          child: Icon(Icons.send,size: 30,), //icon inside button
+        ),
+
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        //floating action button position to center
+
+        bottomNavigationBar: BottomAppBar( //bottom navigation bar on scaffold
+          color:Colors.green,
+          shape: CircularNotchedRectangle(), //shape of notch
+          notchMargin: 8, //notche margin between floating button and bottom appbar
+          child: Row( //children inside bottom appbar
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Text(
+                  "1000000",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 20,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Text(
+                  "1-30-128-390128",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 20,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
         body: GestureDetector(
           onTap: () {
             FocusScopeNode currentFocus = FocusScope.of(context);
@@ -111,7 +168,7 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                           Padding(
                             padding: EdgeInsets.only(left: 5, top: 30),
                             child: Text(
-                              "Demo",
+                              "${widget.nameCustome}",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 20,
@@ -139,7 +196,7 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                           Padding(
                             padding: EdgeInsets.only(left: 5, top: 5),
                             child: Text(
-                              "Demo ",
+                              "${widget.nameShop}",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 20,
@@ -183,7 +240,7 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                                           ),
                                         ),
                                         Text(
-                                          "1000000",
+                                          "${widget.total_own}",
                                           style: TextStyle(
                                             color: Colors.green,
                                             fontSize: 20,
@@ -387,8 +444,10 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                                                       },
                                                       child: BtnFilter_own(lenght: "${Config_G.model_Custome_Bill[1].list_invoices[index].user_id}", Content: "${Config_G.model_Custome_Bill[1].list_invoices[index].name_Bill}", Subcontent: '${Config_G.model_Custome_Bill[1].list_invoices[index].create_date}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
                                             ))),
+
                               ],
                             ),
+
                           ),
                         ))
                   ],

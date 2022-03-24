@@ -3,6 +3,8 @@ import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/Widget/Homepage.dart';
 import 'package:vl_ui/Widget/W_CreateChanger.dart';
 import 'package:vl_ui/Widget/W_EditCustome.dart';
+import 'package:vl_ui/Widget/W_Payment.dart';
+import 'package:vl_ui/Widget/W_Payment.dart';
 import 'package:vl_ui/Widget/W_signupCustome.dart';
 import 'package:http/http.dart' as http;
 import 'package:vl_ui/Widget/W_signupShop.dart';
@@ -413,6 +415,37 @@ class ActionJS {
     } on Exception catch (e) {
       Home.data_Sum = false;
       Home.check_loding_data = true;
+    }
+
+  }
+  static Future<bool> GetInforShop(int id_Custome) async {
+    try {
+      W_Payments.billShop.clear();
+      W_Payments.allInfo_Shop.clear();
+      print('${Config_G.url}/customer/info/${id_Custome}');
+      var headers = {
+        'Authorization': 'Bearer ${Config_G.Token_app}',
+        'Content-Type': 'application/json'
+      };
+      var request_shop = http.Request(
+          'GET', Uri.parse('${Config_G.url}/customer/info/${id_Custome}'));
+      request_shop.headers.addAll(headers);
+      http.StreamedResponse response_shop = await request_shop.send();
+      String inforshop = await response_shop.stream.bytesToString();
+      print(json.decode(inforshop)["data"]["phone"]);
+      W_Payments.allInfo_Shop.add({
+             "phone": json.decode(inforshop)["data"]["phone"]
+            });
+      for (var i in json.decode(inforshop)["data"]["shops"]) {
+          W_Payments.billShop.add({
+            "id": "${i["id"]}",
+            "name": "${i["name"]}",
+            "total_owe": "${i["original_amount"]-i["payment"]}",
+          });
+      }
+      return true;
+    } on Exception catch (e) {
+      return false;
     }
   }
 }
