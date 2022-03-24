@@ -25,7 +25,7 @@ class BtnFilter_own_shop extends StatelessWidget {
     return Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-        height: heights,
+        height: heights*1.5,
         width: wights,
         child: Container(
             decoration: BoxDecoration(
@@ -74,24 +74,42 @@ class BtnFilter_own_shop extends StatelessWidget {
                         margin: EdgeInsets.only(
                             left: 10, top: 2, bottom: 2, right: 3),
                         height: heights,
-                        width: wights / 3,
+                        width: wights / 2.5,
                         child: TextField(
-                          enabled: false,
+                          keyboardType:
+                          TextInputType.number,
+                          // controller: _money,
+                          autocorrect: true,
                           decoration: InputDecoration(
-                            labelStyle: TextStyle(color: Colors.green),
+                            labelStyle: TextStyle(
+                                color: Colors.green),
+                            prefixIcon: Icon(
+                              Icons.euro,
+                              color: Colors.green,
+                            ),
+                            hintStyle: TextStyle(
+                                color: Colors.green),
                             filled: true,
                             fillColor: Colors.white70,
-                            disabledBorder: OutlineInputBorder(
+                            enabledBorder:
+                            OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                              borderSide:
-                                  BorderSide(color: Colors.green, width: 2),
+                              BorderRadius.all(
+                                  Radius.circular(
+                                      12.0)),
+                              borderSide: BorderSide(
+                                  color: Colors.green,
+                                  width: 2),
                             ),
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder:
+                            OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                              borderSide:
-                                  BorderSide(color: Colors.green, width: 2),
+                              BorderRadius.all(
+                                  Radius.circular(
+                                      10.0)),
+                              borderSide: BorderSide(
+                                  color: Colors.green,
+                                  width: 2),
                             ),
                           ),
                         ))
