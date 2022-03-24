@@ -369,7 +369,7 @@ class W_Payments extends State<W_Payment> {
                                                                                                       milliseconds:
                                                                                                       Config_G.timeDruation),
                                                                                                   child: W_PaymentInove(id: billShop[index]["id"].toString(),nameCustome: _foundUsers[index]["name"] , nameShop: billShop[index]["name"].toString(),total_own:billShop[index]["total_owe"].toString())));
-                                                                                        }, child: BtnFilter_own_shop(lenght: "", Content: "${billShop[index]["name"].toString()}", Subcontent: '${billShop[index]["total_owe"].toString()}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))))),
+                                                                                        }, child: BtnFilter_own(lenght: "", Content: "${billShop[index]["name"].toString()}", Subcontent: '${billShop[index]["total_owe"].toString()}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))))),
                                                                           ),
 
                                                                         ],

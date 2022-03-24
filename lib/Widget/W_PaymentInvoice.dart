@@ -1,13 +1,16 @@
+import 'dart:ffi';
+
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:vl_ui/Button/Btn_own.dart';
+import 'package:vl_ui/Button/Btn_shop_own.dart';
 import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:vl_ui/model/Infomation_Custome_Bill.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-
 import 'Homepage.dart';
 
 class W_PaymentInove extends StatefulWidget {
@@ -29,7 +32,29 @@ class W_PaymentInove extends StatefulWidget {
 }
 
 class W_PaymentsInove extends State<W_PaymentInove> {
+  String result_payment = "";
   CurrencyTextInputFormatter _money = CurrencyTextInputFormatter();
+  String value ( var values){
+    if(values.toString().isEmpty){
+      setState(() {
+        result_payment = widget.total_own;
+      });
+      return widget.total_own;
+    }else{
+      if(double.parse(values)>double.parse(widget.total_own )){
+        setState(() {
+          result_payment = "0.0";
+        });
+        return "";
+      }else{
+        var reuslt =   double.parse(widget.total_own )- double.parse(values);
+        setState(() {
+          result_payment = reuslt.toString();
+        });
+        return reuslt.toString();
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -51,26 +76,24 @@ class W_PaymentsInove extends State<W_PaymentInove> {
         floatingActionButton:FloatingActionButton(
           backgroundColor: Colors.green,
           onPressed: (){
-            //code to execute on button press
+            
           },
-          child: Icon(Icons.send,size: 30,), //icon inside button
+          child: Icon(Icons.payment_outlined,size: 30,),
         ),
 
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        //floating action button position to center
-
-        bottomNavigationBar: BottomAppBar( //bottom navigation bar on scaffold
+        bottomNavigationBar: BottomAppBar(
           color:Colors.green,
-          shape: CircularNotchedRectangle(), //shape of notch
-          notchMargin: 8, //notche margin between floating button and bottom appbar
-          child: Row( //children inside bottom appbar
+          shape: CircularNotchedRectangle(),
+          notchMargin: 8,
+          child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.all(15),
                 child: Text(
-                  "1000000",
+                  "",
                   style: TextStyle(
                     color: Colors.green,
                     fontSize: 20,
@@ -82,7 +105,7 @@ class W_PaymentsInove extends State<W_PaymentInove> {
               Padding(
                 padding: EdgeInsets.all(15),
                 child: Text(
-                  "1-30-128-390128",
+                  "",
                   style: TextStyle(
                     color: Colors.green,
                     fontSize: 20,
@@ -240,7 +263,7 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                                           ),
                                         ),
                                         Text(
-                                          "${widget.total_own}",
+                                          "${result_payment.isEmpty?widget.total_own:result_payment}",
                                           style: TextStyle(
                                             color: Colors.green,
                                             fontSize: 20,
@@ -280,6 +303,9 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                                               BorderRadius.circular(15.0),
                                             ),
                                             child: TextField(
+                                              onChanged: (e){
+                                                value(e.toString().replaceAll(",",""));
+                                              },
                                                   // controller: _notes,
                                               inputFormatters: [
                                                 // ThousandsFormatter(),
@@ -347,103 +373,8 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                                                   elevation: 50,
                                                   shadowColor:
                                                   Colors.black12,
-                                                  child: InkWell(
-                                                      onTap: () async {
-                                                        return showBarModalBottomSheet(
-                                                            context:
-                                                            context,
-                                                            builder:
-                                                                (context) {
-                                                              return Container(
-                                                                  height: MediaQuery.of(context)
-                                                                      .size
-                                                                      .height /
-                                                                      1.5,
-                                                                  width: MediaQuery.of(
-                                                                      context)
-                                                                      .size
-                                                                      .width,
-                                                                  child:
-                                                                  Column(
-                                                                    children: [
-                                                                      Row(
-                                                                        children: [
-                                                                          Padding(
-                                                                            padding: EdgeInsets.only(left: 3, top: 30),
-                                                                            child: Text(
-                                                                              "Name : ",
-                                                                              style: TextStyle(
-                                                                                color: Colors.green,
-                                                                                fontSize: 20,
-                                                                                fontFamily: 'Poppins',
-                                                                                fontWeight: FontWeight.bold,
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsets.only(left: 2, top: 30),
-                                                                            child: Text(
-                                                                              "${Config_G.model_Custome_Bill[1].list_invoices[index].name_Bill}",
-                                                                              style: TextStyle(
-                                                                                color: Colors.green,
-                                                                                fontSize: 20,
-                                                                                fontFamily: 'Poppins',
-                                                                                fontWeight: FontWeight.bold,
-                                                                              ),
-                                                                            ),
-                                                                          )
-                                                                        ],
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Padding(
-                                                                            padding: EdgeInsets.only(left: 2, top: 5),
-                                                                            child: Text(
-                                                                              "Phone Number : ",
-                                                                              style: TextStyle(
-                                                                                color: Colors.green,
-                                                                                fontSize: 20,
-                                                                                fontFamily: 'Poppins',
-                                                                                fontWeight: FontWeight.bold,
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsets.only(left: 3, top: 5),
-                                                                            child: Text(
-                                                                              "${Config_G.model_Custome_Bill[1].list_invoices[index].create_date}",
-                                                                              style: TextStyle(
-                                                                                color: Colors.green,
-                                                                                fontSize: 20,
-                                                                                fontFamily: 'Poppins',
-                                                                                fontWeight: FontWeight.bold,
-                                                                              ),
-                                                                            ),
-                                                                          )
-                                                                        ],
-                                                                      ),
-                                                                      Expanded(
-                                                                        child: ListView.builder(
-                                                                            itemCount: Config_G.model_Custome_Bill[1].list_invoices.length,
-                                                                            itemBuilder: (context, index) => Card(
-                                                                                color: Colors.white,
-                                                                                elevation: 4,
-                                                                                margin: const EdgeInsets.symmetric(vertical: 10),
-                                                                                child: Card(
-                                                                                    shape: RoundedRectangleBorder(
-                                                                                      borderRadius: BorderRadius.circular(50.0),
-                                                                                    ),
-                                                                                    elevation: 50,
-                                                                                    shadowColor: Colors.black12,
-                                                                                    child: InkWell(child: BtnFilter_own(lenght: "${Config_G.model_Custome_Bill[1].list_invoices[index].user_id}", Content: "${Config_G.model_Custome_Bill[1].list_invoices[index].name_Bill}", Subcontent: '${Config_G.model_Custome_Bill[1].list_invoices[index].create_date}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))))),
-                                                                      ),
-
-                                                                    ],
-                                                                  ));
-                                                            });
-                                                      },
-                                                      child: BtnFilter_own(lenght: "${Config_G.model_Custome_Bill[1].list_invoices[index].user_id}", Content: "${Config_G.model_Custome_Bill[1].list_invoices[index].name_Bill}", Subcontent: '${Config_G.model_Custome_Bill[1].list_invoices[index].create_date}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
-                                            ))),
+                                                  child: BtnFilter_own_shop(lenght: "${Config_G.model_Custome_Bill[1].list_invoices[index].user_id}", Content: "${Config_G.model_Custome_Bill[1].list_invoices[index].name_Bill}", Subcontent: '${Config_G.model_Custome_Bill[1].list_invoices[index].create_date}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
+                                            )),
 
                               ],
                             ),

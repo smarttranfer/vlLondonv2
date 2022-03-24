@@ -24,89 +24,82 @@ class BtnFilter_own_shop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Container(
-            height: heights,
-            width: wights,
-            child: Container(
-                decoration: BoxDecoration(
-                  color: colors,
-                  border: Border.all(color: Colors.green),
-                ),
-                child: Center(
-                    child: Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            border: Border.all(color: Colors.green),
+      Container(
+        height: heights,
+        width: wights,
+        child: Container(
+            decoration: BoxDecoration(
+              color: colors,
+              border: Border.all(color: Colors.green),
+            ),
+            child: Center(
+                child:
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 25,
+                    ),
+                    Text(
+                      Content,
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 17,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Center(
+                        child: Text(
+                      " : ",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 17,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )),
+                    Center(
+                      child: Text(
+                        ActionJS.splitString(Subcontent),
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 17,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(
+                            left: 10, top: 2, bottom: 2, right: 3),
+                        height: heights,
+                        width: wights / 3,
+                        child: TextField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(color: Colors.green),
+                            filled: true,
+                            fillColor: Colors.white70,
+                            disabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.green, width: 2),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.green, width: 2),
+                            ),
                           ),
-                          height: 50,
-                          width: 45,
-                          child: Container(
-                              margin: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Colors.green,
-                                border: Border.all(color: Colors.green),
-                              ),
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                color: Colors.white,
-                                size: 20,
-                              )),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width/25,
-                            ),
-                            Center(
-                                child: Text(
-                                  Content,
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 17,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )),
-                            Center(
-                                child: Text(
-                                  " : ",
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 17,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )),
-                            Center(
-                              child: Text(
-                                ActionJS.splitString(Subcontent),
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 17,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                "${ActionJS.splitString(lenght)}",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 10,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ))),
-          ),
-        ]));
+                        ))
+                  ],
+                ),
+
+            )),
+      ),
+    ]));
   }
 }
