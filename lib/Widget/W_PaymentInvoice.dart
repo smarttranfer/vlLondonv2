@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'Homepage.dart';
+import 'W_Payment.dart';
 
 class W_PaymentInove extends StatefulWidget {
   const W_PaymentInove({
@@ -145,7 +146,7 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                                         milliseconds: Config_G.timeDruation),
                                     reverseDuration: Duration(
                                         milliseconds: Config_G.timeDruation),
-                                    child: W_Home()));
+                                    child: W_Payment()));
                           },
                           icon: Icon(Icons.arrow_back_ios_outlined),
                           color: Colors.white,
