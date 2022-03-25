@@ -3,11 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:vl_ui/Button/Btn_shop_own.dart';
 import 'package:vl_ui/DartJs/FuntionsAction.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
-import 'package:vl_ui/model/Infomation_Custome_Bill.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'Homepage.dart';
 import 'W_Payment.dart';
 
 class W_PaymentInove extends StatefulWidget {
@@ -31,6 +29,51 @@ class W_PaymentInove extends StatefulWidget {
 class W_PaymentsInove extends State<W_PaymentInove> {
   String result_payment = "";
   CurrencyTextInputFormatter _money = CurrencyTextInputFormatter();
+  static List<Map<String, dynamic>> listbill = [];
+  final List<Map<String, dynamic>> _allUsers = [];
+  List<Map<String, dynamic>> _foundUsers = [];
+  @override
+  initState() {
+    for (var i in listbill) {
+      _allUsers.add({
+        "id": "${i["id"]}",
+        "name": "${i["name"]}",
+        "total_owe": "${i["total_owe"]}",
+        "content": "${i["content"]}",
+        "value":""
+      });
+    }
+    _foundUsers = _allUsers;
+    super.initState();
+  }
+  void _runFilter(String enteredKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enteredKeyword.isEmpty) {
+      int k = 0;
+      for(var indexs in  _allUsers.toList()){
+        _allUsers.toList()[k]["value"] = enteredKeyword;
+        k+=1;
+      }
+      results = _allUsers;
+    } else {
+      int k = 0;
+      double checkvalue = 0.0;
+      for(var indexs in  _allUsers.toList()){
+        if( double.parse(enteredKeyword.replaceAll(",", "")) < double.parse(_allUsers.toList()[k]["total_owe"].replaceAll(",", ""))){
+          _allUsers.toList()[k]["value"] =  double.parse(enteredKeyword.replaceAll(",", "")) - checkvalue ;
+          checkvalue = _allUsers.toList()[k]["value"];
+        }
+        else{
+          _allUsers.toList()[k]["value"] = _allUsers.toList()[k]["total_owe"];
+        }
+       k+=1;
+      }
+      results = _allUsers.toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
+  }
   String value ( var values){
     if(values.toString().isEmpty){
       setState(() {
@@ -51,19 +94,6 @@ class W_PaymentsInove extends State<W_PaymentInove> {
         return reuslt.toString();
       }
     }
-  }
-
-  @override
-  void initState() {
-    asyncMethod();
-    for (Information_Custome_Bill i in Config_G.model_Custome_Bill) {
-
-    }
-    super.initState();
-  }
-
-  void asyncMethod() async {
-    await ActionJS.Get_Voice();
   }
 
   @override
@@ -251,7 +281,7 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          "Tong no :  ",
+                                          "Total Liabilities :  ",
                                           style: TextStyle(
                                             color: Colors.green,
                                             fontSize: 20,
@@ -302,6 +332,7 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                                             child: TextField(
                                               onChanged: (e){
                                                 value(e.toString().replaceAll(",",""));
+                                                return _runFilter(e);
                                               },
                                                   // controller: _notes,
                                               inputFormatters: [
@@ -353,9 +384,9 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                                 // ),
                                 Expanded(
                                     child: ListView.builder(
-                                        itemCount:Config_G.model_Custome_Bill[1].list_invoices.length,
+                                        itemCount:_foundUsers.length,
                                         itemBuilder: (context, index) =>
-                                            Card(
+                                            Card(key: ValueKey(_foundUsers[index]["id"]),
                                               color: Colors.white,
                                               elevation: 4,
                                               margin: const EdgeInsets
@@ -370,9 +401,8 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                                                   elevation: 50,
                                                   shadowColor:
                                                   Colors.black12,
-                                                  child: BtnFilter_own_shop(lenght: "${Config_G.model_Custome_Bill[1].list_invoices[index].user_id}", Content: "${Config_G.model_Custome_Bill[1].list_invoices[index].name_Bill}", Subcontent: '${Config_G.model_Custome_Bill[1].list_invoices[index].create_date}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
+                                                  child: BtnFilter_own_shop(lenght: "${_foundUsers[index]["value"]}", Content: ActionJS.splitString("${_foundUsers[index]["name"]}"), Subcontent: ActionJS.splitString('${_foundUsers[index]["total_owe"]}'), wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))),
                                             )),
-
                               ],
                             ),
 

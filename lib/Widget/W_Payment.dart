@@ -44,7 +44,7 @@ class W_Payments extends State<W_Payment> {
   @override
   void initState() {
     Statemonet = 'Please wait …';
-    asyncMethod();
+    // asyncMethod();
     for (Information_Custome_Bill i in Config_G.model_Custome_Bill) {
       if (i.owe > 0) {
         _allUsers.add({
@@ -345,7 +345,7 @@ class W_Payments extends State<W_Payment> {
                                                                           Expanded(
                                                                             child: ListView.builder(
                                                                                 itemCount: billShop.length,
-                                                                                itemBuilder: (context, index) => Card(
+                                                                                itemBuilder: (context, indexs) => Card(
                                                                                     color: Colors.white,
                                                                                     elevation: 4,
                                                                                     margin: const EdgeInsets.symmetric(vertical: 10),
@@ -356,8 +356,9 @@ class W_Payments extends State<W_Payment> {
                                                                                         elevation: 50,
                                                                                         shadowColor: Colors.black12,
                                                                                         child: InkWell(
-                                                                                        onTap: (){
+                                                                                        onTap: ()async {
                                                                                           Navigator.pop(context);
+                                                                                          await ActionJS.GetInforShop_bill(int.parse(billShop[indexs]["id"].toString()).toInt());
                                                                                           Navigator.pushReplacement(
                                                                                               context,
                                                                                               PageTransition(
@@ -368,8 +369,8 @@ class W_Payments extends State<W_Payment> {
                                                                                                   reverseDuration: Duration(
                                                                                                       milliseconds:
                                                                                                       Config_G.timeDruation),
-                                                                                                  child: W_PaymentInove(id: billShop[index]["id"].toString(),nameCustome: _foundUsers[index]["name"] , nameShop: billShop[index]["name"].toString(),total_own:billShop[index]["total_owe"].toString())));
-                                                                                        }, child: BtnFilter_own(lenght: "", Content: "${billShop[index]["name"].toString()}", Subcontent: '${billShop[index]["total_owe"].toString()}', wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))))),
+                                                                                                  child: W_PaymentInove(id: billShop[indexs]["id"].toString(),nameCustome: _foundUsers[index]["name"] , nameShop: billShop[indexs]["name"].toString(),total_own:billShop[indexs]["total_owe"].toString())));
+                                                                                        }, child: BtnFilter_own(lenght: "", Content: ActionJS.splitString( "${billShop[indexs]["name"].toString()}"), Subcontent: ActionJS.splitString('${billShop[indexs]["total_owe"].toString()}'), wights: MediaQuery.of(context).size.width / 1, heights: 50, colors: Colors.green.withOpacity(0.0), path: ""))))),
                                                                           ),
 
                                                                         ],

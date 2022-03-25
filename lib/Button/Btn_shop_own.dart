@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vl_ui/DartJs/FuntionsAction.dart';
 
 class BtnFilter_own_shop extends StatelessWidget {
+
   const BtnFilter_own_shop({
     required this.colors,
     required this.heights,
@@ -22,6 +23,7 @@ class BtnFilter_own_shop extends StatelessWidget {
   final String lenght;
   @override
   Widget build(BuildContext context) {
+    TextEditingController values = TextEditingController();
     return Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
@@ -76,17 +78,13 @@ class BtnFilter_own_shop extends StatelessWidget {
                         height: heights,
                         width: wights / 2.5,
                         child: TextField(
+                          controller: values..text = lenght,
                           keyboardType:
                           TextInputType.number,
-                          // controller: _money,
                           autocorrect: true,
                           decoration: InputDecoration(
                             labelStyle: TextStyle(
                                 color: Colors.green),
-                            prefixIcon: Icon(
-                              Icons.euro,
-                              color: Colors.green,
-                            ),
                             hintStyle: TextStyle(
                                 color: Colors.green),
                             filled: true,

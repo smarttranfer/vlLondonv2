@@ -310,7 +310,8 @@ class Home extends State<W_Home> {
                                 colors: Colors.green.withOpacity(0.5),
                               )),
                           InkWell(
-                              onTap: () {
+                              onTap: () async {
+                                await ActionJS.Get_Voice();
                                 Navigator.pushReplacement(
                                     context,
                                     PageTransition(

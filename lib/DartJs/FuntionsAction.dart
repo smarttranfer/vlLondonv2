@@ -5,6 +5,7 @@ import 'package:vl_ui/Widget/W_CreateChanger.dart';
 import 'package:vl_ui/Widget/W_EditCustome.dart';
 import 'package:vl_ui/Widget/W_Payment.dart';
 import 'package:vl_ui/Widget/W_Payment.dart';
+import 'package:vl_ui/Widget/W_PaymentInvoice.dart';
 import 'package:vl_ui/Widget/W_signupCustome.dart';
 import 'package:http/http.dart' as http;
 import 'package:vl_ui/Widget/W_signupShop.dart';
@@ -442,6 +443,32 @@ class ActionJS {
             "name": "${i["name"]}",
             "total_owe": "${i["original_amount"]-i["payment"]}",
           });
+      }
+      return true;
+    } on Exception catch (e) {
+      return false;
+    }
+  }
+  static Future<bool> GetInforShop_bill(int id_shop) async {
+    try {
+      W_PaymentsInove.listbill.clear();
+      print('${Config_G.url}/invoice/all_by_shop/${id_shop}');
+      var headers = {
+        'Authorization': 'Bearer ${Config_G.Token_app}',
+        'Content-Type': 'application/json'
+      };
+      var request_shop = http.Request(
+          'GET', Uri.parse('${Config_G.url}/invoice/all_by_shop/${id_shop}'));
+      request_shop.headers.addAll(headers);
+      http.StreamedResponse response_shop = await request_shop.send();
+      String inforshop = await response_shop.stream.bytesToString();
+      for (var i in json.decode(inforshop)["data"]) {
+        W_PaymentsInove.listbill.add({
+          "id": "${i["id"]}",
+          "name": "${i["name"]}",
+          "content": "${i["content"]}",
+          "total_owe": "${i["original_amount"]-i["payment"]}",
+        });
       }
       return true;
     } on Exception catch (e) {
