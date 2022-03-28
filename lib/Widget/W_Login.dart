@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vl_ui/Globle/Config_G.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -280,6 +281,9 @@ class login extends State {
 
                           await _makeGetRequest(_controlleruser.text,_controller.value.text);
                           if (checks == true) {
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.setString('user', _controlleruser.text);
+                            prefs.setString('pass', _controller.value.text);
                             setState(() {
                               check_loadingbar = false;
                             });
