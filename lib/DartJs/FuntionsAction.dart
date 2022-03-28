@@ -468,6 +468,8 @@ class ActionJS {
           "name": "${i["name"]}",
           "content": "${i["content"]}",
           "total_owe": "${i["original_amount"]-i["payment"]}",
+          "original_amount" : '${i["original_amount"]}',
+          "date" :"${i["create_date"]}"
         });
       }
       return true;

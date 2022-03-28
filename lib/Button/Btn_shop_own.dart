@@ -1,121 +1,197 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vl_ui/DartJs/FuntionsAction.dart';
+import 'package:vl_ui/Widget/W_PaymentInvoice.dart';
+import 'package:vl_ui/model/counter_model.dart';
 
 class BtnFilter_own_shop extends StatelessWidget {
-
   const BtnFilter_own_shop({
     required this.colors,
     required this.heights,
     required this.wights,
-    required this.path,
-    required this.Content,
-    required this.Subcontent,
-    required this.lenght,
+    required this.money,
+    required this.original_amount,
+    required this.paymented,
+    required this.date,
+    required this.index,
     Key? key,
   }) : super(key: key);
+  final int index;
   final Color colors;
   final double heights;
   final double wights;
-  final String path;
-  final String Content;
-  final String Subcontent;
-  final String lenght;
+  final String money;
+  final String original_amount;
+  final String paymented;
+  final String date;
   @override
   Widget build(BuildContext context) {
     TextEditingController values = TextEditingController();
+    final counterModel = Provider.of<CounterModel>(context);
     return Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-        height: heights*1.5,
+        height: heights,
         width: wights,
-        child: Container(
-            decoration: BoxDecoration(
-              color: colors,
-              border: Border.all(color: Colors.green),
-            ),
-            child: Center(
-                child:
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 25,
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Date - time",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 12,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      Content,
+                  ),
+                  Text(
+                    date,
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 12,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    " | ",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 25,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      "original_amount",
                       style: TextStyle(
                         color: Colors.green,
-                        fontSize: 17,
+                        fontSize: 12,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Center(
-                        child: Text(
-                      " : ",
+                  ),
+                  Center(
+                    child: Text(
+                      ActionJS.splitString(original_amount),
                       style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 17,
+                        color: Colors.red,
+                        fontSize: 12,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.bold,
                       ),
-                    )),
-                    Center(
-                      child: Text(
-                        ActionJS.splitString(Subcontent),
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 17,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    " | ",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 25,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      "amount owed",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 12,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(
-                            left: 10, top: 2, bottom: 2, right: 3),
-                        height: heights,
-                        width: wights / 2.5,
-                        child: TextField(
-                          controller: values..text = lenght,
-                          keyboardType:
-                          TextInputType.number,
-                          autocorrect: true,
-                          decoration: InputDecoration(
-                            labelStyle: TextStyle(
-                                color: Colors.green),
-                            hintStyle: TextStyle(
-                                color: Colors.green),
-                            filled: true,
-                            fillColor: Colors.white70,
-                            enabledBorder:
-                            OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius.all(
-                                  Radius.circular(
-                                      12.0)),
-                              borderSide: BorderSide(
-                                  color: Colors.green,
-                                  width: 2),
-                            ),
-                            focusedBorder:
-                            OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius.all(
-                                  Radius.circular(
-                                      10.0)),
-                              borderSide: BorderSide(
-                                  color: Colors.green,
-                                  width: 2),
-                            ),
+                  ),
+                  Center(
+                    child: Text(
+                      ActionJS.splitString(paymented),
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    " | ",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 25,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      height: heights/1.5,
+                      width: wights / 5,
+                      child: TextField(
+                        onChanged: (value){
+                          W_PaymentsInove.allUsers[index]["value"] = value;
+                          // counterModel.incrementCounter(double.parse(value.toString()));
+                        },
+                        controller: values..text = money,
+                        keyboardType: TextInputType.number,
+                          style: TextStyle(fontSize: 12),
+                        decoration: InputDecoration(
+                          enabled: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12.0)),
+                            borderSide:
+                                BorderSide(color: Colors.green, width: 2),
                           ),
-                        ))
-                  ],
-                ),
-
-            )),
-      ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            borderSide:
+                                BorderSide(color: Colors.green, width: 2),
+                          ),
+                        ),
+                      ))
+                ],
+              )
+            ],
+          ),
+        )),
     ]));
   }
 }

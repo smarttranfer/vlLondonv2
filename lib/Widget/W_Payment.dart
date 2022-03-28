@@ -44,7 +44,6 @@ class W_Payments extends State<W_Payment> {
   @override
   void initState() {
     Statemonet = 'Please wait …';
-    // asyncMethod();
     for (Information_Custome_Bill i in Config_G.model_Custome_Bill) {
       if (i.owe > 0) {
         _allUsers.add({
@@ -54,7 +53,6 @@ class W_Payments extends State<W_Payment> {
           "Debt_transtion": "${i.list_invoices.length}",
           "owe": "${i.owe}",
           "lenght": "${i.list_invoices.length}",
-          // "phone" : "${i.}"
         });
       }
     }
