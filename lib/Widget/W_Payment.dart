@@ -357,7 +357,7 @@ class W_Payments extends State<W_Payment> {
                                                                                         onTap: ()async {
                                                                                           Navigator.pop(context);
                                                                                           await ActionJS.GetInforShop_bill(int.parse(billShop[indexs]["id"].toString()).toInt());
-                                                                                          Navigator.pushReplacement(
+                                                                                          Navigator.push(
                                                                                               context,
                                                                                               PageTransition(
                                                                                                   type: PageTransitionType.rightToLeft,
@@ -382,17 +382,9 @@ class W_Payments extends State<W_Payment> {
                                                                   "${_foundUsers[index]["name"].toString()}",
                                                               Subcontent:
                                                                   '${_foundUsers[index]["owe"].toString()}',
-                                                              wights: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  1,
+                                                              wights: MediaQuery.of(context).size.width / 1,
                                                               heights: 50,
-                                                              colors: Colors
-                                                                  .green
-                                                                  .withOpacity(
-                                                                      0.0),
-                                                              path: ""))),
+                                                              colors: Colors.green.withOpacity(0.0), path: ""))),
                                                 ))),
                               ],
                             ),

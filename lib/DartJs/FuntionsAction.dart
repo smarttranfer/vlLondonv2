@@ -12,6 +12,7 @@ import 'package:vl_ui/Widget/W_signupShop.dart';
 import 'package:vl_ui/model/Infomation_Custome_Bill.dart';
 import 'package:vl_ui/model/Information_Invoices_owe.dart';
 import 'package:vl_ui/model/New_Changer.dart';
+import 'package:vl_ui/model/listinvoice.dart';
 
 class ActionJS {
   static String splitString(String content) {
@@ -462,14 +463,16 @@ class ActionJS {
       request_shop.headers.addAll(headers);
       http.StreamedResponse response_shop = await request_shop.send();
       String inforshop = await response_shop.stream.bytesToString();
-      for (var i in json.decode(inforshop)["data"]) {
+      for (var i in json.decode(inforshop)["data"]["invoices"]) {
+        print(json.decode(inforshop)["data"]["invoices"]);
         W_PaymentsInove.listbill.add({
           "id": "${i["id"]}",
           "name": "${i["name"]}",
           "content": "${i["content"]}",
-          "total_owe": "${i["original_amount"]-i["payment"]}",
+          "total_owe": "${i["payment"]}",
           "original_amount" : '${i["original_amount"]}',
-          "date" :"${i["create_date"]}"
+          "date" :"${i["create_date"]}",
+          "id_custome":"${json.decode(inforshop)["data"]["customer_id"]}"
         });
       }
       return true;
@@ -477,4 +480,49 @@ class ActionJS {
       return false;
     }
   }
+
+  static Future<bool> Create_transation_payment(
+      int id_Custome, double unallocated, List<listinvoice> listpayment) async {
+    try {
+      List<Map<String, dynamic>> invoicelist = [];
+      for(var i in listpayment){
+        invoicelist.add({
+          "invoice_id": i.invoice_id,
+          "payment": i.payment
+        });
+      }
+
+      print(json.encode({
+        "customer_id": id_Custome,
+        "unallocated": unallocated,
+        "invoices": invoicelist
+      }));
+      var headers = {
+        'Authorization': 'Bearer ${Config_G.Token_app}',
+        'Content-Type': 'application/json'
+      };
+
+      var transation =
+      http.Request('POST', Uri.parse('${Config_G.url}/transaction'));
+      transation.body = json.encode({
+        "customer_id": id_Custome,
+        "unallocated": unallocated,
+        "invoices": invoicelist
+      });
+      transation.headers.addAll(headers);
+      http.StreamedResponse response_transation = await transation.send();
+      String responses = await response_transation.stream.bytesToString();
+      print(responses);
+      if (json.decode(responses)["status"].toString() == "200") {
+        W_PaymentsInove.check_done = true;
+      } else {
+        W_PaymentsInove.check_done = false;
+      }
+      return true;
+    } on Exception catch (e) {
+      W_PaymentsInove.check_done = false;
+      return false;
+    }
+  }
+
 }

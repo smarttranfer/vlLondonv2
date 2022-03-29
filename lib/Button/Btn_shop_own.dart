@@ -15,6 +15,7 @@ class BtnFilter_own_shop extends StatelessWidget {
     required this.paymented,
     required this.date,
     required this.index,
+    required this.id_custome,
     Key? key,
   }) : super(key: key);
   final int index;
@@ -25,6 +26,7 @@ class BtnFilter_own_shop extends StatelessWidget {
   final String original_amount;
   final String paymented;
   final String date;
+  final int id_custome;
   @override
   Widget build(BuildContext context) {
     TextEditingController values = TextEditingController();

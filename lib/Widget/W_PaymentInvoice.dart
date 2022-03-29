@@ -1,5 +1,6 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:vl_ui/Button/Btn_shop_own.dart';
 import 'package:vl_ui/DartJs/FuntionsAction.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vl_ui/model/counter_model.dart';
+import 'package:vl_ui/model/listinvoice.dart';
 import 'W_Payment.dart';
 
 class W_PaymentInove extends StatefulWidget {
@@ -30,7 +32,7 @@ class W_PaymentInove extends StatefulWidget {
 
 class W_PaymentsInove extends State<W_PaymentInove> {
   String result_payment = "";
-
+  static bool check_done = false;
   CurrencyTextInputFormatter _money = CurrencyTextInputFormatter();
   static List<Map<String, dynamic>> listbill = [];
   static List<Map<String, dynamic>> allUsers = [];
@@ -48,7 +50,8 @@ class W_PaymentsInove extends State<W_PaymentInove> {
         "content": "${i["content"]}",
         "value": "",
         "date": "${i["date"]}",
-        "original_amount": "${i["original_amount"]}"
+        "original_amount": "${i["original_amount"]}",
+        "id_custome": "${i["id_custome"]}"
       });
     }
     foundUsers = allUsers;
@@ -70,12 +73,13 @@ class W_PaymentsInove extends State<W_PaymentInove> {
       for (var indexs in allUsers.toList()) {
         if (double.parse(enteredKeyword.replaceAll(",", "")) <
             double.parse(
-                allUsers.toList()[k]["total_owe"].replaceAll(",", ""))) {
+                allUsers.toList()[k]["original_amount"].replaceAll(",", ""))) {
           allUsers.toList()[k]["value"] =
               double.parse(enteredKeyword.replaceAll(",", "")) - checkvalue;
           checkvalue = allUsers.toList()[k]["value"];
         } else {
-          allUsers.toList()[k]["value"] = allUsers.toList()[k]["total_owe"];
+          allUsers.toList()[k]["value"] =
+              allUsers.toList()[k]["original_amount"];
         }
         k += 1;
       }
@@ -115,7 +119,52 @@ class W_PaymentsInove extends State<W_PaymentInove> {
         resizeToAvoidBottomInset: true,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.green,
-          onPressed: () {},
+          onPressed: () async{
+            List<listinvoice> listinvoices = [];
+            for(var k in allUsers.toList()){
+              listinvoice ks = new listinvoice();
+              if(k["value"].toString()!=""){
+                ks.payment = double.parse(k["value"].toString());
+                ks.invoice_id = int.parse(k["id"].toString());
+                print(k["id"].toString());
+                listinvoices.add(ks);
+              }
+            }
+            if(_money.getFormattedValue()!=""){
+              double unallowcate = double.parse(_money.getFormattedValue().substring(3).replaceAll(",", "").toString());
+              await ActionJS.Create_transation_payment(int.parse(allUsers[0]["id_custome"]),unallowcate,listinvoices);
+              if(check_done==true){
+                Fluttertoast.showToast(
+                    msg: Config_G.check_lang
+                        ? "Thanh toán thành công"
+                        : "Payment success",
+                    toastLength:
+                    Toast.LENGTH_SHORT,
+                    gravity:
+                    ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 10,
+                    backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+                Navigator.pop(context);
+              }else{
+                Fluttertoast.showToast(
+                    msg: Config_G.check_lang
+                        ? "Thanh toán thất bại"
+                        : "Payment failed",
+                    toastLength:
+                    Toast.LENGTH_SHORT,
+                    gravity:
+                    ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 10,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+              }
+              // Navigator.pop(context);
+            }
+           
+          },
           child: Icon(
             Icons.payment_outlined,
             size: 30,
@@ -307,16 +356,26 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                               ),
                             ),
                             IconButton(
-                              icon: const Icon(Icons.refresh,color: Colors.green,),
+                              icon: const Icon(
+                                Icons.refresh,
+                                color: Colors.green,
+                              ),
                               onPressed: () {
-                                for(var i in allUsers){
-                                  if(i["value"].toString().isEmpty){
-                                    counterModel.incrementCounter(0.0,double.parse(result_payment.isEmpty ? widget.total_own : result_payment));
-                                  }else{
-                                    counterModel.incrementCounter(double.parse(i["value"].toString()),double.parse(result_payment.isEmpty ? widget.total_own : result_payment));
+                                for (var i in allUsers) {
+                                  if (i["value"].toString().isEmpty) {
+                                    counterModel.incrementCounter(
+                                        0.0,
+                                        double.parse(result_payment.isEmpty
+                                            ? widget.total_own
+                                            : result_payment));
+                                  } else {
+                                    counterModel.incrementCounter(
+                                        double.parse(i["value"].toString()),
+                                        double.parse(result_payment.isEmpty
+                                            ? widget.total_own
+                                            : result_payment));
                                   }
                                 }
-
                               },
                             ),
                           ],
@@ -468,6 +527,8 @@ class W_PaymentsInove extends State<W_PaymentInove> {
                                               //   await
                                               // },
                                               child: BtnFilter_own_shop(
+                                                  id_custome: int.parse(
+                                                      "${foundUsers[index]["id_custome"].toString()}"),
                                                   index: index,
                                                   date:
                                                       "${foundUsers[index]["date"]}",
