@@ -355,9 +355,9 @@ class W_Payments extends State<W_Payment> {
                                                                                         shadowColor: Colors.black12,
                                                                                         child: InkWell(
                                                                                         onTap: ()async {
-                                                                                          Navigator.pop(context);
+                                                                                          // Navigator.pop(context);
                                                                                           await ActionJS.GetInforShop_bill(int.parse(billShop[indexs]["id"].toString()).toInt());
-                                                                                          Navigator.push(
+                                                                                          Navigator.pushReplacement(
                                                                                               context,
                                                                                               PageTransition(
                                                                                                   type: PageTransitionType.rightToLeft,
